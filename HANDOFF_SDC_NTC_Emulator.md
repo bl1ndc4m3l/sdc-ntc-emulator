@@ -237,6 +237,26 @@ Notes:
 
 ## Setup on the SDC controller
 
+### Operating the SDC: technician level and parameters (service manual ch. 5.1.2.9 / 5.2)
+
+Buttons (front panel, operating instructions ch. 4.1):
+- Right column: ☀🌡 = "Daytime room temperature" (top), "Night-time room temperature" (middle), 🚰🌡 = "Daytime hot-water temperature" (bottom).
+- Left column: "Manual mode", "Operating modes", "Switching time programs", **i** = "System information".
+- Centre: rotary **input button** (turn / press).
+
+Enter the technician code (**1234**):
+1. Press **"Daytime room temperature" + "Daytime hot-water temperature"** simultaneously. The first code digit flashes.
+2. Turn the input button to 1, press it. Then 2, press; 3, press; 4, press.
+3. **Press and hold the input button > 3 s** to reach the menu-selection level (starts at TIME–DATE).
+
+Change a parameter:
+4. Turn to the menu (e.g. **HYDRAULIC**), press.
+5. Turn to the parameter number (e.g. **09**), press. The value flashes.
+6. Turn to the new value (e.g. **31**), **press to confirm**.
+7. Back: **i** = one level up. The "Switching time programs" button, holding the input button > 3 s, or a timeout returns to the basic display.
+
+**Never change HYDRAULIC parameter 01** ("Hydraulic schematic"). It redefines the whole application. Write down every value before you change it.
+
 1. Assign the room sensor to the variable input in use: "Hydraulics" menu, parameter 08 (VE1), 09 (VE2) or 10 (VE3). Set it to **31 = room sensor NTC 20 of mixed heating circuit 1**, because the controller runs only one mixer and a pump.
 2. In the "MIX.VALVE-1" menu:
    - Parameter 03 "Room connection" = 1 (room sensor active, operation active). Factory setting: OFF. Setting 3 only displays the room temperature without influence, useful for a first test.
