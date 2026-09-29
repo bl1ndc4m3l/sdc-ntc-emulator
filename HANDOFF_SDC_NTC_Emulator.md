@@ -1,100 +1,104 @@
-# Handoff: Funk-Raumfühler für Honeywell Home Smile SDC per NTC-Emulation
+# Handoff: Wireless Room Sensor for Honeywell Home Smile SDC via NTC Emulation
 
-## Ziel
+## Goal
 
-Ein Honeywell Home (Resideo) Smile SDC Heizungsregler regelt aktuell rein witterungsgeführt (Außentemperatur). Er soll zusätzlich die Wohnzimmertemperatur berücksichtigen (Raumaufschaltung), ohne ein Buskabel zu verlegen.
+A Honeywell Home (Resideo) Smile SDC heating controller currently operates purely weather-compensated (outdoor temperature). It should additionally take the living room temperature into account (room influence / room compensation) without running a bus cable.
 
-Lösung: Ein ESP32 am Regler bildet am Raumfühler-Eingang (variabler Eingang VE) den Widerstand eines NTC-20k-Raumfühlers (Typ RF 20) nach. Die echte Raumtemperatur kommt per WLAN von einem vorhandenen Sonoff-Panel im Wohnzimmer.
+Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room sensor (type RF 20) on the room sensor input (variable input VE). The actual room temperature arrives via Wi-Fi from an existing Sonoff panel in the living room.
 
-## Kontext aus dem Vorgespräch
+## Context from the preliminary discussion
 
-- Anlage: Heizkörper **ohne Raumregelventile**, hydraulisch abgeglichen. Das ist gut für Raumaufschaltung: Das Wohnzimmer dient als Referenzraum, die übrigen Räume folgen über den Abgleich.
-- Verworfene Optionen:
-  - Wandmodul SDW10/SDW30 am Smile-Bus (Klemmen A/B): kein Kabel vorhanden.
-  - Smile-Bus per Funk tunneln: proprietäres, undokumentiertes Protokoll, Busversorgung der Wandmodule, Timing-Probleme. Zu aufwendig.
-  - Smile Connect (SCN-10) + Smile Room Connect (SRC-10): für Einzelraumregelung mit Funk-Heizkörperventilen gedacht, passt nicht.
-- Gewählt: Analoger Raumfühler RF 20 am variablen Eingang, per ESP32 emuliert. Laut SDC-Installationsanleitung wird der Raumfühler über Parameter 08, 09 oder 10 im Menü „Hydraulik" einem variablen Eingang (z. B. VE1) zugeordnet.
-- Sollwert wird am Regler eingestellt (nicht im Raum). Später evtl. erweiterbar.
+- System: radiators **without room control valves**, hydraulically balanced. This suits room compensation well: the living room serves as the reference room, and the other rooms follow via the hydraulic balancing.
+- Rejected options:
+  - Wall module SDW10/SDW30 on the Smile bus (terminals A/B): no cable available.
+  - Tunnelling the Smile bus wirelessly: proprietary, undocumented protocol, bus-powered wall modules, timing issues. Too much effort.
+  - Smile Connect (SCN-10) + Smile Room Connect (SRC-10): intended for single-room control with wireless radiator valves, does not fit.
+- Chosen: analog room sensor RF 20 on the variable input, emulated by an ESP32. According to the SDC installation manual, the room sensor is assigned to a variable input (e.g. VE1) via parameter 08, 09 or 10 in the "Hydraulics" menu.
+- The setpoint is set at the controller (not in the room). Possibly extendable later.
 
-## Hardware-Skizze
+## Hardware sketch
 
 ```
-  WOHNZIMMER                                HEIZUNGSRAUM
+  LIVING ROOM                               BOILER ROOM
  ┌───────────────────┐                    ┌──────────────────────────────────────────┐
- │ Sonoff Panel      │                    │  Isoliertes 5V-Netzteil                   │
- │ (Temp.-Sensor +   │   WLAN / MQTT /    │  (USB-Steckernetzteil o. HLK-PM01)        │
- │  Display)         │ ─ HA / ESP-NOW ──▶ │        │ 5V                               │
+ │ Sonoff Panel      │                    │  Isolated 5V power supply                 │
+ │ (temp. sensor +   │   Wi-Fi / MQTT /   │  (USB wall adapter or HLK-PM01)           │
+ │  display)         │ ─ HA / ESP-NOW ──▶ │        │ 5V                               │
  └───────────────────┘                    │        ▼                                  │
                                           │  ┌───────────┐  I2C   ┌──────────────┐    │
                                           │  │  ESP32    │───────▶│ AD5272 50k   │    │
-                                          │  │ (3.3V)    │ SDA/SCL│ Rheostat     │    │
-                                          │  └───────────┘        │ 1024 Stufen  │    │
-                                          │                       │ ±1 % Toleranz│    │
+                                          │  │ (3.3V)    │ SDA/SCL│ rheostat     │    │
+                                          │  └───────────┘        │ 1024 steps   │    │
+                                          │                       │ ±1 % toler.  │    │
                                           │                       └──┬────────┬──┘    │
                                           │                          │ W      │ A     │
-                                          │                  R_serie │        │       │
+                                          │                 R_series │        │       │
                                           │                  ~12–15k ┴        │       │
                                           │                          │        │       │
                                           └──────────────────────────┼────────┼───────┘
                                                                      │        │
                                                           ┌──────────┴────────┴───┐
-                                                          │ SDC-Regler            │
-                                                          │ Klemmen VEx / Masse   │
-                                                          │ (Raumfühler-Eingang)  │
+                                                          │ SDC controller        │
+                                                          │ terminals VEx / GND   │
+                                                          │ (room sensor input)   │
                                                           └───────────────────────┘
 ```
 
-### Stückliste (Vorschlag)
+### Bill of materials (proposal)
 
-| Teil | Zweck | Hinweis |
+| Part | Purpose | Note |
 |---|---|---|
-| ESP32 DevKit | Empfang der Raumtemp., Ansteuerung Rheostat | beliebiges Board |
-| AD5272BRMZ-50 (oder vergleichbar) | digitaler Rheostat, 50 kΩ, 1024 Stufen, I2C | ±1 % Widerstandstoleranz, 50-TP-Speicher für Power-on-Wert |
-| Festwiderstand ca. 12–15 kΩ, 0,1 % | Offset, damit der Bereich ~15–45 kΩ abgedeckt wird | exakten Wert nach NTC-Tabelle wählen |
-| Isoliertes 5V-Netzteil | Versorgung ESP32 | **galvanisch getrennt**, siehe Sicherheit |
-| optional: I2C-Isolator (ISO1540) + isolierter DC/DC | vollständige Trennung ESP32 ↔ Regler | empfohlen, falls die Eingangsspannung nicht zum Rheostat passt |
-| Alternative: PhotoMOS-Relais + Widerstandskette | voll isolierte Widerstandsnachbildung ohne Rail-Probleme | mehr Bauteile, dafür robust |
+| ESP32 DevKit | Receives room temp., drives the rheostat | any board |
+| AD5272BRMZ-50 (or comparable) | digital rheostat, 50 kΩ, 1024 steps, I2C | ±1 % resistance tolerance, 50-TP memory for power-on value |
+| Fixed resistor approx. 12–15 kΩ, 0.1 % | Offset so the range ~15–45 kΩ is covered | choose exact value from the NTC table |
+| Isolated 5V power supply | Powers the ESP32 | **galvanically isolated**, see Safety |
+| optional: I2C isolator (ISO1540) + isolated DC/DC | full isolation ESP32 ↔ controller | recommended if the input voltage doesn't suit the rheostat |
+| Alternative: PhotoMOS relays + resistor ladder | fully isolated resistance emulation without rail issues | more parts, but robust |
 
-### Größenordnung Widerstand (NTC 20k, grob)
+### Resistance ballpark (NTC 20k, rough)
 
 - 30 °C ≈ 16 kΩ, 25 °C = 20 kΩ, 20 °C ≈ 25 kΩ, 15 °C ≈ 31 kΩ, 10 °C ≈ 40 kΩ
-- **Diese Werte sind Näherungen.** Die exakte Kennlinie (Tabelle oder B-Wert) aus der Honeywell-Dokumentation zum RF 20 / NTC-20k-Fühler übernehmen.
-- Steigung um 20 °C ca. 1 kΩ/K → AD5272 50k (≈ 49 Ω/Stufe) ergibt ca. 0,05 K Auflösung.
+- **These values are approximations.** Take the exact characteristic (table or B value) from the Honeywell documentation for the RF 20 / NTC 20k sensor.
+- Slope around 20 °C approx. 1 kΩ/K → AD5272 50k (≈ 49 Ω/step) gives approx. 0.05 K resolution.
 
-## Sicherheit & Robustheit (wichtig)
+## Safety & robustness (important)
 
-1. **Erst messen:** Leerlaufspannung und Messstrom an den VE-Klemmen (Regler an, Fühler ab) mit dem Multimeter bestimmen. Die Spannung über dem Rheostat muss innerhalb seiner Versorgung (0–5 V) liegen.
-2. **Galvanische Trennung:** ESP32 nur über ein isoliertes Netzteil versorgen. Beim Debuggen per USB am PC entsteht eine Masseverbindung zum Regler: nur bei ausgeschaltetem Regler oder mit USB-Isolator arbeiten.
-3. **Keine Arbeiten unter Netzspannung.** Im Regler liegen 230 V an (Brenner, Pumpen, Mischer). Anschluss nur an den Kleinspannungs-Fühlerklemmen.
-4. **Fail-safe:** Bleibt der Temperaturwert vom Panel länger als z. B. 10 Minuten aus, einen neutralen Wert ausgeben (Widerstand, der dem Raumsollwert entspricht → Raumaufschaltung korrigiert nicht). Denselben Wert als Power-on-Default in den 50-TP-Speicher des AD5272 schreiben.
-5. **Plausibilitätsgrenzen:** Ausgabe auf z. B. 10–30 °C begrenzen, Sprünge glätten.
-6. Eingriff kann Gewährleistung/Garantie des Reglers berühren.
+1. **Measure first:** Determine the open-circuit voltage and measuring current at the VE terminals (controller on, sensor disconnected) with a multimeter. The voltage across the rheostat must stay within its supply range (0–5 V).
+2. **Galvanic isolation:** Power the ESP32 only from an isolated power supply. When debugging via USB on a PC, a ground connection to the controller is created: only work with the controller switched off or with a USB isolator.
+3. **No work on live mains.** The controller carries 230 V (burner, pumps, mixer). Connect only to the extra-low-voltage sensor terminals.
+4. **Fail-safe:** If the temperature value from the panel is missing for longer than e.g. 10 minutes, output a neutral value (resistance corresponding to the room setpoint → room compensation makes no correction). Write the same value as the power-on default into the AD5272's 50-TP memory.
+5. **Plausibility limits:** Clamp the output to e.g. 10–30 °C, smooth out jumps.
+6. The modification may affect the controller's warranty/guarantee.
 
-## Software-Aufgaben für Claude Code
+## Software tasks for Claude Code
 
-1. **Datenquelle klären und anbinden** (siehe offene Punkte): Raumtemperatur vom Sonoff-Panel empfangen, z. B. via
-   - ESPHome + Home Assistant (bevorzugt, falls HA vorhanden),
-   - MQTT (z. B. bei Tasmota auf dem Panel),
-   - ESP-NOW direkt (falls Panel ESP32-basiert und frei programmierbar).
-2. **Temperatur → Widerstand:** NTC-Kennlinie als Tabelle mit linearer Interpolation oder Steinhart-Hart/B-Parameter implementieren.
-3. **Widerstand → Rheostat-Code:** `code = round((R_ziel − R_serie − R_wiper) / (50k / 1024))`, auf 0–1023 begrenzen. AD5272: Write-Protect (RDAC-Schreibschutz) per Control-Register aufheben.
-4. **Kalibrierung:** Offset-Parameter vorsehen, abgleichen gegen die am SDC angezeigte Raumtemperatur.
-5. **Watchdog/Fail-safe** wie oben, inkl. Statusmeldung (z. B. „Quelle verloren") an HA/MQTT.
-6. **Diagnose:** aktuellen Sollwiderstand, Code, letzte Aktualisierung als Sensoren veröffentlichen.
-7. Firmware-Framework: ESPHome (AD5272 braucht vermutlich eine kleine External Component) oder Arduino/PlatformIO. Entscheidung nach Klärung der Datenquelle.
+1. **Clarify and connect the data source** (see open points): receive the room temperature from the Sonoff panel, e.g. via
+   - ESPHome + Home Assistant (preferred, if HA is available),
+   - MQTT (e.g. with Tasmota on the panel),
+   - ESP-NOW directly (if the panel is ESP32-based and freely programmable).
+2. **Temperature → resistance:** implement the NTC characteristic as a table with linear interpolation, or Steinhart-Hart/B parameter.
+3. **Resistance → rheostat code:** `code = round((R_target − R_series − R_wiper) / (50k / 1024))`, clamped to 0–1023. AD5272: disable write protection (RDAC write protect) via the control register.
+4. **Calibration:** provide an offset parameter, trimmed against the room temperature shown on the SDC.
+5. **Watchdog/fail-safe** as above, incl. status message (e.g. "source lost") to HA/MQTT.
+6. **Diagnostics:** publish current target resistance, code and last update as sensors.
+7. Firmware framework: ESPHome (AD5272 probably needs a small external component) or Arduino/PlatformIO. Decide once the data source is clarified.
 
-## Einrichtung am SDC-Regler
+## Setup on the SDC controller
 
-1. Raumfühler im Menü „Hydraulik" per Parameter 08/09/10 dem genutzten variablen Eingang zuordnen (Installationsanleitung, Kapitel „Anschluss von Raumgeräten").
-2. Raumeinfluss/Raumaufschaltung für den betreffenden Heizkreis aktivieren, **moderat** einstellen (Außentemperatur bleibt Basis).
-3. Vorher Heizkurve sauber einstellen; die Raumaufschaltung ist nur Feinkorrektur.
-4. Im Wohnzimmer: Fühler-/Panel-Position fern von Sonne, Heizkörper, Kamin.
+1. Assign the room sensor to the variable input in use via parameter 08/09/10 in the "Hydraulics" menu (installation manual, chapter "Connecting room units").
+2. Enable room influence/room compensation for the relevant heating circuit, set it **moderately** (outdoor temperature remains the basis).
+3. Set up the heating curve properly beforehand; room compensation is only a fine correction.
+4. In the living room: sensor/panel position away from sunlight, radiators, fireplace.
 
-## Offene Punkte (vor Start klären)
+## Open points (clarify before starting)
 
-- [ ] Exaktes SDC-Modell und Softwareversion (SDC3-10 / 3-40 / 9-21 / 12-31, WM/PM)?
-- [ ] Welcher VE-Eingang ist frei?
-- [ ] Gemessene Leerlaufspannung / Messstrom am VE-Eingang?
-- [ ] Welches Sonoff-Panel (NSPanel, NSPanel Pro, …) und welche Firmware (eWeLink, Tasmota, ESPHome)?
-- [ ] Gibt es Home Assistant oder einen MQTT-Broker?
-- [ ] Exakte NTC-20k-Kennlinie aus Honeywell-Unterlagen.
+- [ ] Exact SDC model and software version (SDC3-10 / 3-40 / 9-21 / 12-31, WM/PM)?
+- [ ] Which VE input is free?
+- [ ] Measured open-circuit voltage / measuring current at the VE input?
+- [ ] Which Sonoff panel (NSPanel, NSPanel Pro, …) and which firmware (eWeLink, Tasmota, ESPHome)?
+- [ ] Is there Home Assistant or an MQTT broker?
+- [ ] Exact NTC 20k characteristic from Honeywell documentation.
+
+---
+
+*A German version of this document ([HANDOFF_SDC_NTC_Emulator.de.md](HANDOFF_SDC_NTC_Emulator.de.md)) is kept for reference but is outdated.*
