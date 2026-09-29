@@ -108,8 +108,9 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 | 4 × 4.7 kΩ | I2C pull-ups on **both** sides of the isolator | ESP side to 3V3, SDC side to VDD_ISO |
 | Electrolytic capacitor 470 µF / 10 V | 5 V bulk buffer for Wi-Fi current peaks | RAC03 allows up to 7500 µF |
 | Recom RAC03-05SER/277 | isolated 5 V supply | see assessment below |
-| Slow-blow fuse + holder (value per RAC03 datasheet) | mains-side protection | Recom recommends a slow-blow type |
-| Enclosure, terminal blocks | | mains and SELV parts separated |
+| Slow-blow fuse + in-line holder | mains-side protection | Recom recommends a slow-blow type |
+| Wago lever terminals (mains), 2 × 2-pin PCB screw terminals (5 V in, SDC) | wiring | mains only on the Wago side, never on the PCB |
+| Enclosure | | mains section and PCB section separated; strain relief |
 
 ### Digital rheostat: AD5272 vs. alternatives (reviewed 2026-09-29)
 
@@ -136,13 +137,21 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
 
 ### PCB
 
-- **Own PCB from JLC (bare board, hand-soldered)** rather than perfboard, because of the mains section and the isolation gaps.
-  - Three zones: **mains** (fuse, RAC03 input), **ESP domain**, **SDC domain**.
-  - ≥ 6 mm creepage/clearance between mains and everything else; a milled slot helps.
-  - A few mm gap across the ISO1540/DC-DC/relay barrier.
-- **Hand-soldering friendly:** passives 0805/1206; SOIC-8 (ISO1540), SOT-23 (MOSFET, LDO); relay, RAC03 and DC/DC through-hole; AD5272 MSOP-10 as the only fine-pitch part (optionally with its own footprint pads extended for easier soldering).
-- DevKit on female headers (removable). Screw terminals: 5.08 mm for mains, 3.5/5.08 mm for X6-7/X5 to the SDC.
-- Enclosure: sized to the PCB. The mains side is closed and the terminal areas have strain relief.
+- **No mains on the PCB.** The RAC03-05SER/277 is a potted module (50.3 × 50.3 × 11 mm) with **flying leads** on input and output. It sits next to the PCB in the enclosure, fixed with a clip, strap or adhesive pad.
+  - Its input leads go to a fused mains terminal (e.g. an in-line fuse holder with a slow-blow fuse + Wago lever terminals), in their own section of the enclosure.
+  - Its output leads go to a 2-pin 5 V screw terminal on the PCB.
+  - So the PCB is SELV only, and no 6 mm mains clearances are needed on it.
+- **Own PCB from JLC (bare board, hand-soldered)** rather than perfboard, for clean isolation gaps:
+  - Two zones: **ESP domain** and **SDC domain**.
+  - A few mm gap across the ISO1540 / TEM 2-0511 / relay barrier, with no copper crossing it except through those parts.
+- **Hand-soldering friendly:**
+  - Passives 0805/1206; ISO1540 in SOIC-8; MOSFET in SOT-23.
+  - Relay and TEM 2-0511 (DIP-24) through-hole.
+  - AD5272 MSOP-10 is the only fine-pitch part (optionally with its footprint pads extended for easier soldering).
+- DevKit on female headers (removable). Screw terminals: 5 V in (from RAC03), 2-pin to the SDC (X6-7 / X5).
+- **Enclosure:**
+  - Mains section (RAC03 input, fuse, terminals) separated from the PCB section, e.g. by a partition or at least clearly apart with fixed wiring.
+  - Strain relief for the mains cable and the SDC cable.
 
 ### GPIO notes for the ESP32-S3 N16R8
 
@@ -182,7 +191,7 @@ The measuring current is far below the AD5272's ±3 mA limit in any case: ≤ 5 
 - **Good:** 3 kVAC isolation, EN 60335-1 (household appliances) certified, leakage ≤ 10 µA, OVP and short-circuit protection, −40 … +75 °C at full load, 85–305 VAC input.
 - **Current budget:** 600 mA at 5 V. ESP32-S3 Wi-Fi TX peaks ≈ 350–500 mA at 5 V incl. LDO losses, plus relay ~30 mA. That is enough, but not generous, so add the 470 µF bulk capacitor. Average draw ≈ 100 mA. Keep the DevKit's RGB LED off.
 - **Obsolescence:** the datasheet says "not recommended for new designs, last time buy 31 Mar 2026". Fine for this one unit, but a replacement would be a different part: Mean Well IRM-05-5 (5 W, 1 A, more headroom) or a certified USB-C wall adapter if a socket is available in the boiler room.
-- **Mains wiring (by a qualified person):** It is a bare module, so it needs a slow-blow input fuse, a closed enclosure, strain relief and ≥ 6 mm clearance between the mains and SELV sides. Feed it from its own fused supply or socket. Do not tap the SDC's L/N terminals.
+- **Mains wiring (by a qualified person):** It is a potted module with flying leads, so it stays off the PCB (see PCB). It still needs a slow-blow input fuse, a closed enclosure and strain relief. Feed it from its own fused supply or socket. Do not tap the SDC's L/N terminals.
 - **Isolation concept:** The RAC03 isolates from mains. The I2C isolator + iso DC/DC (revision 3) additionally separate the ESP32 from the SDC sensor ground.
 - **Current budget with revision 3 (tight!):** The TEM 2-0511 draws **80 mA even without load**. Peak: ESP32-S3 Wi-Fi ≈ 350–500 mA + relay ≈ 30 mA + TEM 80 mA ≈ **460–610 mA vs. the RAC03's 600 mA**. Average ≈ 200 mA. The TX peaks are short and the RAC03's current limit only starts at 105–150 %, so this works, but only with the **470 µF bulk capacitor** (RAC03 allows up to 7500 µF; 1000 µF is also fine). Further headroom: disable Bluetooth, reduce ESPHome `wifi: output_power` (e.g. 15 dB), keep the RGB LED off. If the ESP32 shows brown-out resets: move to a Mean Well IRM-05-5 (1 A).
 
