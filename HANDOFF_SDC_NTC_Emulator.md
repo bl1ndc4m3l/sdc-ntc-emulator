@@ -1,6 +1,10 @@
 # Handoff: Wireless Room Sensor for Honeywell Home Smile SDC via NTC Emulation
 
-> **⏰ Pending measurement (user):** Set parameter 09 = 31, then measure VE2 (X6-7 → X5): (1) open-circuit voltage U0, (2) voltage U20 across a 20 kΩ resistor. This decides the AD5272 supply voltage. Details under [Open points](#open-points-clarify-before-starting).
+> **⏰ Pending checks (user):**
+> 1. **VE2 measurement:** Set parameter 09 = 31, then measure VE2 (X6-7 → X5): (1) open-circuit voltage U0, (2) voltage U20 across a 20 kΩ resistor. This decides the AD5272 supply voltage.
+> 2. **DevKit diode check:** Are there Schottky diodes (1N5819 or similar) between each USB-C VBUS and the 5 V rail on the clone board? This decides whether USB and RAC03 may be connected at the same time.
+>
+> Details under [Open points](#open-points-clarify-before-starting).
 
 ## Goal
 
@@ -66,6 +70,12 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 ```
 
 **Isolation boundary:** Everything right of ┆ belongs to the SDC domain: iso DC/DC output, LDO, ISO1540 side 2, AD5272, both resistors, relay contacts. Its only reference is X5. Everything left of it may be earthed (PC via USB). Keep a few mm of gap between the domains on the board. This is functional isolation; safety isolation from mains is still the RAC03's job.
+
+**Rejected: powering the AD5272 side from the SDC.** The SDC's only low-voltage supply is the T2B data bus: X6-1 (A) / X5-1 (B), "power supply via bus 12 V/150 mA" (service manual ch. 8.1), described as "data bus line 12 V AC" (ch. 2.2). It was not used because:
+1. **Data rides on the supply.** The bus powers and talks to SDW wall devices over the same two wires. A rectifier with a buffer capacitor loads and distorts that signal, which risks fault 70-1 "No T2B signal" or disturbing the bus.
+2. **Wrong reference.** The AD5272 rail must be referenced to the sensor ground X5-2…12, because terminal A sits at GND and A/W must stay between GND and VDD. T2B B (X5-1) is a separate terminal, and a rectified 12 V AC is not referenced to sensor ground. Fixing that needs an isolated converter again, so nothing is saved.
+3. **Undocumented.** AC or DC, polarity, modulation and what is left for third parties are not specified.
+4. **Little gain.** Its only advantage, an AD5272 that is always powered while the SDC measures, is already covered by the relay.
 
 **Power-loss behaviour is unchanged:** the iso DC/DC and the relay coil both hang on the same 5 V. If it fails, the relay drops within ms and physically disconnects the AD5272, whatever its rail does.
 
@@ -209,6 +219,7 @@ Notes:
   3. Connect 20 kΩ between X6-7 and X5, measure U20. The SDC should show ≈ 25 °C as room temperature.
   4. Compute: measuring current I = U20 / 20 kΩ; pull-up R_pull = 20 kΩ × (U0 / U20 − 1); worst case U_max = U0 × 65 kΩ / (65 kΩ + R_pull). This decides VDD_ISO: 3.3 V (B0505S + 3.3 V LDO) or 5 V (B0509S + 5.0 V LDO).
   5. Optional: check the displayed temperature with a 24.3 kΩ resistor (≈ 20.9 °C) as well. This also verifies R_failsafe.
+- [ ] **⏰ PENDING (user): DevKit clone diode check.** The official ESP32-S3-DevKitC-1 (schematic in `datasheets/`) has a Schottky diode 1N5819 (D1, D7) from each USB-C VBUS to the 5 V rail. It blocks back-feed from the RAC03 into the PC. Check on the clone: look for a small diode (SOD-123, marking e.g. "S4"/"SL" or similar) next to each USB-C port. Alternatively measure with the multimeter in diode mode from the VBUS pin of each port to the 5V header pin: ~0.2–0.4 V in one direction and open in the other = diode present. **If missing:** unplug the RAC03 (or disconnect the 5 V pin) whenever USB is connected.
 - [ ] SDC day room setpoint? It determines the R_failsafe value (24.3 kΩ assumes 21 °C).
 - [x] Sonoff panel: NSPanel-EU (original NSPanel, Wi-Fi, black) with custom ESPHome firmware.
 - [x] Home Assistant is available and is the data path.
