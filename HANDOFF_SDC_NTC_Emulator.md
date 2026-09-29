@@ -261,6 +261,19 @@ Notes:
   3. Connect 20 kΩ between X6-7 and X5, measure U20. The SDC should show ≈ 25 °C as room temperature.
   4. Compute: measuring current I = U20 / 20 kΩ; pull-up R_pull = 20 kΩ × (U0 / U20 − 1); worst case U_max = U0 × 65 kΩ / (65 kΩ + R_pull). U_max must be ≤ ~4.8 V for VDD_ISO = 5 V (TEM 2-0511).
   5. Optional: check the displayed temperature with a 24.3 kΩ resistor (≈ 20.9 °C) as well. This also verifies R_failsafe.
+
+  **Result 2026-09-29:** VE2 (X6-7 → X5-7) with 20 kΩ connected: **0 V**. Open circuit it was −0.1 V, so VE2 shows no bias at all. Possible causes, to be narrowed down:
+  - a) Parameter 09 was not yet set to 31, so the input is inactive. Note, however, that VE1 showed 2 V while also set to OFF.
+  - b) The SDC3-40 has **no VE2/VE3 hardware**. It is the smallest mixer model, and the service manual's type matrix only lists outputs. Hint: does the "Hydraulics" menu offer parameters 09/10 at all?
+  - c) The input is biased only in short measuring pulses, which a DC multimeter averages to ~0 V. Unlikely at exactly 0 V.
+  - d) The PM variant has a different terminal layout than the 2006 table (WC/PC variants).
+
+  **Next checks (user):**
+  1. Does parameter 09 exist? Is it set to 31?
+  2. With 20 kΩ on VE2 and P09 = 31: what does the SDC show? A room temperature ≈ 25 °C, fault 14-x (VI-2) or fault 20-x (room sensor)?
+  3. Same test on **VE1** (X6-6 → X5, 20 kΩ, P08 = 31): voltage and display.
+
+  If VE2 turns out dead, **use VE1** after all. Its only special feature, the flue-gas sensor (AGF, PT1000), is not needed in this installation.
 - [ ] **⏰ PENDING (user): DevKit clone diode check.** The official ESP32-S3-DevKitC-1 (schematic in `datasheets/`) has a Schottky diode 1N5819 (D1, D7) from each USB-C VBUS to the 5 V rail. It blocks back-feed from the RAC03 into the PC. Check on the clone: look for a small diode (SOD-123, marking e.g. "S4"/"SL" or similar) next to each USB-C port. Alternatively measure with the multimeter in diode mode from the VBUS pin of each port to the 5V header pin: ~0.2–0.4 V in one direction and open in the other = diode present. **If missing:** unplug the RAC03 (or disconnect the 5 V pin) whenever USB is connected.
 - [x] Isolated DC/DC: **Traco TEM 2-0511** (5 V → 5 V regulated, 2 W; datasheet `datasheets/TEM2_datasheet.pdf`). VDD_ISO = 5 V, no LDO. To do at assembly: measure its output with only the indicator LED as load: ≤ 5.4 V and ripple ≤ 50 mVpp. If not, fit the 250 Ω preload resistor and measure again.
 - [ ] SDC day room setpoint? It determines the R_failsafe value (24.3 kΩ assumes 21 °C).
