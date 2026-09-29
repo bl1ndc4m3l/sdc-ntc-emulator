@@ -3,6 +3,7 @@
 > **⏰ Pending checks (user):**
 > 1. **VE2 measurement:** Set parameter 09 = 31, then measure VE2 (X6-7 → X5): (1) open-circuit voltage U0, (2) voltage U20 across a 20 kΩ resistor. This decides the AD5272 supply voltage.
 > 2. **DevKit diode check:** Are there Schottky diodes (1N5819 or similar) between each USB-C VBUS and the 5 V rail on the clone board? This decides whether USB and RAC03 may be connected at the same time.
+> 3. **Recom DC/DC model number:** Exact type of the isolated DC/DC the user already owns. It decides whether an LDO is needed for VDD_ISO.
 >
 > Details under [Open points](#open-points-clarify-before-starting).
 
@@ -110,6 +111,39 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 | Recom RAC03-05SER/277 | isolated 5 V supply | see assessment below |
 | Slow-blow fuse + holder (value per RAC03 datasheet) | mains-side protection | Recom recommends a slow-blow type |
 | Enclosure, terminal blocks | | mains and SELV parts separated |
+
+### Digital rheostat: AD5272 vs. alternatives (reviewed 2026-09-29)
+
+Requirements:
+- ≥ 25 kΩ span, or ≥ 20 kΩ if the window is narrowed to 14–30 °C.
+- Step ≤ ~120 Ω (≈ 0.1 K).
+- Low tempco (the boiler room swings ±10 K).
+- **Readback** of the set value (fail-safe check).
+- Terminals usable from 0 V to the supply.
+- I2C preferred, because it fits the ISO1540 isolator.
+
+Absolute tolerance is less critical, since a one-time calibration can remove it.
+
+| Part | Steps / span | Tolerance, tempco | Interface, readback | Package | Availability | Verdict |
+|---|---|---|---|---|---|---|
+| **AD5272BRMZ-50** | 1024 / 50 kΩ (49 Ω) | ±1 %, 5 ppm/K | I2C, yes | MSOP-10 (0.5 mm) | Mouser, DigiKey (both sell to private customers), possibly LCSC; **not Reichelt** | **Best fit, keep** |
+| MCP4651-103 (dual 10 kΩ, both channels in series) | 2 × 256 / 20 kΩ (39 Ω) | ±20 % → calibrate each channel once; 50 ppm/K; wiper 75–160 Ω per channel | I2C, yes | TSSOP-14 (0.65 mm) | **Reichelt, ~€2** | **Fallback**. With R_series 15 kΩ the range is 15–35 kΩ ≈ 31 … 13.4 °C, OK for a living room. Needs a calibration routine. |
+| AD5291BRUZ-20 | 256 / 20 kΩ (78 Ω) | ±1 % | SPI (the ISO1540 cannot isolate SPI; needs e.g. ADuM1401) | TSSOP-14 | Reichelt, ~€10 | Rejected: needs a 9–33 V supply plus a different isolator |
+| MCP41050 | 256 / 50 kΩ (195 Ω ≈ 0.16 K) | ±20 %, **800 ppm/K** | SPI, no readback | DIP-8 | common | Rejected: coarse, drifts, no readback |
+| X9C103/104 | 100 steps | ±20 %, 300 ppm/K | up/down, **no readback** | SO-8 / modules | everywhere (Amazon, Reichelt) | Rejected: no readback, coarse |
+| MCP4018 boards (Soldered "DEBO DIGI", Reichelt) | 128 steps | ±20 % | I2C | module | Reichelt | Rejected: too coarse for the needed span |
+
+**Decision:** Keep the AD5272. The ISO1540 is not a typical consumer-shop part either, so one Mouser/DigiKey (or LCSC) order covers AD5272 + ISO1540 + precision resistors. The MSOP-10 is the only fine-pitch part; it can be hand-soldered with flux and a fine tip, or put on an MSOP-10 adapter.
+
+### PCB
+
+- **Own PCB from JLC (bare board, hand-soldered)** rather than perfboard, because of the mains section and the isolation gaps.
+  - Three zones: **mains** (fuse, RAC03 input), **ESP domain**, **SDC domain**.
+  - ≥ 6 mm creepage/clearance between mains and everything else; a milled slot helps.
+  - A few mm gap across the ISO1540/DC-DC/relay barrier.
+- **Hand-soldering friendly:** passives 0805/1206; SOIC-8 (ISO1540), SOT-23 (MOSFET, LDO); relay, RAC03 and DC/DC through-hole; AD5272 MSOP-10 as the only fine-pitch part (optionally with its own footprint pads extended for easier soldering).
+- DevKit on female headers (removable). Screw terminals: 5.08 mm for mains, 3.5/5.08 mm for X6-7/X5 to the SDC.
+- Enclosure: sized to the PCB. The mains side is closed and the terminal areas have strain relief.
 
 ### GPIO notes for the ESP32-S3 N16R8
 
