@@ -103,6 +103,8 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 | N-MOSFET, 100 kΩ, 1N4148 | relay driver | |
 | ISO1540 (TI) or ADuM1250 (ADI) | bidirectional I2C isolator | each side 3.0–5.5 V; 100 nF decoupling per side |
 | Isolated DC/DC: **Traco TEM 2-0511** (user already owns it) | powers the SDC domain: VDD_ISO = 5 V for AD5272 + ISO1540 side 2 | 5 V ±10 % in, **regulated** 5 V ±3 % out, 400 mA, 1000 VDC isolation, DIP-24, PFM 80 kHz, ripple ≤ 50 mVpp, max. 470 µF load. End-of-life part. Load regulation is only specified from 10 % load (40 mA); ours is a few mA, so **measure the no-load output once**: must be ≤ 5.4 V for the AD5272 (5.5 V max). Add 10 µF + 100 nF at the AD5272. No LDO needed. |
+| LED + 1.5 kΩ on VDD_ISO | "SDC domain powered" indicator | ~2 mA; always fitted |
+| **Preload resistor 250 Ω / 0.5 W** (e.g. 2 × 1206 in parallel or 1 × THT) on VDD_ISO | preload the TEM 2-0511 (~20 mA = 100 mW) | **Footprint always present, fit only if needed:** if the no-load output is > 5.4 V or ripple is > 50 mVpp at assembly. Costs about +40 mA on the RAC03's 5 V (50 % efficiency), which matters for the tight budget. |
 | 4 × 4.7 kΩ | I2C pull-ups on **both** sides of the isolator | ESP side to 3V3, SDC side to VDD_ISO |
 | Electrolytic capacitor 470 µF / 10 V | 5 V bulk buffer for Wi-Fi current peaks | RAC03 allows up to 7500 µF |
 | Recom RAC03-05SER/277 | isolated 5 V supply | see assessment below |
@@ -251,7 +253,7 @@ Notes:
   4. Compute: measuring current I = U20 / 20 kΩ; pull-up R_pull = 20 kΩ × (U0 / U20 − 1); worst case U_max = U0 × 65 kΩ / (65 kΩ + R_pull). U_max must be ≤ ~4.8 V for VDD_ISO = 5 V (TEM 2-0511).
   5. Optional: check the displayed temperature with a 24.3 kΩ resistor (≈ 20.9 °C) as well. This also verifies R_failsafe.
 - [ ] **⏰ PENDING (user): DevKit clone diode check.** The official ESP32-S3-DevKitC-1 (schematic in `datasheets/`) has a Schottky diode 1N5819 (D1, D7) from each USB-C VBUS to the 5 V rail. It blocks back-feed from the RAC03 into the PC. Check on the clone: look for a small diode (SOD-123, marking e.g. "S4"/"SL" or similar) next to each USB-C port. Alternatively measure with the multimeter in diode mode from the VBUS pin of each port to the 5V header pin: ~0.2–0.4 V in one direction and open in the other = diode present. **If missing:** unplug the RAC03 (or disconnect the 5 V pin) whenever USB is connected.
-- [x] Isolated DC/DC: **Traco TEM 2-0511** (5 V → 5 V regulated, 2 W; datasheet `datasheets/TEM2_datasheet.pdf`). VDD_ISO = 5 V, no LDO. To do at assembly: measure its no-load output (≤ 5.4 V).
+- [x] Isolated DC/DC: **Traco TEM 2-0511** (5 V → 5 V regulated, 2 W; datasheet `datasheets/TEM2_datasheet.pdf`). VDD_ISO = 5 V, no LDO. To do at assembly: measure its output with only the indicator LED as load: ≤ 5.4 V and ripple ≤ 50 mVpp. If not, fit the 250 Ω preload resistor and measure again.
 - [ ] SDC day room setpoint? It determines the R_failsafe value (24.3 kΩ assumes 21 °C).
 - [x] Sonoff panel: NSPanel-EU (original NSPanel, Wi-Fi, black) with custom ESPHome firmware.
 - [x] Home Assistant is available and is the data path.
