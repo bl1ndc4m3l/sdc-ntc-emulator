@@ -56,7 +56,7 @@ The German `SDC_*.pdf` files (2006–2008) are older revisions and only kept for
                                                                      │        │
                                                           ┌──────────┴────────┴───┐
                                                           │ SDC controller        │
-                                                          │ terminals VEx / GND   │
+                                                          │ X6-7 (VE2) / X5 (GND) │
                                                           │ (room sensor input)   │
                                                           └───────────────────────┘
 ```
@@ -122,7 +122,12 @@ The German `SDC_*.pdf` files (2006–2008) are older revisions and only kept for
 - [x] SDC software version: V3.3. The docs are written for V3.2; check parameter numbers on the device if anything differs.
 - [x] Heating circuit: mixed heating circuit 1 (one mixer + pump), so VE setting 31.
 - [x] Free VE inputs: all three (VE1–VE3) are free. **Use VE2 → parameter 09 = 31.** VE1 is kept free because it is the only input that can take a flue-gas sensor (AGF, PT1000).
-- [ ] Measured open-circuit voltage / measuring current at the VE input? First readings (controller on, nothing connected): X5-6 → X6-6 ≈ 2 V, X5-7 → X6-7 ≈ −0.1 V, X5-8 → X6-8 ≈ −0.1 V. Still unknown: which of these pins is VE2 and which is sensor ground. The terminal plan is not in the three R1020 documents; check the label on the device or the installation instructions. Measuring current still to be determined, e.g. with a known resistor (20 kΩ) across the input: I = U / R.
+- [ ] Measured open-circuit voltage / measuring current at VE2? Terminal plan (`SDC_Informationsschrift_ge0h-0405ge51r0603.pdf`, PDF page 37): **X5-1…12 are all sensor GND**; X6-6 = VE1, **X6-7 = VE2**, X6-8 = VE3. First readings (controller on, nothing connected, all VE parameters OFF):
+  - VE1 (X6-6 → X5) ≈ 2 V
+  - VE2 (X6-7 → X5) ≈ −0.1 V
+  - VE3 (X6-8 → X5) ≈ −0.1 V
+
+  Probably the controller only biases an input once it has a function assigned. VE1 may also have a different input circuit, since it is PT1000-capable. **Next step:** set parameter 09 = 31, then measure VE2 again: open-circuit voltage, then the voltage across a 20 kΩ resistor (I = U / 20 kΩ; the controller should show about 25 °C).
 - [x] Sonoff panel: NSPanel-EU (original NSPanel, Wi-Fi, black) with custom ESPHome firmware.
 - [x] Home Assistant is available and is the data path.
 - [x] HA entity: the panel appears in Home Assistant as **"Anzeige"**. Its temperature reading is available and checked as correct. For the ESPHome `homeassistant` sensor, look up the exact `entity_id` (e.g. `sensor.anzeige_…`) in HA.
