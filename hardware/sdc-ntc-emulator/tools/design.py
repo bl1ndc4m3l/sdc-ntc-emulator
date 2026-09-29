@@ -28,7 +28,8 @@ def part(ref, symbol, value, footprint, sch, pins, **fields):
 # Espressif schematic V1.1). Only the pins below are used.
 DEVKIT_J1 = {"1": "+3V3", "2": "+3V3", "4": "RELAY_EN", "12": "SDA_ESP",
              "15": "SCL_ESP", "21": "+5V", "22": "GND"}
-DEVKIT_J3 = {"1": "GND", "21": "GND", "22": "GND"}
+# J3 pin 1 (GND, antenna end) is left open: it sits at the antenna keep-out edge.
+DEVKIT_J3 = {"21": "GND", "22": "GND"}
 
 PARTS = [
     # ---------------------------------------------------------------- ESP domain

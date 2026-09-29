@@ -4441,16 +4441,9 @@
 			)
 		)
 	)
-	(label "GND"
-		(at 25.4 134.62 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "7d87aacd-1fb3-5575-b15e-6fc4c1b43b12")
+	(no_connect
+		(at 25.4 134.62)
+		(uuid "83134cc4-f772-5d1c-a3a2-07066b857c04")
 	)
 	(no_connect
 		(at 25.4 137.16)

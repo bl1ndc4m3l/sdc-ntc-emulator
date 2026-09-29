@@ -32,10 +32,15 @@ NET_PATH = os.path.join(PROJ_DIR, design.PROJECT + ".net")
 BOARD_W, BOARD_H = 104.0, 76.0
 OX, OY = 100.0, 50.0            # board origin on the KiCad page (mm)
 
+# DevKit clone (photo 2026-09-29): pinout = official DevKitC-1, board ~56.6 mm long,
+# ~27.7 mm wide, module antenna overhangs the DevKit edge ~7 mm beyond pin 1.
+DEVKIT_ROWS = 25.4               # centre distance of the two header rows (to be confirmed)
+DEVKIT_X0, DEVKIT_PIN1_Y = 10.0, 58.34
+
 # (x, y, rotation) in board coordinates (mm, y down), footprint origin = pad 1
 PLACEMENT = {
-    "J2": (10.0, 58.34, 180),    # DevKit header J3 (left row), pin 1 at antenna end
-    "J1": (35.4, 58.34, 180),    # DevKit header J1 (right row), 25.4 mm apart
+    "J2": (DEVKIT_X0, DEVKIT_PIN1_Y, 180),                # DevKit header J3 (left row)
+    "J1": (DEVKIT_X0 + DEVKIT_ROWS, DEVKIT_PIN1_Y, 180),  # DevKit header J1 (right row)
     "J3": (47.08, 6.0, 180),     # 5 V in, wire entry towards top edge
     "C1": (53.3, 6.0, 0),
     "C2": (55.5, 13.3, 0),
@@ -87,7 +92,7 @@ ESP_POLY = [(0.5, 0.5), (59.8, 0.5), (59.8, 35.1), (40.2, 35.1), (40.2, 43.1), (
 ISO_POLY = [(61.2, 0.5), (103.5, 0.5), (103.5, 75.5), (43.4, 75.5), (43.4, 60.0), (61.2, 60.0),
             (61.2, 42.4), (41.4, 42.4), (41.4, 36.1), (61.2, 36.1)]
 # No copper under the ESP32-S3 module antenna (DevKit antenna end, bottom left).
-ANTENNA_KEEPOUT = [(7.0, 62.0), (39.0, 62.0), (39.0, 75.9), (7.0, 75.9)]
+ANTENNA_KEEPOUT = [(7.0, 59.6), (39.0, 59.6), (39.0, 75.9), (7.0, 75.9)]
 # No copper around the M3 mounting holes (screw heads, washers).
 MOUNT_KEEPOUT_R = 3.5
 # THT ground pads that additionally get a via (pour access is cramped there).
@@ -455,10 +460,11 @@ class Router:
             self.owner[l][m] = nid
             tree[l] |= m
 
-    def route_net(self, net):
+    def route_net(self, net, only=None, width=None):
         nid = self.idx[net]
-        width = POWER_W.get(net, SIGNAL_W)
-        pads = [p for p in self.pads if p["net"] == net]
+        width = width or POWER_W.get(net, SIGNAL_W)
+        pads = [p for p in self.pads if p["net"] == net
+                and (only is None or (p["ref"], p["num"]) in only)]
         if len(pads) < 2:
             return True
         dom = self.domain(net)
@@ -626,15 +632,19 @@ def dashed(board, pts, dash=1.0, gap=0.8, layer=pcbnew.F_SilkS):
 
 
 def add_silk(board):
-    # DevKit outline (clone ~28 mm wide, rows 25.4 mm apart)
-    for a, b in [((8.2, 1.2), (37.2, 1.2)), ((37.2, 1.2), (37.2, 66.0)),
-                 ((37.2, 66.0), (8.2, 66.0)), ((8.2, 66.0), (8.2, 1.2))]:
-        silk_line(board, *a, *b)
-    silk_text(board, "ESP32-S3 DevKit - USB-C this end", 22.7, 2.6, 0.9)
-    silk_text(board, "ANTENNA", 22.7, 64.4, 0.9)
-    silk_text(board, "no copper below", 22.7, 68.5, 0.8)
-    silk_text(board, "DevKit J1", 33.0, 61.2, 0.8)
-    silk_text(board, "DevKit J3", 12.4, 61.2, 0.8)
+    # DevKit outline (clone: pin 22 ~1.7 mm from USB end, pin 1 ~1.4 mm from antenna end)
+    x0, x1 = DEVKIT_X0 - 1.15, DEVKIT_X0 + DEVKIT_ROWS + 1.15
+    y0, y1 = DEVKIT_PIN1_Y - 21 * 2.54 - 1.7, DEVKIT_PIN1_Y + 1.4
+    for a, b in [((x0, y0), (x1, y0)), ((x1, y0), (x1, y1)), ((x1, y1), (x0, y1)), ((x0, y1), (x0, y0))]:
+        silk_line(board, *a, *b, layer=pcbnew.F_Fab)
+    # module antenna overhang (~18 mm wide, ~7.5 mm beyond the DevKit edge)
+    xm = DEVKIT_X0 + DEVKIT_ROWS / 2
+    dashed(board, [(xm - 9, y1), (xm - 9, y1 + 7.5), (xm + 9, y1 + 7.5), (xm + 9, y1)])
+    silk_text(board, "ESP32-S3 DevKit - USB-C this end", xm, y0 - 1.4, 0.9)
+    silk_text(board, "ANTENNA", xm, y1 + 3.0, 0.9)
+    silk_text(board, "no copper below", xm, y1 + 10.0, 0.8)
+    silk_text(board, "J1", DEVKIT_X0 + DEVKIT_ROWS, y1 + 1.4, 0.8)
+    silk_text(board, "J3", DEVKIT_X0, y1 + 1.4, 0.8)
     # isolation gap (centre line): full outline on F.Fab, top run also on silkscreen
     dashed(board, [(60.5, 1.0), (60.5, 35.6), (40.8, 35.6), (40.8, 43.0), (60.5, 43.0),
                    (60.5, 59.4), (42.8, 59.4), (42.8, 75.0)], layer=pcbnew.F_Fab)
@@ -665,6 +675,11 @@ def main():
     add_outline(board)
     router = Router(board, fps, netinfo)
     failed = []
+    # The antenna keep-out and the J1 fan-out split the ESP ground pour; tie the
+    # DevKit GND to the TEM input ground with a real track first.
+    print("routing /GND link")
+    if not router.route_net("/GND", only={("J1", "22"), ("PS1", "12")}, width=0.8):
+        failed.append("/GND link")
     for net in ROUTE_ORDER:
         if net in GND_NETS:
             continue

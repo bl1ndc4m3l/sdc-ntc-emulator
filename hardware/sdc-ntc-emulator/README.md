@@ -18,7 +18,13 @@ Omron G5V-2 fail-safe relay. 2 layers, 104 × 76 mm, 4 × M3 holes.
 
 ## Verify before ordering
 
-1. **DevKit fit.** The footprint assumes the header rows are **25.4 mm** apart (measured "25 mm"). It also assumes the pin order of the official ESP32-S3-DevKitC-1: J1 pin 1 = 3V3 at the antenna end; pin 21 = 5V and pin 22 = GND at the USB end. Check the clone's silkscreen against the PCB, or print the top layer 1:1 and lay the board on it. Used pins: 3V3, GPIO4 (relay), GPIO8 (SDA), GPIO9 (SCL), 5V, GND.
+1. **DevKit row spacing: still open.** The footprint uses **25.4 mm** (`DEVKIT_ROWS` in `tools/make_pcb.py`).
+   - A caliper reading gave 25.0 mm; a photo scaled by the pin pitch gives ≈ 25.4 mm.
+   - Measure outer-edge-to-outer-edge (A) and inner-edge-to-inner-edge (B) of the two pin rows. Centre distance = (A + B) / 2.
+   - If it differs, change `DEVKIT_ROWS` and run `python tools/build.py`.
+   - The pinout is confirmed from the photo: it is identical to the official DevKitC-1.
+   - The clone is ~56.6 × 27.7 mm, and its module antenna overhangs the DevKit edge by ~7 mm at the pin-1 end. The no-copper area covers that.
+   - J3 pin 1 (GND) is intentionally not connected.
 2. **TEM 2-0511 footprint** (`lib/sdc_emulator.pretty`, self-made). It follows the datasheet: DIP-24 grid, 15.24 mm rows, only pins 1-3, 10-15 and 22-24. Print 1:1 and hold the module against it.
 3. **Terminal blocks.** The wire entries should face the board edge: J3 (5 V in) the top edge, J4 (to SDC) the right edge. This follows from KiCad's footprint graphics; confirm in the 3D view.
 4. **R10 (R_failsafe) = 24.3 kΩ** assumes an SDC day setpoint of 21 °C. For another setpoint, pick the value from the NTC table in the handoff. R10 is a through-hole part, so it is easy to swap.
