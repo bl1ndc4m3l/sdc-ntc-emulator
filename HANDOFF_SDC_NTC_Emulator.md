@@ -1,8 +1,8 @@
 # Handoff: Wireless Room Sensor for Honeywell Home Smile SDC via NTC Emulation
 
 > **⏰ Pending checks (user):**
-> 1. **VE2 measurement:** Set parameter 09 = 31, then measure VE2 (X6-7 → X5): (1) open-circuit voltage U0, (2) voltage U20 across a 20 kΩ resistor. This confirms the 5 V AD5272 supply and gives the measuring current.
-> 2. **DevKit diode check:** Are there Schottky diodes (1N5819 or similar) between each USB-C VBUS and the 5 V rail on the clone board? This decides whether USB and RAC03 may be connected at the same time.>
+> 1. **DevKit diode check:** Are there Schottky diodes (1N5819 or similar) between each USB-C VBUS and the 5 V rail on the clone board? This decides whether USB and RAC03 may be connected at the same time.
+>
 > Details under [Open points](#open-points-clarify-before-starting).
 
 ## Goal
@@ -61,7 +61,7 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
                               └─▶ relay coil ◀─ MOSFET ◀─ GPIO4 "ENABLE" (pull-down)
                                    ║ (coil/contact isolation)
               ┌─ relay (SPDT, gold contacts) ────────────────────────────────────┐
- X6-7 (VE2) ──┤ COM                                                              │
+ X6-6 (VE1) ──┤ COM                                                              │
               │   NO (energised) ── R_series 15.0 kΩ 0.1 % ── W ┤AD5272 50k├ A ──┼──┐
               │   NC (no power)  ── R_failsafe 24.3 kΩ 0.1 % ────────────────────┼──┤
               └──────────────────────────────────────────────────────────────────┘  │
@@ -148,7 +148,7 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
   - Passives 0805/1206; ISO1540 in SOIC-8; MOSFET in SOT-23.
   - Relay and TEM 2-0511 (DIP-24) through-hole.
   - AD5272 MSOP-10 is the only fine-pitch part (optionally with its footprint pads extended for easier soldering).
-- DevKit on female headers (removable). Screw terminals: 5 V in (from RAC03), 2-pin to the SDC (X6-7 / X5).
+- DevKit on female headers (removable). Screw terminals: 5 V in (from RAC03), 2-pin to the SDC (X6-6 / X5).
 - **Enclosure:**
   - Mains section (RAC03 input, fuse, terminals) separated from the PCB section, e.g. by a partition or at least clearly apart with fixed wiring.
   - Strain relief for the mains cable and the SDC cable.
@@ -160,10 +160,10 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
 - Avoid GPIO19/20 (USB) and GPIO43/44 (UART0).
 - Suggestion: I2C on GPIO8 (SDA) / GPIO9 (SCL), relay ENABLE on GPIO4. Check against the clone's silkscreen.
 
-### Open decision: AD5272 supply voltage (depends on the pending measurement)
+### AD5272 supply voltage (settled by the VE1 measurement: U_max ≈ 1.7 V)
 
 The voltage on terminals A/W must stay between GND and VDD. Worst case is the highest resistance: U_max = U0 × 65 kΩ / (65 kΩ + R_pull), with R_pull = 20 kΩ × (U0 / U20 − 1).
-- **Decided: VDD_ISO = 5 V** from the Traco TEM 2-0511. That gives the most headroom. The measurement now only has to confirm U_max ≤ ~4.8 V, which is practically certain if U0 ≤ 5 V.
+- **Decided: VDD_ISO = 5 V** from the Traco TEM 2-0511. That gives the most headroom. Measured: U_max ≈ 1.7 V, so it is confirmed with a wide margin.
 - The ISO1540 handles the level shift to the ESP32's 3V3, so no extra level shifter is needed.
 
 The measuring current is far below the AD5272's ±3 mA limit in any case: ≤ 5 V / 15 kΩ ≈ 0.3 mA.
@@ -257,7 +257,7 @@ Change a parameter:
 
 **Never change HYDRAULIC parameter 01** ("Hydraulic schematic"). It redefines the whole application. Write down every value before you change it.
 
-1. Assign the room sensor to the variable input in use: "Hydraulics" menu, parameter 08 (VE1), 09 (VE2) or 10 (VE3). Set it to **31 = room sensor NTC 20 of mixed heating circuit 1**, because the controller runs only one mixer and a pump.
+1. Assign the room sensor to VE1: "Hydraulics" menu, **parameter 08 = 31** (room sensor NTC 20 of mixed heating circuit 1, since the controller runs only one mixer and a pump). **Verified on the device 2026-09-29.** VE1 is the only working input on this SDC3-40PM.
 2. In the "MIX.VALVE-1" menu:
    - Parameter 03 "Room connection" = 1 (room sensor active, operation active). Factory setting: OFF. Setting 3 only displays the room temperature without influence, useful for a first test.
    - Parameter 04 "Room factor" = influence in % (OFF, 10 … 500 %). Start **moderately**, e.g. 20–50 %, because the outdoor temperature remains the basis. Formula: corrected room setpoint = set room setpoint − deviation × room factor / 100.
@@ -269,31 +269,21 @@ Change a parameter:
 - [x] Exact SDC model: SDC3-40PM
 - [x] SDC software version: V3.3. The docs are written for V3.2; check parameter numbers on the device if anything differs.
 - [x] Heating circuit: mixed heating circuit 1 (one mixer + pump), so VE setting 31.
-- [x] Free VE inputs: all three (VE1–VE3) are free. **Use VE2 → parameter 09 = 31.** VE1 is kept free because it is the only input that can take a flue-gas sensor (AGF, PT1000).
-- [ ] **⏰ PENDING (user): measure VE2 with a 20 kΩ resistor.** Terminal plan (`SDC_Informationsschrift_ge0h-0405ge51r0603.pdf`, PDF page 37): **X5-1…12 are all sensor GND**; X6-6 = VE1, **X6-7 = VE2**, X6-8 = VE3. First readings (controller on, nothing connected, all VE parameters OFF):
+- [x] **Input: VE1 (X6-6 → X5), parameter 08 = 31.** VE2/VE3 do not work on this SDC3-40PM (0 V, no bias); presumably not populated. VE1's extra flue-gas capability (AGF, PT1000) is not needed here.
+- [x] **VE1 measured (2026-09-29).** Terminal plan (`SDC_Informationsschrift_ge0h-0405ge51r0603.pdf`, PDF page 37): **X5-1…12 are all sensor GND**; X6-6 = VE1, **X6-7 = VE2**, X6-8 = VE3. First readings (controller on, nothing connected, all VE parameters OFF):
   - VE1 (X6-6 → X5) ≈ 2 V
   - VE2 (X6-7 → X5) ≈ −0.1 V
   - VE3 (X6-8 → X5) ≈ −0.1 V
 
-  Probably the controller only biases an input once it has a function assigned. **Procedure:**
-  1. Set parameter 09 = 31 (and MIX.VALVE-1 parameter 03 = 3, display only, no influence yet).
-  2. Measure U0 = X6-7 → X5 with nothing connected. Fault 20-0 is expected on the display meanwhile.
-  3. Connect 20 kΩ between X6-7 and X5, measure U20. The SDC should show ≈ 25 °C as room temperature.
-  4. Compute: measuring current I = U20 / 20 kΩ; pull-up R_pull = 20 kΩ × (U0 / U20 − 1); worst case U_max = U0 × 65 kΩ / (65 kΩ + R_pull). U_max must be ≤ ~4.8 V for VDD_ISO = 5 V (TEM 2-0511).
-  5. Optional: check the displayed temperature with a 24.3 kΩ resistor (≈ 20.9 °C) as well. This also verifies R_failsafe.
+  **VE1 result with P08 = 31 and 20 kΩ connected:** **U20 = 1.3 V**; the SDC shows **25.5 °C** as room temperature (nominal 25.0 °C).
+  - U0 ≈ 2.0 V is taken from the open-circuit reading above (P08 was still OFF then).
+  - Measuring current I = 1.3 V / 20 kΩ ≈ **65 µA** (AD5272 limit ±3 mA).
+  - Internal pull-up R_pull = 20 kΩ × (2.0 / 1.3 − 1) ≈ **10.8 kΩ** to ≈ 2 V.
+  - Worst case U_max at 65 kΩ = 2.0 × 65 / 75.8 ≈ **1.7 V**; at 15 kΩ ≈ 1.2 V. Well below VDD_ISO = 5 V, so the supply question is settled.
+  - The +0.5 K display offset: 25.5 °C corresponds to ≈ 19.5 kΩ, i.e. −2.5 %. That is either the test resistor's tolerance or an SDC offset. Measure the resistor with the multimeter to tell which. Either way the firmware calibration offset (software task 6) absorbs it.
+  - VE2 (X6-7) stayed at 0 V with 20 kΩ; VE3 was not usable either.
 
-  **Result 2026-09-29:** VE2 (X6-7 → X5-7) with 20 kΩ connected: **0 V**. Open circuit it was −0.1 V, so VE2 shows no bias at all. Possible causes, to be narrowed down:
-  - a) Parameter 09 was not yet set to 31, so the input is inactive. Note, however, that VE1 showed 2 V while also set to OFF.
-  - b) The SDC3-40 has **no VE2/VE3 hardware**. It is the smallest mixer model, and the service manual's type matrix only lists outputs. Hint: does the "Hydraulics" menu offer parameters 09/10 at all?
-  - c) The input is biased only in short measuring pulses, which a DC multimeter averages to ~0 V. Unlikely at exactly 0 V.
-  - d) The PM variant has a different terminal layout than the 2006 table (WC/PC variants).
-
-  **Next checks (user):**
-  1. Does parameter 09 exist? Is it set to 31?
-  2. With 20 kΩ on VE2 and P09 = 31: what does the SDC show? A room temperature ≈ 25 °C, fault 14-x (VI-2) or fault 20-x (room sensor)?
-  3. Same test on **VE1** (X6-6 → X5, 20 kΩ, P08 = 31): voltage and display.
-
-  If VE2 turns out dead, **use VE1** after all. Its only special feature, the flue-gas sensor (AGF, PT1000), is not needed in this installation.
+  Optional later: check the display with 24.3 kΩ (≈ 20.9 °C) to verify R_failsafe and the offset at a second point.
 - [ ] **⏰ PENDING (user): DevKit clone diode check.** The official ESP32-S3-DevKitC-1 (schematic in `datasheets/`) has a Schottky diode 1N5819 (D1, D7) from each USB-C VBUS to the 5 V rail. It blocks back-feed from the RAC03 into the PC. Check on the clone: look for a small diode (SOD-123, marking e.g. "S4"/"SL" or similar) next to each USB-C port. Alternatively measure with the multimeter in diode mode from the VBUS pin of each port to the 5V header pin: ~0.2–0.4 V in one direction and open in the other = diode present. **If missing:** unplug the RAC03 (or disconnect the 5 V pin) whenever USB is connected.
 - [x] Isolated DC/DC: **Traco TEM 2-0511** (5 V → 5 V regulated, 2 W; datasheet `datasheets/TEM2_datasheet.pdf`). VDD_ISO = 5 V, no LDO. To do at assembly: measure its output with only the indicator LED as load: ≤ 5.4 V and ripple ≤ 50 mVpp. If not, fit the 250 Ω preload resistor and measure again.
 - [ ] SDC day room setpoint? It determines the R_failsafe value (24.3 kΩ assumes 21 °C).
