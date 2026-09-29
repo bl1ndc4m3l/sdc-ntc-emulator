@@ -43,8 +43,8 @@ PLACEMENT = {
     "J1": (DEVKIT_X0 + DEVKIT_ROWS, DEVKIT_PIN1_Y, 180),  # DevKit header J1 (right row)
     "J3": (47.08, 6.0, 180),     # 5 V in, wire entry towards top edge
     "C1": (53.3, 6.0, 0),
-    "C9": (55.5, 13.15, 0),      # 10 uF ceramic next to the elco C1
-    "C2": (51.0, 13.1, 0),
+    "C9": (30.6, 7.54, 0),       # 10 uF ceramic under the DevKit, next to its 5V pin J1.21
+    "C2": (62.3, 16.5, 90),      # TEM input decoupling, beside pin 24
     "PS1": (42.0, 16.5, 0),      # TEM 2-0511, pin 1 top left
     "U1": (60.3, 50.5, 0),       # ISO1540 straddles the isolation gap
     "R1": (47.0, 48.4, 0),
@@ -56,7 +56,7 @@ PLACEMENT = {
     "R4": (39.6, 51.8, 90),
     "R3": (41.0, 58.5, 0),
     "C4": (63.0, 40.63, 90),
-    "R8": (66.0, 32.5, 0),
+    "R8": (84.0, 35.5, 0),       # optional preload, kept away from the TEM
     "R7": (67.2, 36.8, 0),
     "D2": (71.6, 36.8, 180),
     "C5": (66.8, 48.6, 0),
@@ -79,7 +79,7 @@ PLACEMENT = {
 # footprint default would collide with neighbours. Size 0.8 mm.
 REF_POS = {
     "R1": (44.2, 48.4), "R2": (44.2, 50.8), "C3": (52.6, 49.8), "D1": (49.6, 52.7),
-    "Q1": (41.6, 53.3), "R3": (41.0, 60.3), "R4": (41.6, 50.9), "C2": (51.0, 11.3), "C9": (58.0, 11.3),
+    "Q1": (41.6, 53.3), "R3": (41.0, 60.3), "R4": (41.6, 50.9), "C2": (64.6, 16.5), "C9": (30.6, 9.6),
     "J3": (44.55, 12.9), "PS1": (49.6, 19.6), "U1": (64.8, 46.6), "C5": (70.2, 48.6), "R5": (70.2, 51.0),
     "R6": (70.2, 53.4), "C8": (89.4, 53.6), "C6": (89.4, 57.6), "C7": (89.4, 60.0),
     "R7": (67.2, 38.3), "D2": (74.6, 36.8), "C4": (65.0, 40.63),
@@ -88,10 +88,10 @@ REF_POS = {
 HIDE_REFS = {"H1", "H2", "H3", "H4", "J1", "J2", "R8", "R9", "R10"}
 
 # Copper areas per domain (board coordinates). Gap between them >= 1 mm.
-ESP_POLY = [(0.5, 0.5), (59.8, 0.5), (59.8, 35.1), (40.2, 35.1), (40.2, 43.1), (59.8, 43.1),
-            (59.8, 58.8), (42.2, 58.8), (42.2, 75.5), (0.5, 75.5)]
-ISO_POLY = [(61.2, 0.5), (103.5, 0.5), (103.5, 75.5), (43.4, 75.5), (43.4, 60.0), (61.2, 60.0),
-            (61.2, 42.4), (41.4, 42.4), (41.4, 36.1), (61.2, 36.1)]
+ESP_POLY = [(0.5, 0.5), (71.0, 0.5), (71.0, 30.0), (59.8, 30.0), (59.8, 35.1), (40.2, 35.1),
+            (40.2, 43.1), (59.8, 43.1), (59.8, 58.8), (42.2, 58.8), (42.2, 75.5), (0.5, 75.5)]
+ISO_POLY = [(72.4, 0.5), (103.5, 0.5), (103.5, 75.5), (43.4, 75.5), (43.4, 60.0), (61.2, 60.0),
+            (61.2, 42.4), (41.4, 42.4), (41.4, 36.1), (61.2, 36.1), (61.2, 31.4), (72.4, 31.4)]
 # No copper under the ESP32-S3 module antenna (DevKit antenna end, bottom left).
 ANTENNA_KEEPOUT = [(7.0, 59.6), (39.0, 59.6), (39.0, 75.9), (7.0, 75.9)]
 # No copper around the M3 mounting holes (screw heads, washers).
@@ -647,9 +647,9 @@ def add_silk(board):
     silk_text(board, "J1", DEVKIT_X0 + DEVKIT_ROWS, y1 + 1.4, 0.8)
     silk_text(board, "J3", DEVKIT_X0, y1 + 1.4, 0.8)
     # isolation gap (centre line): full outline on F.Fab, top run also on silkscreen
-    dashed(board, [(60.5, 1.0), (60.5, 35.6), (40.8, 35.6), (40.8, 43.0), (60.5, 43.0),
-                   (60.5, 59.4), (42.8, 59.4), (42.8, 75.0)], layer=pcbnew.F_Fab)
-    dashed(board, [(60.5, 12.0), (60.5, 33.0)])
+    dashed(board, [(71.7, 1.0), (71.7, 30.7), (60.5, 30.7), (60.5, 35.6), (40.8, 35.6), (40.8, 43.0),
+                   (60.5, 43.0), (60.5, 59.4), (42.8, 59.4), (42.8, 75.0)], layer=pcbnew.F_Fab)
+    dashed(board, [(71.7, 2.0), (71.7, 30.7), (66.0, 30.7)])
     silk_text(board, "ESP SIDE", 50.0, 33.2, 1.0, bold=True)
     silk_text(board, "ISOLATED SDC SIDE", 82.0, 44.5, 1.2, bold=True)
     silk_text(board, "+5V", 47.08, 12.9, 0.8)
@@ -657,10 +657,9 @@ def add_silk(board):
     silk_text(board, "TO SDC", 97.5, 52.2, 1.0, bold=True)
     silk_text(board, "GND X5", 97.5, 54.3, 0.8)
     silk_text(board, "VE1 X6-6", 97.5, 68.2, 0.8)
-    silk_text(board, "R8: DNP - preload, fit only if needed", 64.2, 29.8, 0.8, justify="left")
-    silk_text(board, "SDC NTC emulator", 82.0, 8.0, 1.5, bold=True)
-    silk_text(board, "Smile SDC3-40PM  VE1 room sensor", 82.0, 10.8, 1.0)
-    silk_text(board, "rev 1  2026-09", 82.0, 13.2, 1.0)
+    silk_text(board, "R8 DNP: preload only if needed", 79.0, 33.3, 0.8, justify="left")
+    silk_text(board, "SDC NTC emulator", 88.0, 8.0, 1.2, bold=True)
+    silk_text(board, "SDC3-40PM VE1  rev 1  2026-09", 88.0, 10.2, 0.8)
     silk_text(board, "R9 R_series 15k0 0.1%", 63.6, 75.0, 0.8)
     silk_text(board, "R10 R_failsafe 24k3 0.1%", 63.6, 65.8, 0.8)
 
