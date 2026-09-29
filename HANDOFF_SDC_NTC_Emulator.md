@@ -107,6 +107,7 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 | **Preload resistor 250 Ω / 0.5 W** (e.g. 2 × 1206 in parallel or 1 × THT) on VDD_ISO | preload the TEM 2-0511 (~20 mA = 100 mW) | **Footprint always present, fit only if needed:** if the no-load output is > 5.4 V or ripple is > 50 mVpp at assembly. Costs about +40 mA on the RAC03's 5 V (50 % efficiency), which matters for the tight budget. |
 | 4 × 4.7 kΩ | I2C pull-ups on **both** sides of the isolator | ESP side to 3V3, SDC side to VDD_ISO |
 | Electrolytic capacitor 470 µF / 10 V | 5 V bulk buffer for Wi-Fi current peaks | RAC03 allows up to 7500 µF |
+| Ceramic capacitor 10 µF / 25 V X7R, 1206 (C9) | parallel to the elco: low ESR against RAC03 switching ripple and fast current edges | 25 V/1206 because of DC-bias derating; a film cap of 10 µF would be far too large |
 | Recom RAC03-05SER/277 | isolated 5 V supply | see assessment below |
 | Slow-blow fuse + in-line holder | mains-side protection | Recom recommends a slow-blow type |
 | Wago lever terminals (mains), 2 × 2-pin PCB screw terminals (5 V in, SDC) | wiring | mains only on the Wago side, never on the PCB |

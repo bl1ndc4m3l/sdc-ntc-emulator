@@ -4723,6 +4723,95 @@
 	)
 	(symbol
 		(lib_id "Device:C")
+		(at 95.25 38.1 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6de2bb72-4bec-5309-91c6-de41a2d1b80a")
+		(property "Reference" "C9"
+			(at 95.885 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10uF 25V X7R"
+			(at 95.885 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder"
+			(at 95.25 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 95.25 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Low-ESR ceramic parallel to C1: RAC03 ripple, fast Wi-Fi current edges"
+			(at 95.25 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "59648e4d-6f84-5891-af25-d68025fc68d9")
+		)
+		(pin "2"
+			(uuid "79ffde2a-c148-5697-8337-eb39e2868dd2")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "C9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+5V"
+		(at 95.25 34.29 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "00ea5cd2-6b46-5f67-b6e3-de02d4836525")
+	)
+	(label "GND"
+		(at 95.25 41.91 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d35378d1-b671-5be7-8e9d-a32f7d78e9e7")
+	)
+	(symbol
+		(lib_id "Device:C")
 		(at 101.6 38.1 0)
 		(unit 1)
 		(exclude_from_sim no)
