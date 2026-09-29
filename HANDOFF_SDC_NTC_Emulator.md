@@ -103,7 +103,7 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 | Signal relay 5 V coil, SPDT/DPDT, gold contacts | fail-safe switch-over | coil ~20–40 mA |
 | N-MOSFET, 100 kΩ, 1N4148 | relay driver | |
 | ISO1540 (TI) or ADuM1250 (ADI) | bidirectional I2C isolator | each side 3.0–5.5 V; 100 nF decoupling per side |
-| Isolated DC/DC 1 W: B0505S-1W (for 3V3) or B0509S-1W (for 5 V) | powers the SDC domain | unregulated; its output rises at light load, hence the LDO |
+| Isolated DC/DC: **Recom module, already owned by the user (exact model still to be named)** | powers the SDC domain | Needs 5 V input. Check: output voltage, regulated or not, minimum load. Unregulated types rise at light load, so an LDO follows. Fallback: B0505S-1W (for 3V3) / B0509S-1W (for 5 V). |
 | LDO 3.3 V or 5.0 V, input rating ≥ 12 V (e.g. HT7333 / HT7350) | VDD_ISO for AD5272 + ISO1540 side 2 | load only a few mA |
 | 4 × 4.7 kΩ | I2C pull-ups on **both** sides of the isolator | ESP side to 3V3, SDC side to VDD_ISO |
 | Electrolytic capacitor 470 µF / 10 V | 5 V bulk buffer for Wi-Fi current peaks | RAC03 allows up to 7500 µF |
@@ -220,6 +220,7 @@ Notes:
   4. Compute: measuring current I = U20 / 20 kΩ; pull-up R_pull = 20 kΩ × (U0 / U20 − 1); worst case U_max = U0 × 65 kΩ / (65 kΩ + R_pull). This decides VDD_ISO: 3.3 V (B0505S + 3.3 V LDO) or 5 V (B0509S + 5.0 V LDO).
   5. Optional: check the displayed temperature with a 24.3 kΩ resistor (≈ 20.9 °C) as well. This also verifies R_failsafe.
 - [ ] **⏰ PENDING (user): DevKit clone diode check.** The official ESP32-S3-DevKitC-1 (schematic in `datasheets/`) has a Schottky diode 1N5819 (D1, D7) from each USB-C VBUS to the 5 V rail. It blocks back-feed from the RAC03 into the PC. Check on the clone: look for a small diode (SOD-123, marking e.g. "S4"/"SL" or similar) next to each USB-C port. Alternatively measure with the multimeter in diode mode from the VBUS pin of each port to the 5V header pin: ~0.2–0.4 V in one direction and open in the other = diode present. **If missing:** unplug the RAC03 (or disconnect the 5 V pin) whenever USB is connected.
+- [ ] Exact model of the user's Recom isolated DC/DC? This determines the LDO (and whether one is needed) for VDD_ISO.
 - [ ] SDC day room setpoint? It determines the R_failsafe value (24.3 kΩ assumes 21 °C).
 - [x] Sonoff panel: NSPanel-EU (original NSPanel, Wi-Fi, black) with custom ESPHome firmware.
 - [x] Home Assistant is available and is the data path.
