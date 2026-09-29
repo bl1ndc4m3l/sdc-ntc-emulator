@@ -280,7 +280,7 @@ Change a parameter:
   - Measuring current I = 1.3 V / 20 kΩ ≈ **65 µA** (AD5272 limit ±3 mA).
   - Internal pull-up R_pull = 20 kΩ × (2.0 / 1.3 − 1) ≈ **10.8 kΩ** to ≈ 2 V.
   - Worst case U_max at 65 kΩ = 2.0 × 65 / 75.8 ≈ **1.7 V**; at 15 kΩ ≈ 1.2 V. Well below VDD_ISO = 5 V, so the supply question is settled.
-  - The +0.5 K display offset: 25.5 °C corresponds to ≈ 19.5 kΩ, i.e. −2.5 %. That is either the test resistor's tolerance or an SDC offset. Measure the resistor with the multimeter to tell which. Either way the firmware calibration offset (software task 6) absorbs it.
+  - The +0.5 K display offset: 25.5 °C corresponds to ≈ 19.5 kΩ, i.e. −2.5 %. The test resistor (2 × 10 kΩ) measured **20.0 kΩ** with a VC820 (meter tolerance ≈ ±0.8 %). So the offset is **on the SDC side**: either its input reads slightly high, or it displays the room temperature in coarse (e.g. 0.5 K) steps. It would apply to a real RF 20 sensor as well. The firmware calibration offset (software task 6) is set so that the SDC display matches the panel temperature. Expect roughly −0.5 K, to be confirmed at a second point (24.3 kΩ).
   - VE2 (X6-7) stayed at 0 V with 20 kΩ; VE3 was not usable either.
 
   Optional later: check the display with 24.3 kΩ (≈ 20.9 °C) to verify R_failsafe and the offset at a second point.
