@@ -1,7 +1,6 @@
 # Handoff: Wireless Room Sensor for Honeywell Home Smile SDC via NTC Emulation
 
 > **⏰ Pending checks (user):**
-> 0. **DevKit header row spacing:** Measure outer-edge-to-outer-edge (A) and inner-edge-to-inner-edge (B) of the two pin rows; centre distance = (A + B) / 2. The PCB uses 25.4 mm. A caliper said 25.0 mm, a photo suggests 25.4 mm. Must be settled before ordering the PCB.
 > 1. **DevKit diode check:** Are there Schottky diodes (1N5819 or similar) between each USB-C VBUS and the 5 V rail on the clone board? This decides whether USB and RAC03 may be connected at the same time.
 >
 > Details under [Open points](#open-points-clarify-before-starting).

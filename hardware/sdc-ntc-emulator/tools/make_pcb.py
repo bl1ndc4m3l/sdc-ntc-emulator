@@ -34,7 +34,7 @@ OX, OY = 100.0, 50.0            # board origin on the KiCad page (mm)
 
 # DevKit clone (photo 2026-09-29): pinout = official DevKitC-1, board ~56.6 mm long,
 # ~27.7 mm wide, module antenna overhangs the DevKit edge ~7 mm beyond pin 1.
-DEVKIT_ROWS = 25.4               # centre distance of the two header rows (to be confirmed)
+DEVKIT_ROWS = 25.1               # measured: outer 25.6 / inner 24.6 mm -> centre 25.1 mm
 DEVKIT_X0, DEVKIT_PIN1_Y = 10.0, 58.34
 
 # (x, y, rotation) in board coordinates (mm, y down), footprint origin = pad 1

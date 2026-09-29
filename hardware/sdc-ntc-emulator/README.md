@@ -18,11 +18,9 @@ Omron G5V-2 fail-safe relay. 2 layers, 104 × 76 mm, 4 × M3 holes.
 
 ## Verify before ordering
 
-1. **DevKit row spacing: still open.** The footprint uses **25.4 mm** (`DEVKIT_ROWS` in `tools/make_pcb.py`).
-   - A caliper reading gave 25.0 mm; a photo scaled by the pin pitch gives ≈ 25.4 mm.
-   - Measure outer-edge-to-outer-edge (A) and inner-edge-to-inner-edge (B) of the two pin rows. Centre distance = (A + B) / 2.
-   - If it differs, change `DEVKIT_ROWS` and run `python tools/build.py`.
+1. **DevKit row spacing: measured and set to 25.1 mm** (`DEVKIT_ROWS` in `tools/make_pcb.py`). Outer edges 25.6 mm, inner edges 24.6 mm, so the centre distance is 25.1 mm. This is not on the 0.1" grid.
    - The pinout is confirmed from the photo: it is identical to the official DevKitC-1.
+   - Solder the sockets with the DevKit plugged in, so they align to the real pins.
    - The clone is ~56.6 × 27.7 mm, and its module antenna overhangs the DevKit edge by ~7 mm at the pin-1 end. The no-copper area covers that.
    - J3 pin 1 (GND) is intentionally not connected.
 2. **TEM 2-0511 footprint** (`lib/sdc_emulator.pretty`, self-made). It follows the datasheet: DIP-24 grid, 15.24 mm rows, only pins 1-3, 10-15 and 22-24. Print 1:1 and hold the module against it.
