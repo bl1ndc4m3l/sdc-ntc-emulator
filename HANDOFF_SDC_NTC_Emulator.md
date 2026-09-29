@@ -10,6 +10,9 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 
 - Controller: **Honeywell Home Smile SDC3-40PM**
 - Power supply for the emulator: **Recom RAC03-05SER/277** (isolated AC/DC module, 5 V)
+- Microcontroller: **ESP32-S3-DevKitC-1 clone with ESP32-S3-WROOM-1 N16R8** (16 MB flash, 8 MB PSRAM), two USB-C ports (USB-UART and native USB)
+
+Datasheets and manuals are kept locally in `datasheets/` (not in git, `*.pdf` is ignored). The SDC service manual (GE2H-0221GE51 R0808) contains the resistance table of the Honeywell/Centra NTC 20k sensors.
 
 ## Context from the preliminary discussion
 
@@ -53,7 +56,7 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 
 | Part | Purpose | Note |
 |---|---|---|
-| ESP32 DevKit | Receives room temp., drives the rheostat | any board |
+| ESP32-S3-DevKitC-1 (WROOM-1 N16R8) | Receives room temp., drives the rheostat | chosen board; powered via its 5V pin from the RAC03 |
 | AD5272BRMZ-50 (or comparable) | digital rheostat, 50 kΩ, 1024 steps, I2C | ±1 % resistance tolerance, 50-TP memory for power-on value |
 | Fixed resistor approx. 12–15 kΩ, 0.1 % | Offset so the range ~15–45 kΩ is covered | choose exact value from the NTC table |
 | Recom RAC03-05SER/277 | Isolated AC/DC 5V supply for the ESP32 (chosen) | **galvanically isolated**, see Safety; 3 W / 600 mA, enough for ESP32 Wi-Fi peaks; mains side needs fusing and a proper enclosure |
@@ -103,7 +106,7 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 - [ ] Measured open-circuit voltage / measuring current at the VE input?
 - [ ] Which Sonoff panel (NSPanel, NSPanel Pro, …) and which firmware (eWeLink, Tasmota, ESPHome)?
 - [ ] Is there Home Assistant or an MQTT broker?
-- [ ] Exact NTC 20k characteristic from Honeywell documentation.
+- [ ] Exact NTC 20k characteristic from Honeywell documentation (table is in the SDC service manual in `datasheets/`, still to be transferred).
 
 ---
 
