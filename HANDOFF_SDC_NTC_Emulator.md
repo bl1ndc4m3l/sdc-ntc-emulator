@@ -11,6 +11,7 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 - Controller: **Honeywell Home Smile SDC3-40PM**, software **V3.3**. It controls only one mixer and a pump, i.e. **mixed heating circuit 1**.
 - Power supply for the emulator: **Recom RAC03-05SER/277** (isolated AC/DC module, 5 V)
 - Microcontroller: **ESP32-S3-DevKitC-1 clone with ESP32-S3-WROOM-1 N16R8** (16 MB flash, 8 MB PSRAM), two USB-C ports (USB-UART and native USB)
+- Room temperature source: **SONOFF NSPanel-EU** (original NSPanel "Smart Scene Wall Switch", Wi-Fi, black, EAN 6920075776393; not the NSPanel Pro), in the living room, running custom ESPHome firmware and integrated in **Home Assistant**. It is ESP32-based with a Nextion display, two relays and a built-in temperature sensor.
 
 Datasheets and manuals are kept locally in `datasheets/` (not in git, `*.pdf` is ignored). The authoritative SDC documents are the English Resideo set for the SDC3-40PM, revision R1020, valid for software V3.2:
 
@@ -98,16 +99,13 @@ The German `SDC_*.pdf` files (2006–2008) are older revisions and only kept for
 
 ## Software tasks for Claude Code
 
-1. **Clarify and connect the data source** (see open points): receive the room temperature from the Sonoff panel, e.g. via
-   - ESPHome + Home Assistant (preferred, if HA is available),
-   - MQTT (e.g. with Tasmota on the panel),
-   - ESP-NOW directly (if the panel is ESP32-based and freely programmable).
+1. **Connect the data source (decided: ESPHome + Home Assistant):** The panel publishes its room temperature to HA via ESPHome. The emulator runs ESPHome too and imports the value with the `homeassistant` sensor platform. The panel's own ESPHome API link is not used. The NSPanel's built-in sensor is known to read high from self-heating, but the reading on this panel has been checked and is correct.
 2. **Temperature → resistance:** implement the NTC characteristic as a table with linear interpolation, or Steinhart-Hart/B parameter.
 3. **Resistance → rheostat code:** `code = round((R_target − R_series − R_wiper) / (50k / 1024))`, clamped to 0–1023. AD5272: disable write protection (RDAC write protect) via the control register.
 4. **Calibration:** provide an offset parameter, trimmed against the room temperature shown on the SDC.
 5. **Watchdog/fail-safe** as above, incl. status message (e.g. "source lost") to HA/MQTT.
 6. **Diagnostics:** publish current target resistance, code and last update as sensors.
-7. Firmware framework: ESPHome (AD5272 probably needs a small external component) or Arduino/PlatformIO. Decide once the data source is clarified.
+7. Firmware framework (decided): **ESPHome** on the ESP32-S3. The AD5272 probably needs a small external component.
 
 ## Setup on the SDC controller
 
@@ -123,10 +121,11 @@ The German `SDC_*.pdf` files (2006–2008) are older revisions and only kept for
 - [x] Exact SDC model: SDC3-40PM
 - [x] SDC software version: V3.3. The docs are written for V3.2; check parameter numbers on the device if anything differs.
 - [x] Heating circuit: mixed heating circuit 1 (one mixer + pump), so VE setting 31.
-- [ ] Which VE input is free?
-- [ ] Measured open-circuit voltage / measuring current at the VE input?
-- [ ] Which Sonoff panel (NSPanel, NSPanel Pro, …) and which firmware (eWeLink, Tasmota, ESPHome)?
-- [ ] Is there Home Assistant or an MQTT broker?
+- [x] Free VE inputs: all three (VE1–VE3) are free. **Use VE2 → parameter 09 = 31.** VE1 is kept free because it is the only input that can take a flue-gas sensor (AGF, PT1000).
+- [ ] Measured open-circuit voltage / measuring current at the VE input? First readings (controller on, nothing connected): X5-6 → X6-6 ≈ 2 V, X5-7 → X6-7 ≈ −0.1 V, X5-8 → X6-8 ≈ −0.1 V. Still unknown: which of these pins is VE2 and which is sensor ground. The terminal plan is not in the three R1020 documents; check the label on the device or the installation instructions. Measuring current still to be determined, e.g. with a known resistor (20 kΩ) across the input: I = U / R.
+- [x] Sonoff panel: NSPanel-EU (original NSPanel, Wi-Fi, black) with custom ESPHome firmware.
+- [x] Home Assistant is available and is the data path.
+- [x] HA entity: the panel appears in Home Assistant as **"Anzeige"**. Its temperature reading is available and checked as correct. For the ESPHome `homeassistant` sensor, look up the exact `entity_id` (e.g. `sensor.anzeige_…`) in HA.
 - [x] Exact NTC 20k characteristic: see table above (10–30 °C). The full range is in the service manual, ch. 8.2.1.
 
 ---
