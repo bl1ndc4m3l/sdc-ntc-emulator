@@ -12,7 +12,15 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 - Power supply for the emulator: **Recom RAC03-05SER/277** (isolated AC/DC module, 5 V)
 - Microcontroller: **ESP32-S3-DevKitC-1 clone with ESP32-S3-WROOM-1 N16R8** (16 MB flash, 8 MB PSRAM), two USB-C ports (USB-UART and native USB)
 
-Datasheets and manuals are kept locally in `datasheets/` (not in git, `*.pdf` is ignored). The SDC service manual (GE2H-0221GE51 R0808) contains the resistance table of the Honeywell/Centra NTC 20k sensors.
+Datasheets and manuals are kept locally in `datasheets/` (not in git, `*.pdf` is ignored). The authoritative SDC documents are the English Resideo set for the SDC3-40PM, revision R1020, valid for software V3.2:
+
+| File | Document |
+|---|---|
+| `en2h0221-ge51.pdf` | Service manual EN2H-0221GE51 (261 pages; NTC 20 table in ch. 8.2.1, room influence in ch. 7.3.4) |
+| `en2h0220-ge51.pdf` | Operating instructions EN2H-0220GE51 |
+| `en0b0565-ge51.pdf` | Parameter list EN0B-0565GE51 |
+
+The German `SDC_*.pdf` files (2006–2008) are older revisions and only kept for reference.
 
 ## Context from the preliminary discussion
 
@@ -21,7 +29,7 @@ Datasheets and manuals are kept locally in `datasheets/` (not in git, `*.pdf` is
   - Wall module SDW10/SDW30 on the Smile bus (terminals A/B): no cable available.
   - Tunnelling the Smile bus wirelessly: proprietary, undocumented protocol, bus-powered wall modules, timing issues. Too much effort.
   - Smile Connect (SCN-10) + Smile Room Connect (SRC-10): intended for single-room control with wireless radiator valves, does not fit.
-- Chosen: analog room sensor RF 20 on the variable input, emulated by an ESP32. According to the SDC installation manual, the room sensor is assigned to a variable input (e.g. VE1) via parameter 08, 09 or 10 in the "Hydraulics" menu.
+- Chosen: analog room sensor RF 20 on the variable input, emulated by an ESP32. Confirmed by the service manual (R1020): parameters 08/09/10 in the "Hydraulics" menu assign variable inputs VE1/VE2/VE3; setting value 30/31/32 = "Room sensor NTC 20" of the direct heating circuit / mixed heating circuit 1 / mixed heating circuit 2.
 - The setpoint is set at the controller (not in the room). Possibly extendable later.
 
 ## Hardware sketch
@@ -63,11 +71,21 @@ Datasheets and manuals are kept locally in `datasheets/` (not in git, `*.pdf` is
 | optional: I2C isolator (ISO1540) + isolated DC/DC | full isolation ESP32 ↔ controller | recommended if the input voltage doesn't suit the rheostat |
 | Alternative: PhotoMOS relays + resistor ladder | fully isolated resistance emulation without rail issues | more parts, but robust |
 
-### Resistance ballpark (NTC 20k, rough)
+### NTC 20 resistance (from service manual EN2H-0221GE51 R1020, ch. 8.2.1)
 
-- 30 °C ≈ 16 kΩ, 25 °C = 20 kΩ, 20 °C ≈ 25 kΩ, 15 °C ≈ 31 kΩ, 10 °C ≈ 40 kΩ
-- **These values are approximations.** Take the exact characteristic (table or B value) from the Honeywell documentation for the RF 20 / NTC 20k sensor.
-- Slope around 20 °C approx. 1 kΩ/K → AD5272 50k (≈ 49 Ω/step) gives approx. 0.05 K resolution.
+| °C | Ω | °C | Ω | °C | Ω |
+|---|---|---|---|---|---|
+| 10 | 41560 | 17 | 29303 | 24 | 20958 |
+| 11 | 39500 | 18 | 27909 | 25 | 20000 |
+| 12 | 37553 | 19 | 26590 | 26 | 19089 |
+| 13 | 35714 | 20 | 25340 | 27 | 18224 |
+| 14 | 33975 | 21 | 24155 | 28 | 17404 |
+| 15 | 32331 | 22 | 23032 | 29 | 16624 |
+| 16 | 30775 | 23 | 21967 | 30 | 15884 |
+
+- The same NTC 20 curve applies to all VE inputs (and the outside/flow/tank sensors). The full table covers −50 … 130 °C.
+- 10–30 °C therefore needs 15.9–41.6 kΩ. A series resistor of ~12–15 kΩ plus the 50 kΩ rheostat covers this.
+- Slope around 20 °C is approx. 1.2 kΩ/K → AD5272 50k (≈ 49 Ω/step) gives approx. 0.04 K resolution.
 
 ## Safety & robustness (important)
 
@@ -93,20 +111,23 @@ Datasheets and manuals are kept locally in `datasheets/` (not in git, `*.pdf` is
 
 ## Setup on the SDC controller
 
-1. Assign the room sensor to the variable input in use via parameter 08/09/10 in the "Hydraulics" menu (installation manual, chapter "Connecting room units").
-2. Enable room influence/room compensation for the relevant heating circuit, set it **moderately** (outdoor temperature remains the basis).
+1. Assign the room sensor to the variable input in use: "Hydraulics" menu, parameter 08 (VE1), 09 (VE2) or 10 (VE3). Set it to 31 = room sensor NTC 20 of mixed heating circuit 1 (the SDC3-40 controls one mixed circuit; to be confirmed on site), or 30 for the direct heating circuit.
+2. In the menu of that heating circuit (e.g. "MIX.VALVE-1"):
+   - Parameter 03 "Room connection" = 1 (room sensor active, operation active). Factory setting: OFF. Setting 3 only displays the room temperature without influence, useful for a first test.
+   - Parameter 04 "Room factor" = influence in % (OFF, 10 … 500 %). Start **moderately**, e.g. 20–50 %, because the outdoor temperature remains the basis. Formula: corrected room setpoint = set room setpoint − deviation × room factor / 100.
 3. Set up the heating curve properly beforehand; room compensation is only a fine correction.
 4. In the living room: sensor/panel position away from sunlight, radiators, fireplace.
 
 ## Open points (clarify before starting)
 
 - [x] Exact SDC model: SDC3-40PM
-- [ ] SDC software version?
+- [ ] SDC software version? It is shown for about 8 s after switch-on. The docs are valid for V3.2.
+- [ ] Which heating circuit does the living room belong to (mixed circuit 1 or direct circuit)?
 - [ ] Which VE input is free?
 - [ ] Measured open-circuit voltage / measuring current at the VE input?
 - [ ] Which Sonoff panel (NSPanel, NSPanel Pro, …) and which firmware (eWeLink, Tasmota, ESPHome)?
 - [ ] Is there Home Assistant or an MQTT broker?
-- [ ] Exact NTC 20k characteristic from Honeywell documentation (table is in the SDC service manual in `datasheets/`, still to be transferred).
+- [x] Exact NTC 20k characteristic: see table above (10–30 °C). The full range is in the service manual, ch. 8.2.1.
 
 ---
 
