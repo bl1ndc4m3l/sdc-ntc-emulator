@@ -8,7 +8,7 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 
 ## Installed hardware
 
-- Controller: **Honeywell Home Smile SDC3-40PM**
+- Controller: **Honeywell Home Smile SDC3-40PM**, software **V3.3**. It controls only one mixer and a pump, i.e. **mixed heating circuit 1**.
 - Power supply for the emulator: **Recom RAC03-05SER/277** (isolated AC/DC module, 5 V)
 - Microcontroller: **ESP32-S3-DevKitC-1 clone with ESP32-S3-WROOM-1 N16R8** (16 MB flash, 8 MB PSRAM), two USB-C ports (USB-UART and native USB)
 
@@ -111,8 +111,8 @@ The German `SDC_*.pdf` files (2006–2008) are older revisions and only kept for
 
 ## Setup on the SDC controller
 
-1. Assign the room sensor to the variable input in use: "Hydraulics" menu, parameter 08 (VE1), 09 (VE2) or 10 (VE3). Set it to 31 = room sensor NTC 20 of mixed heating circuit 1 (the SDC3-40 controls one mixed circuit; to be confirmed on site), or 30 for the direct heating circuit.
-2. In the menu of that heating circuit (e.g. "MIX.VALVE-1"):
+1. Assign the room sensor to the variable input in use: "Hydraulics" menu, parameter 08 (VE1), 09 (VE2) or 10 (VE3). Set it to **31 = room sensor NTC 20 of mixed heating circuit 1**, because the controller runs only one mixer and a pump.
+2. In the "MIX.VALVE-1" menu:
    - Parameter 03 "Room connection" = 1 (room sensor active, operation active). Factory setting: OFF. Setting 3 only displays the room temperature without influence, useful for a first test.
    - Parameter 04 "Room factor" = influence in % (OFF, 10 … 500 %). Start **moderately**, e.g. 20–50 %, because the outdoor temperature remains the basis. Formula: corrected room setpoint = set room setpoint − deviation × room factor / 100.
 3. Set up the heating curve properly beforehand; room compensation is only a fine correction.
@@ -121,8 +121,8 @@ The German `SDC_*.pdf` files (2006–2008) are older revisions and only kept for
 ## Open points (clarify before starting)
 
 - [x] Exact SDC model: SDC3-40PM
-- [ ] SDC software version? It is shown for about 8 s after switch-on. The docs are valid for V3.2.
-- [ ] Which heating circuit does the living room belong to (mixed circuit 1 or direct circuit)?
+- [x] SDC software version: V3.3. The docs are written for V3.2; check parameter numbers on the device if anything differs.
+- [x] Heating circuit: mixed heating circuit 1 (one mixer + pump), so VE setting 31.
 - [ ] Which VE input is free?
 - [ ] Measured open-circuit voltage / measuring current at the VE input?
 - [ ] Which Sonoff panel (NSPanel, NSPanel Pro, …) and which firmware (eWeLink, Tasmota, ESPHome)?
