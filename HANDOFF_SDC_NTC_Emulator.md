@@ -36,9 +36,11 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 - Chosen: analog room sensor RF 20 on the variable input, emulated by an ESP32. Confirmed by the service manual (R1020): parameters 08/09/10 in the "Hydraulics" menu assign variable inputs VE1/VE2/VE3; setting value 30/31/32 = "Room sensor NTC 20" of the direct heating circuit / mixed heating circuit 1 / mixed heating circuit 2.
 - The setpoint is set at the controller (not in the room). Possibly extendable later.
 
-## Circuit (revision 2)
+## Circuit (revision 3)
 
-The first sketch connected the AD5272 directly to the SDC input. Its weak spot: if the ESP32 loses power, the SDC's measuring voltage reaches the unpowered AD5272 through its internal clamp diodes (datasheet: "power VDD first before applying any voltage to terminal A/W"). The SDC then reads an undefined, probably low resistance, i.e. a "very warm" room. With room influence active that throttles the heating, silently. Revision 2 adds a **fail-safe relay**: without power it connects a fixed resistor instead.
+- **Revision 1 (first sketch)** connected the AD5272 directly to the SDC input. Its weak spot: if the ESP32 loses power, the SDC's measuring voltage reaches the unpowered AD5272 through its internal clamp diodes (datasheet: "power VDD first before applying any voltage to terminal A/W"). The SDC then reads an undefined, probably low resistance, i.e. a "very warm" room. With room influence active that throttles the heating, silently.
+- **Revision 2** added a **fail-safe relay**: without power it connects a fixed resistor instead.
+- **Revision 3** adds **galvanic isolation** between the ESP32 and the SDC side: an I2C isolator plus an isolated DC/DC for the AD5272. The relay's coil/contact gap forms the second crossing of the barrier. This makes USB flashing/debugging on a PC possible while installed, because PC earth no longer touches the SDC sensor ground. As a bonus, the isolator also level-shifts, so the AD5272 supply voltage is independent of the ESP32's 3V3.
 
 ```
   LIVING ROOM                       HOME ASSISTANT                 BOILER ROOM
@@ -46,16 +48,26 @@ The first sketch connected the AD5272 directly to the SDC input. Its weak spot: 
  │ NSPanel-EU     │ ──────────▶ │ entity "Anzeige"│ ────────────▶ │ ESP32-S3 DevKitC-1   │
  │ (ESPHome)      │             └─────────────────┘               └──────────────────────┘
 
- 230 V ─ fuse (slow-blow) ─▶ RAC03-05SER/277 ─ 5 V ─┬─▶ DevKit 5V pin ─▶ onboard LDO ─ 3V3 ─▶ AD5272 VDD
-                                                    └─▶ relay coil ◀─ MOSFET ◀─ GPIO "ENABLE" (pull-down)
-
+            ESP DOMAIN (RAC03 secondary / USB / PC)  ┆  SDC DOMAIN (floating, referenced to X5 only)
+                                                     ┆
+ 230 V ─ fuse ─▶ RAC03 ─ 5 V ─┬─▶ DevKit 5V pin      ┆
+                              ├─▶ iso DC/DC in ══════╪═▶ iso out ─▶ LDO ─ VDD_ISO ─┬─▶ AD5272 VDD
+                              │                      ┆                             └─▶ ISO1540 side 2
+      DevKit 3V3 ─▶ ISO1540 side 1                   ┆
+      GPIO8/9 SDA/SCL ─▶ ISO1540 ════════════════════╪═▶ SDA2/SCL2 ─▶ AD5272 (addr 0x2F)
+                              └─▶ relay coil ◀─ MOSFET ◀─ GPIO4 "ENABLE" (pull-down)
+                                   ║ (coil/contact isolation)
               ┌─ relay (SPDT, gold contacts) ────────────────────────────────────┐
  X6-7 (VE2) ──┤ COM                                                              │
               │   NO (energised) ── R_series 15.0 kΩ 0.1 % ── W ┤AD5272 50k├ A ──┼──┐
               │   NC (no power)  ── R_failsafe 24.3 kΩ 0.1 % ────────────────────┼──┤
               └──────────────────────────────────────────────────────────────────┘  │
- X5-x (GND) ─────────────────────────────────────────────── AD5272 GND = ESP32 GND ──┘
+ X5-x (GND) ──────────────────────────────────────────── GND_ISO (AD5272, ISO1540-2) ┘
 ```
+
+**Isolation boundary:** Everything right of ┆ belongs to the SDC domain: iso DC/DC output, LDO, ISO1540 side 2, AD5272, both resistors, relay contacts. Its only reference is X5. Everything left of it may be earthed (PC via USB). Keep a few mm of gap between the domains on the board. This is functional isolation; safety isolation from mains is still the RAC03's job.
+
+**Power-loss behaviour is unchanged:** the iso DC/DC and the relay coil both hang on the same 5 V. If it fails, the relay drops within ms and physically disconnects the AD5272, whatever its rail does.
 
 ### Why each part is there
 
@@ -80,7 +92,10 @@ The first sketch connected the AD5272 directly to the SDC input. Its weak spot: 
 | Resistor 24.3 kΩ, 0.1 % (E96) | R_failsafe | value = NTC resistance at the SDC day setpoint |
 | Signal relay 5 V coil, SPDT/DPDT, gold contacts | fail-safe switch-over | coil ~20–40 mA |
 | N-MOSFET, 100 kΩ, 1N4148 | relay driver | |
-| 2 × 4.7 kΩ | I2C pull-ups to 3V3 | |
+| ISO1540 (TI) or ADuM1250 (ADI) | bidirectional I2C isolator | each side 3.0–5.5 V; 100 nF decoupling per side |
+| Isolated DC/DC 1 W: B0505S-1W (for 3V3) or B0509S-1W (for 5 V) | powers the SDC domain | unregulated; its output rises at light load, hence the LDO |
+| LDO 3.3 V or 5.0 V, input rating ≥ 12 V (e.g. HT7333 / HT7350) | VDD_ISO for AD5272 + ISO1540 side 2 | load only a few mA |
+| 4 × 4.7 kΩ | I2C pull-ups on **both** sides of the isolator | ESP side to 3V3, SDC side to VDD_ISO |
 | Electrolytic capacitor 470 µF / 10 V | 5 V bulk buffer for Wi-Fi current peaks | RAC03 allows up to 7500 µF |
 | Recom RAC03-05SER/277 | isolated 5 V supply | see assessment below |
 | Slow-blow fuse + holder (value per RAC03 datasheet) | mains-side protection | Recom recommends a slow-blow type |
@@ -96,8 +111,8 @@ The first sketch connected the AD5272 directly to the SDC input. Its weak spot: 
 ### Open decision: AD5272 supply voltage (depends on the pending measurement)
 
 The voltage on terminals A/W must stay between GND and VDD. Worst case is the highest resistance: U_max = U0 × 65 kΩ / (65 kΩ + R_pull), with R_pull = 20 kΩ × (U0 / U20 − 1).
-- U_max < ~3.1 V → run the AD5272 on **3V3**: simplest, same I2C levels as the ESP32.
-- Otherwise → run the AD5272 on **5 V** and add an I2C level shifter (e.g. PCA9306 or BSS138 module).
+- U_max < ~3.1 V → VDD_ISO = **3.3 V** (B0505S + 3.3 V LDO).
+- Otherwise → VDD_ISO = **5.0 V** (B0509S + 5.0 V LDO). The ISO1540 handles the level shift, so no extra level shifter is needed.
 
 The measuring current is far below the AD5272's ±3 mA limit in any case: ≤ 5 V / 15 kΩ ≈ 0.3 mA.
 
@@ -125,7 +140,8 @@ The measuring current is far below the AD5272's ±3 mA limit in any case: ≤ 5 
 - **Current budget:** 600 mA at 5 V. ESP32-S3 Wi-Fi TX peaks ≈ 350–500 mA at 5 V incl. LDO losses, plus relay ~30 mA. That is enough, but not generous, so add the 470 µF bulk capacitor. Average draw ≈ 100 mA. Keep the DevKit's RGB LED off.
 - **Obsolescence:** the datasheet says "not recommended for new designs, last time buy 31 Mar 2026". Fine for this one unit, but a replacement would be a different part: Mean Well IRM-05-5 (5 W, 1 A, more headroom) or a certified USB-C wall adapter if a socket is available in the boiler room.
 - **Mains wiring (by a qualified person):** It is a bare module, so it needs a slow-blow input fuse, a closed enclosure, strain relief and ≥ 6 mm clearance between the mains and SELV sides. Feed it from its own fused supply or socket. Do not tap the SDC's L/N terminals.
-- **Isolation concept:** The RAC03 isolates from mains. The ESP32 ground is then deliberately tied to the SDC sensor ground (X5) via the AD5272. An extra I2C isolator is **not** needed as long as no second earthed device is connected. See USB below.
+- **Isolation concept:** The RAC03 isolates from mains. The I2C isolator + iso DC/DC (revision 3) additionally separate the ESP32 from the SDC sensor ground.
+- **Current budget with revision 3:** The 1 W iso DC/DC draws roughly 30–50 mA even at light load. That is still within the 600 mA budget.
 
 ## Failure modes and fail-safe behaviour
 
@@ -140,8 +156,9 @@ The measuring current is far below the AD5272's ±3 mA limit in any case: ≤ 5 
 | 7 | AD5272 fault (I2C NACK, readback ≠ written code) | check on every write, plus periodic readback e.g. every 5 min | relay off, report in HA | as 1 |
 | 8 | Relay coil / driver open | readback via 2nd relay pole on a GPIO (optional, DPDT) | report in HA | as 1 (safe direction) |
 | 9 | Local heat in the living room (fireplace, sun) | – | optional: limit the emulated temperature to setpoint ± 3 K (setpoint as an HA `number`) | limited deviation, other rooms not undersupplied |
-| 10 | USB debugging while installed | – | PC earth + SDC sensor ground = ground loop; also two 5 V sources collide on the clone board | **Use OTA updates.** For USB: disconnect RAC03/SDC or use a USB isolator. |
-| 11 | SDC reduced/night mode | – | none | R_failsafe matches only the day setpoint. At night the fail-safe reads "too warm", so the night setback gets a bit deeper. Acceptable. |
+| 10 | USB flashing/debugging while installed | – | Allowed thanks to the isolator: PC earth only reaches the ESP domain. The official DevKitC-1 has a Schottky diode (1N5819) from each USB VBUS to the 5 V rail, so USB and RAC03 can be connected at the same time. **Verify these diodes on the clone** (near both USB-C ports) before doing so. | unaffected |
+| 11 | Isolated rail fails (DC/DC or LDO) while relay is on | AD5272 I2C NACK / readback error | relay off (as 7) | as 1 |
+| 12 | SDC reduced/night mode | – | none | R_failsafe matches only the day setpoint. At night the fail-safe reads "too warm", so the night setback gets a bit deeper. Acceptable. |
 
 Notes:
 - **Stale-value detection:** Do not use "no update for 10 min". HA only pushes a value when it changes, so a steady room temperature would trigger false alarms. Watch the connection state and NaN/`unavailable` instead.
@@ -190,7 +207,7 @@ Notes:
   1. Set parameter 09 = 31 (and MIX.VALVE-1 parameter 03 = 3, display only, no influence yet).
   2. Measure U0 = X6-7 → X5 with nothing connected. Fault 20-0 is expected on the display meanwhile.
   3. Connect 20 kΩ between X6-7 and X5, measure U20. The SDC should show ≈ 25 °C as room temperature.
-  4. Compute: measuring current I = U20 / 20 kΩ; pull-up R_pull = 20 kΩ × (U0 / U20 − 1); worst case U_max = U0 × 65 kΩ / (65 kΩ + R_pull). This decides 3V3 vs 5 V for the AD5272.
+  4. Compute: measuring current I = U20 / 20 kΩ; pull-up R_pull = 20 kΩ × (U0 / U20 − 1); worst case U_max = U0 × 65 kΩ / (65 kΩ + R_pull). This decides VDD_ISO: 3.3 V (B0505S + 3.3 V LDO) or 5 V (B0509S + 5.0 V LDO).
   5. Optional: check the displayed temperature with a 24.3 kΩ resistor (≈ 20.9 °C) as well. This also verifies R_failsafe.
 - [ ] SDC day room setpoint? It determines the R_failsafe value (24.3 kΩ assumes 21 °C).
 - [x] Sonoff panel: NSPanel-EU (original NSPanel, Wi-Fi, black) with custom ESPHome firmware.
