@@ -6,6 +6,11 @@ A Honeywell Home (Resideo) Smile SDC heating controller currently operates purel
 
 Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room sensor (type RF 20) on the room sensor input (variable input VE). The actual room temperature arrives via Wi-Fi from an existing Sonoff panel in the living room.
 
+## Installed hardware
+
+- Controller: **Honeywell Home Smile SDC3-40PM**
+- Power supply for the emulator: **Recom RAC03-05SER/277** (isolated AC/DC module, 5 V)
+
 ## Context from the preliminary discussion
 
 - System: radiators **without room control valves**, hydraulically balanced. This suits room compensation well: the living room serves as the reference room, and the other rooms follow via the hydraulic balancing.
@@ -22,7 +27,7 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
   LIVING ROOM                               BOILER ROOM
  ┌───────────────────┐                    ┌──────────────────────────────────────────┐
  │ Sonoff Panel      │                    │  Isolated 5V power supply                 │
- │ (temp. sensor +   │   Wi-Fi / MQTT /   │  (USB wall adapter or HLK-PM01)           │
+ │ (temp. sensor +   │   Wi-Fi / MQTT /   │  (Recom RAC03-05SER/277)                  │
  │  display)         │ ─ HA / ESP-NOW ──▶ │        │ 5V                               │
  └───────────────────┘                    │        ▼                                  │
                                           │  ┌───────────┐  I2C   ┌──────────────┐    │
@@ -51,7 +56,7 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 | ESP32 DevKit | Receives room temp., drives the rheostat | any board |
 | AD5272BRMZ-50 (or comparable) | digital rheostat, 50 kΩ, 1024 steps, I2C | ±1 % resistance tolerance, 50-TP memory for power-on value |
 | Fixed resistor approx. 12–15 kΩ, 0.1 % | Offset so the range ~15–45 kΩ is covered | choose exact value from the NTC table |
-| Isolated 5V power supply | Powers the ESP32 | **galvanically isolated**, see Safety |
+| Recom RAC03-05SER/277 | Isolated AC/DC 5V supply for the ESP32 (chosen) | **galvanically isolated**, see Safety; 3 W / 600 mA, enough for ESP32 Wi-Fi peaks; mains side needs fusing and a proper enclosure |
 | optional: I2C isolator (ISO1540) + isolated DC/DC | full isolation ESP32 ↔ controller | recommended if the input voltage doesn't suit the rheostat |
 | Alternative: PhotoMOS relays + resistor ladder | fully isolated resistance emulation without rail issues | more parts, but robust |
 
@@ -92,7 +97,8 @@ Solution: An ESP32 at the controller emulates the resistance of an NTC 20k room 
 
 ## Open points (clarify before starting)
 
-- [ ] Exact SDC model and software version (SDC3-10 / 3-40 / 9-21 / 12-31, WM/PM)?
+- [x] Exact SDC model: SDC3-40PM
+- [ ] SDC software version?
 - [ ] Which VE input is free?
 - [ ] Measured open-circuit voltage / measuring current at the VE input?
 - [ ] Which Sonoff panel (NSPanel, NSPanel Pro, …) and which firmware (eWeLink, Tasmota, ESPHome)?
