@@ -1,0 +1,13 @@
+# KiCad local/user state
+*.kicad_prl
+*.lck
+fp-info-cache
+*-backups/
+_autosave-*
+
+__pycache__/
+
+# intermediate build outputs (the zip in production/ holds the Gerbers)
+*.net
+production/gerbers/
+production/build.log

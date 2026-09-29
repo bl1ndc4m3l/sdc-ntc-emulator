@@ -1,0 +1,23 @@
+Qty,References,Value,Footprint,Purpose,Fit
+1,C1,470uF 10V,CP_Radial_D8.0mm_P3.50mm,5 V bulk for Wi-Fi TX peaks,fit
+4,C2 C3 C5 C6,100nF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,TEM 2-0511 input decoupling; U1 VCC1 decoupling; U1 VCC2 decoupling; U2 VDD decoupling,fit
+2,C4 C7,10uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,TEM output buffer; U2 VDD decoupling,fit
+1,C8,1uF 16V,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,AD5272 EXT_CAP (>= 7 V rating),fit
+1,D1,1N4148W,D_SOD-123,Flyback diode,fit
+1,D2,green,LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder,VDD_ISO present,fit
+1,J1,DevKit J1,PinSocket_1x22_P2.54mm_Vertical,ESP32-S3-DevKitC-1 header J1 (3V3/GPIO4/GPIO8/GPIO9/5V/GND),fit
+1,J2,DevKit J3,PinSocket_1x22_P2.54mm_Vertical,"ESP32-S3-DevKitC-1 header J3 (GND only, mechanical)",fit
+1,J3,5V IN (RAC03),"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",5 V from Recom RAC03-05SER/277 flying leads,fit
+1,J4,SDC VE1 / GND,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",To SDC X6-6 (VE1) and X5 (GND),fit
+1,K1,G5V-2-H1 5VDC,Relay_DPDT_Omron_G5V-2,"Fail-safe relay, both poles in parallel; de-energised = R_failsafe",fit
+1,PS1,TEM 2-0511,Traco_TEM2_Single_DIP24,"Traco TEM 2-0511 isolated DC/DC 5 V -> 5 V, 1000 VDC",fit
+1,Q1,AO3400A,SOT-23,Relay coil driver,fit
+4,R1 R2 R5 R6,4k7,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,I2C pull-up ESP side; I2C pull-up SDC side,fit
+1,R10,24k3 0.1%,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,R_failsafe ~20.9 C (match SDC day setpoint),fit
+1,R3,100k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Gate pull-down: relay off while GPIO4 floats,fit
+1,R4,100R,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Gate series resistor,fit
+1,R7,1k5,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Indicator LED resistor,fit
+1,R8,270R 0.6W,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,"Optional TEM preload (~18 mA), fit only if no-load output > 5.4 V",DNP
+1,R9,15k0 0.1%,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,"R_series: hardware floor ~31 C, smaller absolute error",fit
+1,U1,ISO1540,SOIC-8_3.9x4.9mm_P1.27mm,Bidirectional I2C isolator,fit
+1,U2,AD5272BRMZ-50,MSOP-10_3x3mm_P0.5mm,"1024-step 50k digital rheostat, I2C address 0x2F (ADDR=GND)",fit

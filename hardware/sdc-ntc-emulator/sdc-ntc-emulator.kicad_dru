@@ -1,0 +1,4 @@
+(version 1)
+(rule "MSOP-10 fine pitch"
+	(condition "A.intersectsCourtyard('U2') || B.intersectsCourtyard('U2')")
+	(constraint clearance (min 0.13)))

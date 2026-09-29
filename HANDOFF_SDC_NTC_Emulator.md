@@ -99,7 +99,7 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 | AD5272BRMZ-50 (MSOP-10) + breakout board | digital rheostat, 50 kΩ, 1024 steps, I2C | needs 1 µF on EXT_CAP, 100 nF on VDD, RESET tied to VDD, ADDR → GND = I2C address 0x2F |
 | Resistor 15.0 kΩ, 0.1 %, ≤ 25 ppm/K | R_series | |
 | Resistor 24.3 kΩ, 0.1 % (E96) | R_failsafe | value = NTC resistance at the SDC day setpoint |
-| Signal relay 5 V coil, SPDT/DPDT, gold contacts | fail-safe switch-over | coil ~20–40 mA |
+| **Omron G5V-2-H1 5VDC** (DPDT, both poles in parallel) | fail-safe switch-over | gold-alloy contacts, coil 30 mA / 167 Ω; Reichelt |
 | N-MOSFET, 100 kΩ, 1N4148 | relay driver | |
 | ISO1540 (TI) or ADuM1250 (ADI) | bidirectional I2C isolator | each side 3.0–5.5 V; 100 nF decoupling per side |
 | Isolated DC/DC: **Traco TEM 2-0511** (user already owns it) | powers the SDC domain: VDD_ISO = 5 V for AD5272 + ISO1540 side 2 | 5 V ±10 % in, **regulated** 5 V ±3 % out, 400 mA, 1000 VDC isolation, DIP-24, PFM 80 kHz, ripple ≤ 50 mVpp, max. 470 µF load. End-of-life part. Load regulation is only specified from 10 % load (40 mA); ours is a few mA, so **measure the no-load output once**: must be ≤ 5.4 V for the AD5272 (5.5 V max). Add 10 µF + 100 nF at the AD5272. No LDO needed. |
@@ -137,6 +137,16 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
 
 ### PCB
 
+**Designed (rev 1, 2026-09-29): [hardware/sdc-ntc-emulator/](hardware/sdc-ntc-emulator/README.md).**
+- KiCad 9, 2 layers, 104 × 76 mm; ERC and DRC clean, schematic parity OK.
+- JLC Gerber zip and BOM in `production/`, generated from `tools/design.py` by `tools/build.py`.
+- Choices made during layout:
+  - Relay **Omron G5V-2-H1 5VDC** with both poles **in parallel**: COM 4+13, NC 6+11, NO 8+9, coil 1/16, gold-alloy contacts, 30 mA coil.
+  - That drops the optional relay-state readback (failure mode 8).
+  - GPIO4 = relay, GPIO8/9 = I2C.
+  - R_failsafe and R_series are THT 0.1 % parts, so they are easy to swap.
+- Before ordering, check the points in the README: DevKit row spacing 25.4 mm and pinout, TEM footprint 1:1, terminal orientation, R10 value.
+
 - **No mains on the PCB.** The RAC03-05SER/277 is a potted module (50.3 × 50.3 × 11 mm) with **flying leads** on input and output. It sits next to the PCB in the enclosure, fixed with a clip, strap or adhesive pad.
   - Its input leads go to a fused mains terminal (e.g. an in-line fuse holder with a slow-blow fuse + Wago lever terminals), in their own section of the enclosure.
   - Its output leads go to a 2-pin 5 V screw terminal on the PCB.
@@ -158,7 +168,7 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
 - Avoid the strapping pins GPIO0, 3, 45 and 46.
 - Avoid GPIO35–37, which are used by the octal PSRAM on R8 modules.
 - Avoid GPIO19/20 (USB) and GPIO43/44 (UART0).
-- Suggestion: I2C on GPIO8 (SDA) / GPIO9 (SCL), relay ENABLE on GPIO4. Check against the clone's silkscreen.
+- **Used on the PCB:** I2C on GPIO8 (SDA) / GPIO9 (SCL), relay ENABLE on GPIO4. All are on DevKit header J1. Check against the clone's silkscreen.
 
 ### AD5272 supply voltage (settled by the VE1 measurement: U_max ≈ 1.7 V)
 
@@ -206,7 +216,7 @@ The measuring current is far below the AD5272's ±3 mA limit in any case: ≤ 5 
 | 5 | Panel offline / entity `unavailable` | HA sensor delivers NaN > 10 min | relay off | as 1 |
 | 6 | Implausible value (< 10 °C, > 30 °C, jump > 2 K/min) | range/rate check | ignore sample; persistent → relay off | last good value, then as 1 |
 | 7 | AD5272 fault (I2C NACK, readback ≠ written code) | check on every write, plus periodic readback e.g. every 5 min | relay off, report in HA | as 1 |
-| 8 | Relay coil / driver open | readback via 2nd relay pole on a GPIO (optional, DPDT) | report in HA | as 1 (safe direction) |
+| 8 | Relay coil / driver open | not detected (the 2nd pole is used in parallel for contact reliability, no readback) | none needed | as 1 (safe direction) |
 | 9 | Local heat in the living room (fireplace, sun) | – | optional: limit the emulated temperature to setpoint ± 3 K (setpoint as an HA `number`) | limited deviation, other rooms not undersupplied |
 | 10 | USB flashing/debugging while installed | – | Allowed thanks to the isolator: PC earth only reaches the ESP domain. The official DevKitC-1 has a Schottky diode (1N5819) from each USB VBUS to the 5 V rail, so USB and RAC03 can be connected at the same time. **Verify these diodes on the clone** (near both USB-C ports) before doing so. | unaffected |
 | 11 | Isolated rail fails (DC/DC or LDO) while relay is on | AD5272 I2C NACK / readback error | relay off (as 7) | as 1 |
