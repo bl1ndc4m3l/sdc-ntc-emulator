@@ -1,7 +1,7 @@
 Qty,References,Value,Footprint,Purpose,Fit
 1,C1,470uF 10V,CP_Radial_D8.0mm_P3.50mm,5 V bulk for Wi-Fi TX peaks,fit
 4,C2 C3 C5 C6,100nF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,TEM 2-0511 input decoupling; U1 VCC1 decoupling; U1 VCC2 decoupling; U2 VDD decoupling,fit
-2,C4 C7,10uF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,TEM output buffer; U2 VDD decoupling,fit
+2,C4 C7,10uF 16V X5R,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,TEM output buffer; U2 VDD decoupling,fit
 1,C8,1uF 16V,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,AD5272 EXT_CAP (>= 7 V rating),fit
 1,C9,10uF 25V X7R,C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"Low-ESR ceramic parallel to C1: RAC03 ripple, fast Wi-Fi current edges",fit
 1,D1,1N4148W,D_SOD-123,Flyback diode,fit
@@ -13,12 +13,16 @@ Qty,References,Value,Footprint,Purpose,Fit
 1,K1,G5V-2-H1 5VDC,Relay_DPDT_Omron_G5V-2,"Fail-safe relay, both poles in parallel; de-energised = R_failsafe",fit
 1,PS1,TEM 2-0511,Traco_TEM2_Single_DIP24,"Traco TEM 2-0511 isolated DC/DC 5 V -> 5 V, 1000 VDC",fit
 1,Q1,AO3400A,SOT-23,Relay coil driver,fit
-4,R1 R2 R5 R6,4k7,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,I2C pull-up ESP side; I2C pull-up SDC side,fit
-1,R10,24k3 0.1%,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,R_failsafe ~20.9 C (match SDC day setpoint),fit
+1,Q2,AO3401A,SOT-23,"Reverse-polarity protection: P-FET, gate to GND (Vgs max 12 V), ~25 mV drop",fit
+2,R1 R2,2k7,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,I2C pull-up ESP side (>= 0.5 mA sink current for ISO1540 side 1),fit
+1,R10,24k9 0.1% 25ppm,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,R_failsafe ~20.4 C true = ~20.9 C on the SDC display (+0.5 K offset),fit
+1,R11,10k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Relay sense divider: GPIO5 LOW = coil energised,fit
+1,R12,20k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Relay sense divider (5 V -> 3.3 V),fit
 1,R3,100k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Gate pull-down: relay off while GPIO4 floats,fit
 1,R4,100R,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Gate series resistor,fit
+2,R5 R6,4k7,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,I2C pull-up SDC side,fit
 1,R7,1k5,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Indicator LED resistor,fit
 1,R8,270R 0.6W,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,"Optional TEM preload (~18 mA), fit only if no-load output > 5.4 V",DNP
-1,R9,15k0 0.1%,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,"R_series: hardware floor ~31 C, smaller absolute error",fit
+1,R9,18k2 0.1% 25ppm,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,R_series: hardware floor ~27 C even if the AD5272 is unpowered or shorted,fit
 1,U1,ISO1540,SOIC-8_3.9x4.9mm_P1.27mm,Bidirectional I2C isolator,fit
 1,U2,AD5272BRMZ-50,MSOP-10_3x3mm_P0.5mm,"1024-step 50k digital rheostat, I2C address 0x2F (ADDR=GND)",fit

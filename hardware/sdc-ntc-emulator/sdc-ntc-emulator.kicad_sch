@@ -1233,6 +1233,324 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Transistor_FET:AO3401A"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "Q"
+				(at 5.08 1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "AO3401A"
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+				(at 5.08 -1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3401A.pdf"
+				(at 5.08 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+					(hide yes)
+				)
+			)
+			(property "Description" "-4.0A Id, -30V Vds, P-Channel MOSFET, SOT-23"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "P-Channel MOSFET"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "AO3401A_0_1"
+				(polyline
+					(pts
+						(xy 0.254 1.905)
+						(xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 0)
+						(xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286)
+						(xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 1.778)
+						(xy 3.302 1.778)
+						(xy 3.302 -1.778)
+						(xy 0.762 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508)
+						(xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27)
+						(xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 0)
+						(xy 1.27 0.381)
+						(xy 1.27 -0.381)
+						(xy 2.286 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54)
+						(xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54)
+						(xy 2.54 0)
+						(xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.794 -0.508)
+						(xy 2.921 -0.381)
+						(xy 3.683 -0.381)
+						(xy 3.81 -0.254)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 -0.381)
+						(xy 2.921 0.254)
+						(xy 3.683 0.254)
+						(xy 3.302 -0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "AO3401A_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Device:C_Polarized"
 			(pin_numbers
 				(hide yes)
@@ -4214,9 +4532,16 @@
 		)
 		(uuid "dc0c0114-59a0-59c4-aa06-33614684f9dd")
 	)
-	(no_connect
-		(at 25.4 60.96)
-		(uuid "30b5324c-5b82-56ab-addd-8d8e6d6b917f")
+	(label "RELAY_SENSE"
+		(at 25.4 60.96 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "54d2bc45-823f-589f-97ff-eff4992e7452")
 	)
 	(no_connect
 		(at 25.4 63.5)
@@ -4610,7 +4935,7 @@
 			)
 		)
 	)
-	(label "+5V"
+	(label "+5V_IN"
 		(at 76.2 35.56 0)
 		(fields_autoplaced yes)
 		(effects
@@ -4619,7 +4944,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "438f4205-af4d-5cb0-a5cf-e2bb9fbbbd2b")
+		(uuid "2106d9d8-eda4-55cf-9f4a-ea4114fd5620")
 	)
 	(label "GND"
 		(at 76.2 33.02 0)
@@ -4631,6 +4956,109 @@
 			(justify left bottom)
 		)
 		(uuid "78436b53-4980-57ce-a7e6-0ece05e297fe")
+	)
+	(symbol
+		(lib_id "Transistor_FET:AO3401A")
+		(at 78.74 60.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ef1de2d1-0afb-561f-8903-fd2a90e80fab")
+		(property "Reference" "Q2"
+			(at 83.82 59.055 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AO3401A"
+			(at 83.82 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 78.74 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3401A.pdf"
+			(at 78.74 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Reverse-polarity protection: P-FET, gate to GND (Vgs max 12 V), ~25 mV drop"
+			(at 78.74 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d94f2cb3-0d11-5283-9fdb-cca1c08ae8be")
+		)
+		(pin "3"
+			(uuid "76cf6003-d46c-598c-96d3-6ede6eec66aa")
+		)
+		(pin "2"
+			(uuid "f439b1be-451f-53c3-b685-daca820d0fe6")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "Q2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GND"
+		(at 73.66 60.96 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "961dc5ae-45d1-5fb4-a033-e64bba3b0473")
+	)
+	(label "+5V_IN"
+		(at 81.28 55.88 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b2199fbd-eb28-5d60-aa17-bae730c90202")
+	)
+	(label "+5V"
+		(at 81.28 66.04 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0b5a08a8-b407-5985-8661-04b3434a628a")
 	)
 	(symbol
 		(lib_id "Device:C_Polarized")
@@ -5363,7 +5791,7 @@
 				)
 			)
 		)
-		(property "Value" "4k7"
+		(property "Value" "2k7"
 			(at 116.84 101.6 0)
 			(effects
 				(font
@@ -5389,7 +5817,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "I2C pull-up ESP side"
+		(property "Description" "I2C pull-up ESP side (>= 0.5 mA sink current for ISO1540 side 1)"
 			(at 116.84 101.6 0)
 			(effects
 				(font
@@ -5452,7 +5880,7 @@
 				)
 			)
 		)
-		(property "Value" "4k7"
+		(property "Value" "2k7"
 			(at 124.46 101.6 0)
 			(effects
 				(font
@@ -5478,7 +5906,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "I2C pull-up ESP side"
+		(property "Description" "I2C pull-up ESP side (>= 0.5 mA sink current for ISO1540 side 1)"
 			(at 124.46 101.6 0)
 			(effects
 				(font
@@ -5523,6 +5951,184 @@
 			(justify right bottom)
 		)
 		(uuid "64e06cf8-6e10-5a00-b39f-12a98b79dbff")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 116.84 198.12 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "82d00b2c-9cbf-5f91-9028-657dc4e111b3")
+		(property "Reference" "R11"
+			(at 118.872 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 116.84 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 116.84 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 116.84 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Relay sense divider: GPIO5 LOW = coil energised"
+			(at 116.84 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cc6d6bb6-e0f5-5feb-bab7-48963b1db85b")
+		)
+		(pin "2"
+			(uuid "be7b8bd8-8b54-5e07-b44e-17e929fb66b9")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "COIL_N"
+		(at 116.84 194.31 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "823aadb5-e283-5dce-83a7-241731aa11cf")
+	)
+	(label "RELAY_SENSE"
+		(at 116.84 201.93 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fc14bdd2-beed-5f22-b7ea-1b7110769898")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 124.46 198.12 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7e04c011-1dc2-5587-b31a-b809d6229329")
+		(property "Reference" "R12"
+			(at 126.492 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "20k"
+			(at 124.46 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 124.46 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 124.46 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Relay sense divider (5 V -> 3.3 V)"
+			(at 124.46 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "be28c051-99c0-5991-9556-a719dcd5df22")
+		)
+		(pin "2"
+			(uuid "6bbc5a8d-e887-5306-b866-c9f53c9bd2dc")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "RELAY_SENSE"
+		(at 124.46 194.31 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8c74b0fa-4afe-56ba-9bfd-f12ee314555c")
+	)
+	(label "GND"
+		(at 124.46 201.93 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "5ff13a09-475c-5e29-bc4c-0537f1bc0126")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -6084,7 +6690,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF 16V X5R"
 			(at 208.915 40.64 0)
 			(effects
 				(font
@@ -6997,7 +7603,7 @@
 				)
 			)
 		)
-		(property "Value" "10uF"
+		(property "Value" "10uF 16V X5R"
 			(at 231.775 104.14 0)
 			(effects
 				(font
@@ -7175,7 +7781,7 @@
 				)
 			)
 		)
-		(property "Value" "15k0 0.1%"
+		(property "Value" "18k2 0.1% 25ppm"
 			(at 208.28 175.26 0)
 			(effects
 				(font
@@ -7201,7 +7807,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "R_series: hardware floor ~31 C, smaller absolute error"
+		(property "Description" "R_series: hardware floor ~27 C even if the AD5272 is unpowered or shorted"
 			(at 208.28 175.26 0)
 			(effects
 				(font
@@ -7264,7 +7870,7 @@
 				)
 			)
 		)
-		(property "Value" "24k3 0.1%"
+		(property "Value" "24k9 0.1% 25ppm"
 			(at 208.28 195.58 0)
 			(effects
 				(font
@@ -7290,7 +7896,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "R_failsafe ~20.9 C (match SDC day setpoint)"
+		(property "Description" "R_failsafe ~20.4 C true = ~20.9 C on the SDC display (+0.5 K offset)"
 			(at 208.28 195.58 0)
 			(effects
 				(font
@@ -7919,7 +8525,7 @@
 		)
 		(uuid "4d0b1c50-4c7d-5a8d-bcb3-646b3c34be52")
 	)
-	(text "DevKit: ESP32-S3-DevKitC-1 (N16R8 clone), header rows 25.4 mm apart.\nGPIO4 = RELAY_EN, GPIO8 = SDA, GPIO9 = SCL."
+	(text "DevKit: ESP32-S3-DevKitC-1 (N16R8 clone), header rows 25.1 mm apart (measured).\nGPIO4 = RELAY_EN (ESPHome restore_mode ALWAYS_OFF), GPIO5 = RELAY_SENSE (LOW = coil on),\nGPIO8 = SDA, GPIO9 = SCL."
 		(exclude_from_sim no)
 		(at 20.32 228.6 0)
 		(effects
@@ -7928,7 +8534,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "6cb975d8-05c8-5f4e-98a4-c2384ab050f8")
+		(uuid "bdd6d7c5-88fa-50b0-b4c9-9841269436f9")
 	)
 	(text "Relay K1: coil 1/16, COM 4/13, NC 6/11, NO 8/9 (Omron datasheet).\nBoth poles in parallel for dry-circuit reliability.\nDe-energised: VE1 -> R10 (fail-safe). Energised: VE1 -> R9 -> AD5272 W-A."
 		(exclude_from_sim no)

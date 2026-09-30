@@ -26,7 +26,7 @@ def part(ref, symbol, value, footprint, sch, pins, **fields):
 
 # DevKit header J1 (official ESP32-S3-DevKitC-1 pinout, verified against the
 # Espressif schematic V1.1). Only the pins below are used.
-DEVKIT_J1 = {"1": "+3V3", "2": "+3V3", "4": "RELAY_EN", "12": "SDA_ESP",
+DEVKIT_J1 = {"1": "+3V3", "2": "+3V3", "4": "RELAY_EN", "5": "RELAY_SENSE", "12": "SDA_ESP",
              "15": "SCL_ESP", "21": "+5V", "22": "GND"}
 # J3 pin 1 (GND, antenna end) is left open: it sits at the antenna keep-out edge.
 DEVKIT_J3 = {"21": "GND", "22": "GND"}
@@ -38,7 +38,10 @@ PARTS = [
     part("J2", "Connector:Conn_01x22_Socket", "DevKit J3", FP_SOCKET, (30.48, 160.02, 0),
          DEVKIT_J3, Description="ESP32-S3-DevKitC-1 header J3 (GND only, mechanical)"),
     part("J3", "Connector:Screw_Terminal_01x02", "5V IN (RAC03)", FP_TERM, (71.12, 35.56, 180),
-         {"1": "+5V", "2": "GND"}, Description="5 V from Recom RAC03-05SER/277 flying leads"),
+         {"1": "+5V_IN", "2": "GND"}, Description="5 V from Recom RAC03-05SER/277 flying leads"),
+    part("Q2", "Transistor_FET:AO3401A", "AO3401A", "Package_TO_SOT_SMD:SOT-23", (78.74, 60.96, 0),
+         {"1": "GND", "2": "+5V", "3": "+5V_IN"},
+         Description="Reverse-polarity protection: P-FET, gate to GND (Vgs max 12 V), ~25 mV drop"),
     part("C1", "Device:C_Polarized", "470uF 10V", "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
          (88.9, 38.1, 0), {"1": "+5V", "2": "GND"}, Description="5 V bulk for Wi-Fi TX peaks"),
     part("C9", "Device:C", "10uF 25V X7R", "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
@@ -58,10 +61,14 @@ PARTS = [
          Description="Bidirectional I2C isolator"),
     part("C3", "Device:C", "100nF", FP_C0805, (106.68, 111.76, 0), {"1": "+3V3", "2": "GND"},
          Description="U1 VCC1 decoupling"),
-    part("R1", "Device:R", "4k7", FP_R0805, (116.84, 101.6, 0), {"1": "+3V3", "2": "SDA_ESP"},
-         Description="I2C pull-up ESP side"),
-    part("R2", "Device:R", "4k7", FP_R0805, (124.46, 101.6, 0), {"1": "+3V3", "2": "SCL_ESP"},
-         Description="I2C pull-up ESP side"),
+    part("R1", "Device:R", "2k7", FP_R0805, (116.84, 101.6, 0), {"1": "+3V3", "2": "SDA_ESP"},
+         Description="I2C pull-up ESP side (>= 0.5 mA sink current for ISO1540 side 1)"),
+    part("R2", "Device:R", "2k7", FP_R0805, (124.46, 101.6, 0), {"1": "+3V3", "2": "SCL_ESP"},
+         Description="I2C pull-up ESP side (>= 0.5 mA sink current for ISO1540 side 1)"),
+    part("R11", "Device:R", "10k", FP_R0805, (116.84, 198.12, 0), {"1": "COIL_N", "2": "RELAY_SENSE"},
+         Description="Relay sense divider: GPIO5 LOW = coil energised"),
+    part("R12", "Device:R", "20k", FP_R0805, (124.46, 198.12, 0), {"1": "RELAY_SENSE", "2": "GND"},
+         Description="Relay sense divider (5 V -> 3.3 V)"),
     part("R4", "Device:R", "100R", FP_R0805, (76.2, 185.42, 90), {"1": "RELAY_EN", "2": "GATE"},
          Description="Gate series resistor"),
     part("R3", "Device:R", "100k", FP_R0805, (88.9, 193.04, 0), {"1": "GATE", "2": "GND"},
@@ -77,7 +84,7 @@ PARTS = [
           "6": "NC_PATH", "11": "NC_PATH", "8": "NO_PATH", "9": "NO_PATH"},
          Description="Fail-safe relay, both poles in parallel; de-energised = R_failsafe"),
     # ---------------------------------------------------------- isolated domain
-    part("C4", "Device:C", "10uF", FP_C0805, (208.28, 38.1, 0), {"1": "VDD_ISO", "2": "GND_ISO"},
+    part("C4", "Device:C", "10uF 16V X5R", FP_C0805, (208.28, 38.1, 0), {"1": "VDD_ISO", "2": "GND_ISO"},
          Description="TEM output buffer"),
     part("R8", "Device:R", "270R 0.6W", FP_R_THT, (220.98, 38.1, 0),
          {"1": "VDD_ISO", "2": "GND_ISO"}, dnp=True,
@@ -100,14 +107,14 @@ PARTS = [
          Description="1024-step 50k digital rheostat, I2C address 0x2F (ADDR=GND)"),
     part("C6", "Device:C", "100nF", FP_C0805, (223.52, 101.6, 0), {"1": "VDD_ISO", "2": "GND_ISO"},
          Description="U2 VDD decoupling"),
-    part("C7", "Device:C", "10uF", FP_C0805, (231.14, 101.6, 0), {"1": "VDD_ISO", "2": "GND_ISO"},
+    part("C7", "Device:C", "10uF 16V X5R", FP_C0805, (231.14, 101.6, 0), {"1": "VDD_ISO", "2": "GND_ISO"},
          Description="U2 VDD decoupling"),
     part("C8", "Device:C", "1uF 16V", FP_C0805, (269.24, 129.54, 0), {"1": "EXT_CAP", "2": "GND_ISO"},
          Description="AD5272 EXT_CAP (>= 7 V rating)"),
-    part("R9", "Device:R", "15k0 0.1%", FP_R_THT, (208.28, 175.26, 90), {"1": "NO_PATH", "2": "WIPER"},
-         Description="R_series: hardware floor ~31 C, smaller absolute error"),
-    part("R10", "Device:R", "24k3 0.1%", FP_R_THT, (208.28, 195.58, 90), {"1": "NC_PATH", "2": "GND_ISO"},
-         Description="R_failsafe ~20.9 C (match SDC day setpoint)"),
+    part("R9", "Device:R", "18k2 0.1% 25ppm", FP_R_THT, (208.28, 175.26, 90), {"1": "NO_PATH", "2": "WIPER"},
+         Description="R_series: hardware floor ~27 C even if the AD5272 is unpowered or shorted"),
+    part("R10", "Device:R", "24k9 0.1% 25ppm", FP_R_THT, (208.28, 195.58, 90), {"1": "NC_PATH", "2": "GND_ISO"},
+         Description="R_failsafe ~20.4 C true = ~20.9 C on the SDC display (+0.5 K offset)"),
     part("J4", "Connector:Screw_Terminal_01x02", "SDC VE1 / GND", FP_TERM, (254.0, 177.8, 0),
          {"1": "VE1", "2": "GND_ISO"}, Description="To SDC X6-6 (VE1) and X5 (GND)"),
     # ---------------------------------------------------------------- mechanical
@@ -127,8 +134,9 @@ PWR_FLAGS = [("+5V", (60.96, 25.4)), ("GND", (60.96, 45.72)), ("+3V3", (106.68, 
 TEXTS = [
     ("ESP DOMAIN (earthed via USB/PC allowed)", (20.32, 15.24), 2.5),
     ("ISOLATED SDC DOMAIN (referenced to SDC X5 only)", (195.58, 15.24), 2.5),
-    ("DevKit: ESP32-S3-DevKitC-1 (N16R8 clone), header rows 25.4 mm apart.\n"
-     "GPIO4 = RELAY_EN, GPIO8 = SDA, GPIO9 = SCL.", (20.32, 228.6), 1.5),
+    ("DevKit: ESP32-S3-DevKitC-1 (N16R8 clone), header rows 25.1 mm apart (measured).\n"
+     "GPIO4 = RELAY_EN (ESPHome restore_mode ALWAYS_OFF), GPIO5 = RELAY_SENSE (LOW = coil on),\n"
+     "GPIO8 = SDA, GPIO9 = SCL.", (20.32, 228.6), 1.5),
     ("Relay K1: coil 1/16, COM 4/13, NC 6/11, NO 8/9 (Omron datasheet).\n"
      "Both poles in parallel for dry-circuit reliability.\n"
      "De-energised: VE1 -> R10 (fail-safe). Energised: VE1 -> R9 -> AD5272 W-A.", (152.4, 213.36), 1.5),

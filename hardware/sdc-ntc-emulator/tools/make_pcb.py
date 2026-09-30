@@ -42,15 +42,18 @@ PLACEMENT = {
     "J2": (DEVKIT_X0, DEVKIT_PIN1_Y, 180),                # DevKit header J3 (left row)
     "J1": (DEVKIT_X0 + DEVKIT_ROWS, DEVKIT_PIN1_Y, 180),  # DevKit header J1 (right row)
     "J3": (47.08, 6.0, 180),     # 5 V in, wire entry towards top edge
-    "C1": (53.3, 6.0, 0),
+    "Q2": (53.5, 6.0, 180),      # reverse-polarity P-FET between J3 and C1
+    "C1": (62.0, 6.0, 0),
     "C9": (30.6, 7.54, 0),       # 10 uF ceramic under the DevKit, next to its 5V pin J1.21
     "C2": (62.3, 16.5, 90),      # TEM input decoupling, beside pin 24
     "PS1": (42.0, 16.5, 0),      # TEM 2-0511, pin 1 top left
     "U1": (60.3, 50.5, 0),       # ISO1540 straddles the isolation gap
     "R1": (47.0, 48.4, 0),
     "R2": (47.0, 50.8, 0),
-    "C3": (52.6, 48.4, 0),
-    "D1": (52.6, 51.6, 180),
+    "C3": (55.4, 50.5, 270),     # right at U1 VCC1/GND1 (TI: <= 2 mm)
+    "D1": (51.8, 51.6, 180),
+    "R11": (38.0, 47.9, 90),     # relay sense divider
+    "R12": (41.3, 47.7, 0),
     "K1": (45.0, 55.0, 0),       # coil (pins 1/16) on ESP side, contacts below
     "Q1": (41.0, 55.6, 0),
     "R4": (39.6, 51.8, 90),
@@ -59,15 +62,15 @@ PLACEMENT = {
     "R8": (84.0, 35.5, 0),       # optional preload, kept away from the TEM
     "R7": (67.2, 36.8, 0),
     "D2": (71.6, 36.8, 180),
-    "C5": (66.8, 48.6, 0),
-    "R5": (66.8, 51.0, 0),
-    "R6": (66.8, 53.4, 0),
+    "C5": (65.2, 50.5, 270),     # right at U1 VCC2/GND2
+    "R5": (69.0, 51.0, 0),
+    "R6": (69.0, 53.4, 0),
     "U2": (80.0, 56.05, 180),    # pad rows land exactly on router grid centres
     "C8": (86.2, 53.6, 0),
-    "C6": (86.2, 57.6, 0),
-    "C7": (86.2, 60.0, 0),
+    "C6": (86.6, 58.6, 0),
+    "C7": (86.6, 61.0, 0),
     "R10": (58.5, 67.9, 0),
-    "R9": (58.5, 73.0, 0),
+    "R9": (86.0, 48.0, 0),       # R_series above U2: the wiper leaves upwards, away from VDD/A
     "J4": (97.5, 64.0, 90),      # SDC terminal, wire entry towards right edge
     "H1": (4.0, 4.0, 0),
     "H2": (100.0, 4.0, 0),
@@ -76,22 +79,26 @@ PLACEMENT = {
 }
 
 # Reference designator positions on the silkscreen (board coordinates), where the
-# footprint default would collide with neighbours. Size 0.8 mm.
+# footprint default would collide with neighbours. Size 1.0 mm (JLC minimum).
 REF_POS = {
-    "R1": (44.2, 48.4), "R2": (44.2, 50.8), "C3": (52.6, 49.8), "D1": (49.6, 52.7),
-    "Q1": (41.6, 53.3), "R3": (41.0, 60.3), "R4": (41.6, 50.9), "C2": (64.6, 16.5), "C9": (30.6, 9.6),
-    "J3": (44.55, 12.9), "PS1": (49.6, 19.6), "U1": (64.8, 46.6), "C5": (70.2, 48.6), "R5": (70.2, 51.0),
-    "R6": (70.2, 53.4), "C8": (89.4, 53.6), "C6": (89.4, 57.6), "C7": (89.4, 60.0),
-    "R7": (67.2, 38.3), "D2": (74.6, 36.8), "C4": (65.0, 40.63),
-    "U2": (80.0, 59.4), "K1": (49.0, 64.5), "J4": (92.0, 70.5),
+    "R1": (44.0, 48.4), "R2": (44.0, 50.8), "C3": (55.4, 47.3), "D1": (51.8, 49.5),
+    "Q1": (41.6, 53.3), "R3": (41.0, 60.4), "R4": (37.7, 51.8), "C2": (64.9, 16.5), "C9": (30.6, 9.8),
+    "J3": (44.55, 13.0), "PS1": (49.6, 19.6), "U1": (61.5, 46.9), "C5": (65.2, 47.3), "R5": (72.7, 51.0),
+    "R6": (72.7, 53.4), "C8": (89.6, 53.6), "C6": (90.0, 58.6), "C7": (90.0, 61.0),
+    "R7": (67.2, 38.5), "D2": (74.9, 36.8), "C4": (65.3, 40.63), "Q2": (53.5, 9.6),
+    "R11": (38.0, 44.8, 90), "R12": (41.3, 49.6),
+    "U2": (80.0, 59.5), "K1": (49.0, 64.5), "J4": (92.0, 70.5),
 }
 HIDE_REFS = {"H1", "H2", "H3", "H4", "J1", "J2", "R8", "R9", "R10"}
 
 # Copper areas per domain (board coordinates). Gap between them >= 1 mm.
-ESP_POLY = [(0.5, 0.5), (71.0, 0.5), (71.0, 30.0), (59.8, 30.0), (59.8, 35.1), (40.2, 35.1),
-            (40.2, 43.1), (59.8, 43.1), (59.8, 58.8), (42.2, 58.8), (42.2, 75.5), (0.5, 75.5)]
+# Tracks are kept inside their outline (eroded by half their width), so the outline
+# gap is also the minimum copper gap between the domains. tools/check_isolation.py
+# verifies >= 1.0 mm on the finished board.
+ESP_POLY = [(0.5, 0.5), (71.0, 0.5), (71.0, 30.0), (59.8, 30.0), (59.8, 34.9), (39.8, 34.9),
+            (39.8, 43.7), (59.8, 43.7), (59.8, 58.8), (42.2, 58.8), (42.2, 75.5), (0.5, 75.5)]
 ISO_POLY = [(72.4, 0.5), (103.5, 0.5), (103.5, 75.5), (43.4, 75.5), (43.4, 60.0), (61.2, 60.0),
-            (61.2, 42.4), (41.4, 42.4), (41.4, 36.1), (61.2, 36.1), (61.2, 31.4), (72.4, 31.4)]
+            (61.2, 42.4), (41.0, 42.4), (41.0, 36.2), (61.2, 36.2), (61.2, 31.4), (72.4, 31.4)]
 # No copper under the ESP32-S3 module antenna (DevKit antenna end, bottom left).
 ANTENNA_KEEPOUT = [(7.0, 59.6), (39.0, 59.6), (39.0, 75.9), (7.0, 75.9)]
 # No copper around the M3 mounting holes (screw heads, washers).
@@ -99,7 +106,7 @@ MOUNT_KEEPOUT_R = 3.5
 # THT ground pads that additionally get a via (pour access is cramped there).
 THT_GROUND_VIAS = {("PS1", "12"), ("PS1", "13")}
 
-POWER_W = {"/+5V": 0.6, "/VDD_ISO": 0.6, "/COIL_N": 0.6, "/+3V3": 0.4}
+POWER_W = {"/+5V_IN": 0.6, "/+5V": 0.6, "/VDD_ISO": 0.6, "/COIL_N": 0.6, "/+3V3": 0.4}
 SIGNAL_W = 0.25
 GND_NETS = {"/GND", "/GND_ISO"}
 VIA_D, VIA_DRILL = 0.8, 0.4
@@ -240,13 +247,19 @@ def build_board():
         if p["fields"].get("dnp"):
             fp.SetDNP(True)
         rf = fp.Reference()
-        rf.SetTextSize(pcbnew.VECTOR2I(mm(0.8), mm(0.8)))
-        rf.SetTextThickness(mm(0.12))
+        rf.SetTextSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0)))
+        rf.SetTextThickness(mm(0.15))
         if ref in HIDE_REFS:
             rf.SetVisible(False)
         elif ref in REF_POS:
-            rf.SetPosition(vec(*REF_POS[ref]))
-            rf.SetTextAngleDegrees(0)
+            pos = REF_POS[ref]
+            rf.SetPosition(vec(pos[0], pos[1]))
+            rf.SetTextAngleDegrees(pos[2] if len(pos) > 2 else 0)
+        if ref == "K1":
+            # Omron recommends 1.0 mm holes for the G5V-2 (library footprint: 0.7 mm)
+            for pad in fp.Pads():
+                pad.SetDrillSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0)))
+                pad.SetSize(pcbnew.VECTOR2I(mm(1.8), mm(1.8)))
         for pad in fp.Pads():
             name = pad_net.get((ref, pad.GetNumber()))
             if name:
@@ -287,6 +300,7 @@ class Router:
         self._hard_blocks()
         self.tracks = []  # (net, layer, x1, y1, x2, y2, w)
         self.vias = []    # (net, x, y)
+        self.failed = []  # ground connections that could not be made
 
     def _raster_pads(self):
         u2 = self.fps["U2"].GetCourtyard(pcbnew.F_Cu).BBox()
@@ -341,6 +355,15 @@ class Router:
             holes |= seg_mask(x, y, x, y, MOUNT_KEEPOUT_R)
         for li in (0, 1):
             self.owner[li][edge | keep | holes] = HARD
+        # AD5272: no tracks under the MSOP body, no vias anywhere in its courtyard
+        # (hand-soldering bridge risk)
+        cy = self.fps["U2"].GetCourtyard(pcbnew.F_Cu).BBox()
+        cx0, cy0 = to_board(cy.GetOrigin())
+        cx1, cy1 = to_board(cy.GetEnd())
+        self.novia = (GX > cx0) & (GX < cx1) & (GY > cy0) & (GY < cy1)
+        # Under the body only GND_ISO may run (it ties A/VSS to the outer GND pins)
+        ux, uy, _ = PLACEMENT["U2"]
+        self.body = (GX > ux - 1.2) & (GX < ux + 1.2) & (GY > uy - 1.6) & (GY < uy + 1.6)
 
     # -------------------------------------------------------------- masks
     def blocked(self, nid, half_w):
@@ -355,6 +378,11 @@ class Router:
     def domain(self, net):
         return self.iso if net.lstrip("/") in design.ISO_NETS else self.esp
 
+    @staticmethod
+    def inside(dom, half_w):
+        """Domain eroded so that a track of this half width stays inside the outline."""
+        return ~dilate(~dom, (half_w + 0.1) / G)
+
     def via_ok(self, nid, net):
         both = np.zeros((NY, NX), dtype=bool)
         for li in (0, 1):
@@ -365,7 +393,22 @@ class Router:
         near_hole = np.zeros((NY, NX), dtype=bool)
         for hx, hy, hd in self.holes:
             near_hole |= seg_mask(hx, hy, hx, hy, hd / 2 + 0.5 + VIA_DRILL / 2 + 0.05)
-        return ~both & ~own_pads & ~dom & ~near_hole
+        return ~both & ~own_pads & ~dom & ~near_hole & ~self.novia
+
+    def exit_corridors(self, except_net=None, half=0.8):
+        """Cells in front of the AD5272 signal pins (3 mm outwards), so every 0.5 mm-pitch
+        pin keeps a straight way out. half=0.8: keep vias out; half=0.45: keep other nets'
+        top-layer tracks out (adjacent pins at 0.5 mm pitch can still leave in parallel)."""
+        ux = PLACEMENT["U2"][0]
+        m = np.zeros((NY, NX), dtype=bool)
+        for q in self.pads:
+            if q["ref"] != "U2" or q["net"] in GND_NETS or q["net"] == except_net:
+                continue
+            side = 1 if q["x"] > ux else -1
+            x_end = q["x"] + side * 0.81
+            xs = (GX - x_end) * side
+            m |= (np.abs(GY - q["y"]) < half) & (xs > 0) & (xs < 3.0)
+        return m
 
     def add_via(self, net, nid, x, y, tree=None):
         self.vias.append((net, x, y))
@@ -407,8 +450,8 @@ class Router:
                 nj, ni = j + dj, i + di
                 if not (0 <= nj < NY and 0 <= ni < NX) or not free[l, nj, ni]:
                     continue
-                if dj and di and not (free[l, j, ni] or free[l, nj, i]):
-                    continue
+                if dj and di and not (free[l, j, ni] and free[l, nj, i]):
+                    continue    # no corner cutting past obstacles on a diagonal step
                 ns = (l, nj, ni)
                 ng = gcost + c + (0.3 if (dj and di) else 0.0)
                 if ng < best.get(ns, 1e18):
@@ -475,11 +518,15 @@ class Router:
             # Own pad cells are only free where they also keep clearance, so a track
             # never runs off-centre inside a fine-pitch pad towards its neighbour.
             f = ~self.blocked(nid, w / 2)
+            inner = self.inside(dom, w / 2)
             for li in (0, 1):
-                f[li] &= dom
+                f[li] &= inner
+                if w > SIGNAL_W:
+                    f[li] &= ~self.fine      # wide power tracks stay out of the MSOP area
+            f[0] &= ~self.exit_corridors(except_net=net, half=0.45) & ~self.body
             return f
 
-        vok = self.via_ok(nid, net)
+        vok = self.via_ok(nid, net) & ~self.exit_corridors(except_net=net, half=0.8)
         # fine-pitch pads (MSOP-10) must not be the tree seed: they get thin tracks
         pads.sort(key=lambda p: bool(self.fine[cell_of(p["x"], p["y"])]))
         tree = np.zeros((2, NY, NX), dtype=bool)
@@ -516,35 +563,54 @@ class Router:
             done.append(p)
         return ok
 
-    def ground_vias(self):
-        """Give every SMD ground pad (and the listed THT pads) a via to the bottom pour."""
+    def ground_vias(self, fine=None, only=None, own_only=False):
+        """Give every SMD ground pad (and the listed THT pads) a via to the bottom pour.
+        fine=True: only the fine-pitch (MSOP) pads, fine=False: all others.
+        only: set of (ref, pin) to restrict to. Pads that already have a via are skipped."""
         for p in self.pads:
             if p["net"] not in GND_NETS:
                 continue
+            if fine is not None and bool(self.fine[cell_of(p["x"], p["y"])]) != fine:
+                continue
+            if only is not None and (p["ref"], p["num"]) not in only:
+                continue
+            if p.get("via_done"):
+                continue
+            p["via_done"] = True
             if not p["smd"] and (p["ref"], p["num"]) not in THT_GROUND_VIAS:
                 continue
             net, nid = p["net"], p["nid"]
             width = SIGNAL_W if self.fine[cell_of(p["x"], p["y"])] else 0.4
-            free = ~self.blocked(nid, width / 2)[0] & self.domain(net)
+            free = (~self.blocked(nid, width / 2)[0] & self.inside(self.domain(net), width / 2)
+                    & ~self.exit_corridors(half=0.45))
+            if net != "/GND_ISO":
+                free &= ~self.body
             j0, i0 = cell_of(p["x"], p["y"])
             free[j0, i0] = True
             vok = self.via_ok(nid, net)
             goal = np.zeros((2, NY, NX), dtype=bool)
             # via candidates at least 0.9 mm from the pad centre
             far = (GX - p["x"]) ** 2 + (GY - p["y"]) ** 2 > 1.0 ** 2
-            near = (GX - p["x"]) ** 2 + (GY - p["y"]) ** 2 < 5.0 ** 2
-            goal[0] = vok & free & far & near
+            near = (GX - p["x"]) ** 2 + (GY - p["y"]) ** 2 < 6.0 ** 2
+            goal[0] = vok & free & far & near & ~self.exit_corridors()
+            # ... or any existing copper of the same ground net (pads, tracks, vias)
+            own = (self.owner[0] == nid) & ~p["mask"] & near
+            if own_only:
+                goal[0] = own
+            goal[0] |= own
             fr = np.zeros((2, NY, NX), dtype=bool)
-            fr[0] = free
+            fr[0] = free | own
             path = self.astar([(0, j0, i0)], goal, fr, np.zeros((NY, NX), dtype=bool),
                               (p["x"], p["y"]))
             if path is None:
                 print(f"  !! no ground via for {p['ref']}.{p['num']}")
+                self.failed.append(f"ground {p['ref']}.{p['num']}")
                 continue
             tree = np.zeros((2, NY, NX), dtype=bool)
             self.commit_path(net, nid, path, width, (p["x"], p["y"]), tree)
             l, j, i = path[-1]
-            self.add_via(net, nid, CX[i], CY[j])
+            if not own[j, i]:
+                self.add_via(net, nid, CX[i], CY[j])
 
     def emit(self):
         for net, l, x1, y1, x2, y2, w in self.tracks:
@@ -641,32 +707,34 @@ def add_silk(board):
     # module antenna overhang (~18 mm wide, ~7.5 mm beyond the DevKit edge)
     xm = DEVKIT_X0 + DEVKIT_ROWS / 2
     dashed(board, [(xm - 9, y1), (xm - 9, y1 + 7.5), (xm + 9, y1 + 7.5), (xm + 9, y1)])
-    silk_text(board, "ESP32-S3 DevKit - USB-C this end", xm, y0 - 1.4, 0.9)
-    silk_text(board, "ANTENNA", xm, y1 + 3.0, 0.9)
-    silk_text(board, "no copper below", xm, y1 + 10.0, 0.8)
-    silk_text(board, "J1", DEVKIT_X0 + DEVKIT_ROWS, y1 + 1.4, 0.8)
-    silk_text(board, "J3", DEVKIT_X0, y1 + 1.4, 0.8)
+    silk_text(board, "ESP32-S3 DevKit - USB-C this end", xm, y0 - 1.4, 1.0)
+    silk_text(board, "ANTENNA", xm, y1 + 3.0, 1.0)
+    silk_text(board, "no copper below", xm, y1 + 10.0, 1.0)
+    silk_text(board, "DK-J1", DEVKIT_X0 + DEVKIT_ROWS, y1 + 1.5, 1.0)
+    silk_text(board, "DK-J3", DEVKIT_X0, y1 + 1.5, 1.0)
     # isolation gap (centre line): full outline on F.Fab, top run also on silkscreen
-    dashed(board, [(71.7, 1.0), (71.7, 30.7), (60.5, 30.7), (60.5, 35.6), (40.8, 35.6), (40.8, 43.0),
-                   (60.5, 43.0), (60.5, 59.4), (42.8, 59.4), (42.8, 75.0)], layer=pcbnew.F_Fab)
+    dashed(board, [(71.7, 1.0), (71.7, 30.7), (60.5, 30.7), (60.5, 35.6), (40.4, 35.6), (40.4, 43.05),
+                   (60.5, 43.05), (60.5, 59.4), (42.8, 59.4), (42.8, 75.0)], layer=pcbnew.F_Fab)
     dashed(board, [(71.7, 2.0), (71.7, 30.7), (66.0, 30.7)])
     silk_text(board, "ESP SIDE", 50.0, 33.2, 1.0, bold=True)
     silk_text(board, "ISOLATED SDC SIDE", 82.0, 44.5, 1.2, bold=True)
-    silk_text(board, "+5V", 47.08, 12.9, 0.8)
-    silk_text(board, "GND", 42.0, 12.9, 0.8)
-    silk_text(board, "TO SDC", 97.5, 52.2, 1.0, bold=True)
-    silk_text(board, "GND X5", 97.5, 54.3, 0.8)
-    silk_text(board, "VE1 X6-6", 97.5, 68.2, 0.8)
-    silk_text(board, "R8 DNP: preload only if needed", 79.0, 33.3, 0.8, justify="left")
+    silk_text(board, "+5V", 47.08, 13.0, 1.0)
+    silk_text(board, "GND", 41.9, 13.0, 1.0)
+    silk_text(board, "TO SDC", 97.5, 52.0, 1.0, bold=True)
+    silk_text(board, "GND X5-2..12", 97.2, 54.3, 1.0)
+    silk_text(board, "VE1 X6-6", 97.5, 68.4, 1.0)
+    silk_text(board, "R8: DNP", 79.0, 33.3, 1.0, justify="left")
     silk_text(board, "SDC NTC emulator", 88.0, 8.0, 1.2, bold=True)
-    silk_text(board, "SDC3-40PM VE1  rev 1  2026-09", 88.0, 10.2, 0.8)
-    silk_text(board, "R9 R_series 15k0 0.1%", 63.6, 75.0, 0.8)
-    silk_text(board, "R10 R_failsafe 24k3 0.1%", 63.6, 65.8, 0.8)
+    silk_text(board, "SDC3-40PM VE1  rev 2  2026-09", 88.0, 10.4, 1.0)
+    silk_text(board, "R9 R_series 18k2 0.1%", 91.1, 50.2, 1.0)
+    silk_text(board, "R10 R_failsafe 24k9 0.1%", 66.0, 65.7, 1.0)
 
 
 # ------------------------------------------------------------------ main
-ROUTE_ORDER = ["/+5V", "/COIL_N", "/GATE", "/RELAY_EN", "/+3V3", "/SDA_ESP", "/SCL_ESP",
-               "/VDD_ISO", "/SDA_ISO", "/SCL_ISO", "/EXT_CAP", "/WIPER", "/LED_ISO",
+# AD5272 nets first (after its ground stubs), so its 0.5 mm-pitch pins are not walled in.
+ROUTE_ORDER = ["/SDA_ISO", "/SCL_ISO", "/EXT_CAP", "/WIPER", "/VDD_ISO",
+               "/+5V_IN", "/+5V", "/COIL_N", "/RELAY_SENSE", "/GATE", "/RELAY_EN", "/+3V3", "/SDA_ESP",
+               "/SCL_ESP", "/LED_ISO",
                "/VE1", "/NC_PATH", "/NO_PATH", "/GND", "/GND_ISO"]
 
 
@@ -680,14 +748,28 @@ def main():
     print("routing /GND link")
     if not router.route_net("/GND", only={("J1", "22"), ("PS1", "12")}, width=0.8):
         failed.append("/GND link")
-    for net in ROUTE_ORDER:
+    # AD5272 fan-out in a fixed order so no 0.5 mm-pitch pin gets walled in:
+    # left side SDA/SCL, right side EXT_CAP, then pin 2 (A) ground, then the wiper,
+    # then the remaining ground pins; everything else afterwards.
+    for net in ("/SDA_ISO", "/SCL_ISO", "/EXT_CAP"):
+        print("routing", net)
+        if not router.route_net(net):
+            failed.append(net)
+    print("ground (AD5272)")
+    router.ground_vias(fine=True, only={("U2", "6"), ("U2", "10")})   # outer pins: vias outwards
+    router.ground_vias(fine=True, only={("U2", "2"), ("U2", "4")}, own_only=True)  # under the body
+    print("routing /WIPER")
+    if not router.route_net("/WIPER"):
+        failed.append("/WIPER")
+    for net in ROUTE_ORDER[4:]:      # the first four (AD5272) are done above
         if net in GND_NETS:
             continue
         print("routing", net)
         if not router.route_net(net):
             failed.append(net)
     print("ground vias")
-    router.ground_vias()
+    router.ground_vias(fine=False)
+    failed += router.failed
     router.emit()
     for layer in (pcbnew.F_Cu, pcbnew.B_Cu):
         add_zone(board, netinfo, "/GND", ESP_POLY, layer)

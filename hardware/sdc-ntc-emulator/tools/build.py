@@ -76,6 +76,9 @@ def main():
     run(KPY, os.path.join(HERE, "make_pcb.py"))
     drc = os.path.join(OUT, NAME + "-drc.rpt")
     run(CLI, "pcb", "drc", "--schematic-parity", "--severity-all", "-o", drc, PCB, check=False)
+    iso = run(KPY, os.path.join(HERE, "check_isolation.py"), check=False)
+    with open(os.path.join(OUT, NAME + "-isolation.txt"), "w", encoding="utf-8") as f:
+        f.write(iso.stdout)
 
     gdir = os.path.join(OUT, "gerbers")
     shutil.rmtree(gdir, ignore_errors=True)
@@ -97,6 +100,8 @@ def main():
             "--height", "1200", "-o", os.path.join(OUT, f"{NAME}-{side}.png"), PCB, check=False)
     print("\nERC report:", erc)
     print("DRC report:", drc)
+    if iso.returncode != 0:
+        sys.exit("ISOLATION GAP CHECK FAILED - see production/" + NAME + "-isolation.txt")
 
 
 if __name__ == "__main__":

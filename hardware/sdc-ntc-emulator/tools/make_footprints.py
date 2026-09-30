@@ -48,10 +48,12 @@ def tem2():
           '(effects (font (size 1 1) (thickness 0.15))))\n')
     s += (f'\t(fp_text user "OUT" (at {cx:.2f} 24.0 0) (layer "F.Fab") '
           '(effects (font (size 1 1) (thickness 0.15))))\n')
+    # Oval pads, narrow along the row: 1.24 mm copper gap between neighbouring pins,
+    # which matters between pin 11 (+Vout, isolated) and pin 12 (-Vin, ESP side).
     for n in PINS:
         x, y = pin_xy(n)
-        shape = "rect" if n == 1 else "circle"
-        s += (f'\t(pad "{n}" thru_hole {shape} (at {x:.2f} {y:.2f}) (size 1.6 1.6) (drill 0.8) '
+        shape = "rect" if n == 1 else "oval"
+        s += (f'\t(pad "{n}" thru_hole {shape} (at {x:.2f} {y:.2f}) (size 1.8 1.3) (drill 0.8) '
               '(layers "*.Cu" "*.Mask"))\n')
     s += ')\n'
     return s
