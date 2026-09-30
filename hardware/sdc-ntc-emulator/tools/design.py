@@ -128,6 +128,52 @@ PARTS = [
          in_bom=False),
 ]
 
+# Manufacturer part numbers (DigiKey BOM Manager matches uploads on these).
+# (manufacturer, MPN, order quantity for one board incl. spares, note)
+MPN = {
+    "C1": ("Panasonic", "EEU-FR1A471", 1, "470 uF 10 V, 8 x 11.5 mm, 3.5 mm pitch, low ESR"),
+    "C2 C3 C5 C6": ("Murata", "GRM21BR71H104KA01L", 10, "100 nF 50 V X7R 0805"),
+    "C4 C7": ("Murata", "GRM21BR61C106KE15L", 5, "10 uF 16 V X5R 0805"),
+    "C8": ("Murata", "GRM21BR71C105KA01L", 5, "1 uF 16 V X7R 0805"),
+    "C9": ("Murata", "GRM31CR71E106KA12L", 3, "10 uF 25 V X7R 1206"),
+    "D1": ("Diodes Incorporated", "1N4148W-7-F", 3, "SOD-123"),
+    "D2": ("Lite-On", "LTST-C171GKT", 3, "green LED 0805"),
+    "J1 J2": ("Sullins Connector Solutions", "PPTC221LFBN-RC", 2, "female header 1 x 22, 2.54 mm"),
+    "J3 J4": ("Phoenix Contact", "1715721", 2, "MKDS 1,5/ 2-5,08 terminal block"),
+    "K1": ("Omron", "G5V-2-H1 DC5", 1, "DPDT signal relay, 5 V high-sensitivity coil"),
+    "Q1": ("Alpha & Omega Semiconductor", "AO3400A", 3, "N-MOSFET SOT-23"),
+    "Q2": ("Alpha & Omega Semiconductor", "AO3401A", 3, "P-MOSFET SOT-23"),
+    "R1 R2": ("Yageo", "RC0805FR-072K7L", 10, "2.7 k 1 % 0805"),
+    "R3": ("Yageo", "RC0805FR-07100KL", 10, "100 k 1 % 0805"),
+    "R4": ("Yageo", "RC0805FR-07100RL", 10, "100 R 1 % 0805"),
+    "R5 R6": ("Yageo", "RC0805FR-074K7L", 10, "4.7 k 1 % 0805"),
+    "R7": ("Yageo", "RC0805FR-071K5L", 10, "1.5 k 1 % 0805"),
+    "R11": ("Yageo", "RC0805FR-0710KL", 10, "10 k 1 % 0805"),
+    "R12": ("Yageo", "RC0805FR-0720KL", 10, "20 k 1 % 0805"),
+    "R8": ("Vishay Beyschlag", "MBB02070C2700FC100", 1, "270 R 0.6 W 0207, DNP - only if needed"),
+    "R9": ("Vishay Dale", "RN55E1822BB14", 2, "18.2 k 0.1 % 25 ppm axial (alt.: any RN55E1822B...)"),
+    "R10": ("Vishay Dale", "RN55E2492BB14", 2, "24.9 k 0.1 % 25 ppm axial (alt.: any RN55E2492B...)"),
+    "U1": ("Texas Instruments", "ISO1540DR", 2, "I2C isolator SOIC-8"),
+    "U2": ("Analog Devices", "AD5272BRMZ-50", 2, "50 k digital rheostat MSOP-10 (spare for hand soldering)"),
+    "PS1": ("Traco Power", "TEM 2-0511", 0, "already on hand"),
+}
+# Off-board parts (not on the PCB, listed for completeness)
+OFF_BOARD = [
+    ("Recom", "RAC03-05SER/277", 0, "AC/DC 5 V 3 W - already on hand (end of life)"),
+    ("", "ESP32-S3-DevKitC-1 N16R8 clone", 0, "already on hand"),
+    ("", "fuse 5 x 20 mm slow-blow + in-line holder", 1,
+     "value not given by Recom; T 500 mA - T 1 A is typical for a 3 W module - buy locally"),
+    ("", "Wago 221 lever terminals, M3 spacers, enclosure", 1, "buy locally"),
+]
+
+
+def mpn_for(ref):
+    for refs, data in MPN.items():
+        if ref in refs.split():
+            return data
+    return None
+
+
 # Power flags for nets that are only driven by passive pins (connectors).
 PWR_FLAGS = [("+5V", (60.96, 25.4)), ("GND", (60.96, 45.72)), ("+3V3", (106.68, 96.52))]
 

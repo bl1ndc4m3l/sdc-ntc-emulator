@@ -232,6 +232,9 @@ def main():
         fields = dict(p["fields"])
         dnp = fields.pop("dnp", False)
         in_bom = fields.pop("in_bom", True)
+        m = design.mpn_for(p["ref"])
+        if m:
+            fields["Manufacturer"], fields["MPN"] = m[0], m[1]
         text, node = symbol_instance(p["symbol"], p["ref"], p["value"], p["footprint"],
                                      x, y, rot, fields, dnp=dnp, in_bom=in_bom)
         used_libs[p["symbol"]] = node

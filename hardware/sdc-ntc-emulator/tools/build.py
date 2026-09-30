@@ -61,6 +61,21 @@ def bom():
             purposes = "; ".join(dict.fromkeys(d for _, d in items if d))
             w.writerow([len(refs), " ".join(refs), value, fp.split(":")[1], purposes, dnp or "fit"])
     print("  wrote", path)
+    digikey()
+
+
+def digikey():
+    """Upload file for DigiKey's BOM Manager (matched on Manufacturer Part Number)."""
+    path = os.path.join(OUT, NAME + "-digikey-order.csv")
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["Quantity", "Manufacturer Part Number", "Manufacturer", "Customer Reference",
+                    "Description", "Qty per board"])
+        for refs, (mfr, mpn, order, note) in design.MPN.items():
+            if order == 0:
+                continue
+            w.writerow([order, mpn, mfr, refs, note, len(refs.split())])
+    print("  wrote", path)
 
 
 def main():

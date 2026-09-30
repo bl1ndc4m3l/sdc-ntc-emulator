@@ -4420,6 +4420,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Sullins Connector Solutions"
+			(at 30.48 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "PPTC221LFBN-RC"
+			(at 30.48 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d3fac527-bfda-5259-840a-9d8c3b96f278")
 		)
@@ -4691,6 +4709,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Sullins Connector Solutions"
+			(at 30.48 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "PPTC221LFBN-RC"
+			(at 30.48 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1f2e53e5-ef2e-5465-b86f-740c20fdfda1")
 		)
@@ -4920,6 +4956,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Phoenix Contact"
+			(at 71.12 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "1715721"
+			(at 71.12 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f7621dc9-be3e-5c1d-bfaf-44ebf22025c3")
 		)
@@ -5001,6 +5055,24 @@
 			)
 		)
 		(property "Description" "Reverse-polarity protection: P-FET, gate to GND (Vgs max 12 V), ~25 mV drop"
+			(at 78.74 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Alpha & Omega Semiconductor"
+			(at 78.74 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "AO3401A"
 			(at 78.74 60.96 0)
 			(effects
 				(font
@@ -5112,6 +5184,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Panasonic"
+			(at 88.9 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "EEU-FR1A471"
+			(at 88.9 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6b62dee2-e83d-5b91-bbe5-e4df7e4edb0e")
 		)
@@ -5193,6 +5283,24 @@
 			)
 		)
 		(property "Description" "Low-ESR ceramic parallel to C1: RAC03 ripple, fast Wi-Fi current edges"
+			(at 95.25 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Murata"
+			(at 95.25 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM31CR71E106KA12L"
 			(at 95.25 38.1 0)
 			(effects
 				(font
@@ -5290,6 +5398,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Murata"
+			(at 101.6 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM21BR71H104KA01L"
+			(at 101.6 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1d41725d-c556-5ac5-be42-6f7e073590d8")
 		)
@@ -5371,6 +5497,24 @@
 			)
 		)
 		(property "Description" "Traco TEM 2-0511 isolated DC/DC 5 V -> 5 V, 1000 VDC"
+			(at 142.24 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Traco Power"
+			(at 142.24 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "TEM 2-0511"
 			(at 142.24 45.72 0)
 			(effects
 				(font
@@ -5564,6 +5708,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 142.24 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "ISO1540DR"
+			(at 142.24 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6246ca16-f614-589c-b1cd-60de55ad8d49")
 		)
@@ -5737,6 +5899,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Murata"
+			(at 106.68 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM21BR71H104KA01L"
+			(at 106.68 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bb0c6871-2aec-5f7f-81ee-31daa4c536d4")
 		)
@@ -5818,6 +5998,24 @@
 			)
 		)
 		(property "Description" "I2C pull-up ESP side (>= 0.5 mA sink current for ISO1540 side 1)"
+			(at 116.84 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 116.84 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-072K7L"
 			(at 116.84 101.6 0)
 			(effects
 				(font
@@ -5915,6 +6113,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 124.46 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-072K7L"
+			(at 124.46 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "4765a7f8-e484-56be-916a-0e1c12505fb7")
 		)
@@ -5996,6 +6212,24 @@
 			)
 		)
 		(property "Description" "Relay sense divider: GPIO5 LOW = coil energised"
+			(at 116.84 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 116.84 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-0710KL"
 			(at 116.84 198.12 0)
 			(effects
 				(font
@@ -6093,6 +6327,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 124.46 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-0720KL"
+			(at 124.46 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "be28c051-99c0-5991-9556-a719dcd5df22")
 		)
@@ -6174,6 +6426,24 @@
 			)
 		)
 		(property "Description" "Gate series resistor"
+			(at 76.2 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 76.2 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-07100RL"
 			(at 76.2 185.42 0)
 			(effects
 				(font
@@ -6271,6 +6541,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 88.9 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-07100KL"
+			(at 88.9 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ec3eae9e-63df-54ab-b41c-2d79224473c9")
 		)
@@ -6352,6 +6640,24 @@
 			)
 		)
 		(property "Description" "Relay coil driver"
+			(at 101.6 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Alpha & Omega Semiconductor"
+			(at 101.6 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "AO3400A"
 			(at 101.6 185.42 0)
 			(effects
 				(font
@@ -6463,6 +6769,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Diodes Incorporated"
+			(at 114.3 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "1N4148W-7-F"
+			(at 114.3 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "5142c618-5d23-5fa8-826e-72b889b9c8a0")
 		)
@@ -6544,6 +6868,24 @@
 			)
 		)
 		(property "Description" "Fail-safe relay, both poles in parallel; de-energised = R_failsafe"
+			(at 152.4 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Omron"
+			(at 152.4 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "G5V-2-H1 DC5"
 			(at 152.4 175.26 0)
 			(effects
 				(font
@@ -6725,6 +7067,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Murata"
+			(at 208.28 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM21BR61C106KE15L"
+			(at 208.28 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "9f905c72-f1ec-5864-9eec-f2c5516f90c2")
 		)
@@ -6806,6 +7166,24 @@
 			)
 		)
 		(property "Description" "Optional TEM preload (~18 mA), fit only if no-load output > 5.4 V"
+			(at 220.98 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Vishay Beyschlag"
+			(at 220.98 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "MBB02070C2700FC100"
 			(at 220.98 38.1 0)
 			(effects
 				(font
@@ -6903,6 +7281,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 233.68 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-071K5L"
+			(at 233.68 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bfd75587-5223-5910-8fbb-a1fd6170d867")
 		)
@@ -6984,6 +7380,24 @@
 			)
 		)
 		(property "Description" "VDD_ISO present"
+			(at 233.68 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Lite-On"
+			(at 233.68 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "LTST-C171GKT"
 			(at 233.68 45.72 0)
 			(effects
 				(font
@@ -7081,6 +7495,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Murata"
+			(at 177.8 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM21BR71H104KA01L"
+			(at 177.8 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "58cf12f1-1211-5c9d-bf07-164c239354c5")
 		)
@@ -7162,6 +7594,24 @@
 			)
 		)
 		(property "Description" "I2C pull-up SDC side"
+			(at 190.5 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 190.5 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-074K7L"
 			(at 190.5 101.6 0)
 			(effects
 				(font
@@ -7259,6 +7709,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 198.12 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-074K7L"
+			(at 198.12 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a79470ba-6655-5c09-9f4d-e301d4012740")
 		)
@@ -7340,6 +7808,24 @@
 			)
 		)
 		(property "Description" "1024-step 50k digital rheostat, I2C address 0x2F (ADDR=GND)"
+			(at 241.3 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Analog Devices"
+			(at 241.3 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "AD5272BRMZ-50"
 			(at 241.3 121.92 0)
 			(effects
 				(font
@@ -7549,6 +8035,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Murata"
+			(at 223.52 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM21BR71H104KA01L"
+			(at 223.52 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ebc60a24-ae24-56de-8aba-e75d7968aac3")
 		)
@@ -7630,6 +8134,24 @@
 			)
 		)
 		(property "Description" "U2 VDD decoupling"
+			(at 231.14 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Murata"
+			(at 231.14 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM21BR61C106KE15L"
 			(at 231.14 101.6 0)
 			(effects
 				(font
@@ -7727,6 +8249,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Murata"
+			(at 269.24 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM21BR71C105KA01L"
+			(at 269.24 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8829c8e8-d88d-55e3-84e5-2f0bcbedfa38")
 		)
@@ -7808,6 +8348,24 @@
 			)
 		)
 		(property "Description" "R_series: hardware floor ~27 C even if the AD5272 is unpowered or shorted"
+			(at 208.28 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 208.28 175.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RN55E1822BB14"
 			(at 208.28 175.26 0)
 			(effects
 				(font
@@ -7905,6 +8463,24 @@
 				(hide yes)
 			)
 		)
+		(property "Manufacturer" "Vishay Dale"
+			(at 208.28 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RN55E2492BB14"
+			(at 208.28 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "c7fbd86f-893f-539c-916e-75bd01c24276")
 		)
@@ -7986,6 +8562,24 @@
 			)
 		)
 		(property "Description" "To SDC X6-6 (VE1) and X5 (GND)"
+			(at 254 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Phoenix Contact"
+			(at 254 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "1715721"
 			(at 254 177.8 0)
 			(effects
 				(font
