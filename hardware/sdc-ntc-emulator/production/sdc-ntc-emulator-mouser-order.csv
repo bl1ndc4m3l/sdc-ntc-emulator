@@ -1,0 +1,25 @@
+Quantity,Mfr. Part Number,Manufacturer,Customer Part Number,Description,Qty per board
+1,EEU-FR1A471,Panasonic,C1,"470 uF 10 V, 8 x 11.5 mm, 3.5 mm pitch, low ESR",1
+10,GRM21BR71H104KA01L,Murata,C2 C3 C5 C6,100 nF 50 V X7R 0805,4
+5,GRM21BR61C106KE15L,Murata,C4 C7,10 uF 16 V X5R 0805,2
+5,GRM21BR71C105KA01L,Murata,C8,1 uF 16 V X7R 0805,1
+3,GRM31CR71E106KA12L,Murata,C9,10 uF 25 V X7R 1206,1
+3,1N4148W-7-F,Diodes Incorporated,D1,SOD-123,1
+3,LTST-C171GKT,Lite-On,D2,green LED 0805,1
+2,PPTC221LFBN-RC,Sullins Connector Solutions,J1 J2,"female header 1 x 22, 2.54 mm",2
+2,1715721,Phoenix Contact,J3 J4,"MKDS 1,5/ 2-5,08 terminal block",2
+1,G5V-2-H1 DC5,Omron,K1,"DPDT signal relay, 5 V high-sensitivity coil",1
+3,AO3400A,Alpha & Omega Semiconductor,Q1,N-MOSFET SOT-23,1
+3,AO3401A,Alpha & Omega Semiconductor,Q2,P-MOSFET SOT-23,1
+10,RC0805FR-072K7L,Yageo,R1 R2,2.7 k 1 % 0805,2
+10,RC0805FR-07100KL,Yageo,R3,100 k 1 % 0805,1
+10,RC0805FR-07100RL,Yageo,R4,100 R 1 % 0805,1
+10,RC0805FR-074K7L,Yageo,R5 R6,4.7 k 1 % 0805,2
+10,RC0805FR-071K5L,Yageo,R7,1.5 k 1 % 0805,1
+10,RC0805FR-0710KL,Yageo,R11,10 k 1 % 0805,1
+10,RC0805FR-0720KL,Yageo,R12,20 k 1 % 0805,1
+1,MBB02070C2700FC100,Vishay Beyschlag,R8,"270 R 0.6 W 0207, DNP - only if needed",1
+2,RN55E1822BB14,Vishay Dale,R9,18.2 k 0.1 % 25 ppm axial (alt.: any RN55E1822B...),1
+2,RN55E2492BB14,Vishay Dale,R10,24.9 k 0.1 % 25 ppm axial (alt.: any RN55E2492B...),1
+2,ISO1540DR,Texas Instruments,U1,I2C isolator SOIC-8,1
+2,AD5272BRMZ-50,Analog Devices,U2,50 k digital rheostat MSOP-10 (spare for hand soldering),1

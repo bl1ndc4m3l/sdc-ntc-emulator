@@ -61,16 +61,19 @@ def bom():
             purposes = "; ".join(dict.fromkeys(d for _, d in items if d))
             w.writerow([len(refs), " ".join(refs), value, fp.split(":")[1], purposes, dnp or "fit"])
     print("  wrote", path)
-    digikey()
+    order_file("digikey", ["Quantity", "Manufacturer Part Number", "Manufacturer",
+                           "Customer Reference", "Description", "Qty per board"])
+    order_file("mouser", ["Quantity", "Mfr. Part Number", "Manufacturer",
+                          "Customer Part Number", "Description", "Qty per board"])
 
 
-def digikey():
-    """Upload file for DigiKey's BOM Manager (matched on Manufacturer Part Number)."""
-    path = os.path.join(OUT, NAME + "-digikey-order.csv")
+def order_file(shop, header):
+    """Upload file for the distributor's BOM tool (DigiKey BOM Manager, Mouser BOM Tool).
+    Both match on the manufacturer part number; only the column names differ."""
+    path = os.path.join(OUT, f"{NAME}-{shop}-order.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["Quantity", "Manufacturer Part Number", "Manufacturer", "Customer Reference",
-                    "Description", "Qty per board"])
+        w.writerow(header)
         for refs, (mfr, mpn, order, note) in design.MPN.items():
             if order == 0:
                 continue
