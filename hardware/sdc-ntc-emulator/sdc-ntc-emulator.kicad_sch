@@ -1233,6 +1233,589 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:USB_C_Receptacle_PowerOnly_6P"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 16.51 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "Value" "USB_C_Receptacle_PowerOnly_6P"
+				(at 0 13.97 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify bottom)
+				)
+			)
+			(property "Footprint" ""
+				(at 3.81 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.usb.org/sites/default/files/documents/usb_type-c.zip"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "USB Power-Only 6P Type-C Receptacle connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "usb universal serial bus type-C power-only charging-only 6P 6C"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "USB*C*Receptacle*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "USB_C_Receptacle_PowerOnly_6P_0_0"
+				(rectangle
+					(start -0.254 -12.7)
+					(end 0.254 -11.684)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 7.874)
+					(end 9.144 7.366)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 -4.826)
+					(end 9.144 -5.334)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 10.16 -7.366)
+					(end 9.144 -7.874)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "USB_C_Receptacle_PowerOnly_6P_0_1"
+				(rectangle
+					(start -10.16 12.7)
+					(end 10.16 -12.7)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -8.89 -1.27)
+						(xy -8.89 6.35)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -7.62 -1.27)
+					(end -6.35 6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(arc
+					(start -7.62 6.35)
+					(mid -6.985 6.9823)
+					(end -6.35 6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -7.62 6.35)
+					(mid -6.985 6.9823)
+					(end -6.35 6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(arc
+					(start -8.89 6.35)
+					(mid -6.985 8.2467)
+					(end -5.08 6.35)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -5.08 -1.27)
+					(mid -6.985 -3.1667)
+					(end -8.89 -1.27)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -6.35 -1.27)
+					(mid -6.985 -1.9023)
+					(end -7.62 -1.27)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -6.35 -1.27)
+					(mid -6.985 -1.9023)
+					(end -7.62 -1.27)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -5.08 6.35)
+						(xy -5.08 -1.27)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center -2.54 3.683)
+					(radius 0.635)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 6.858)
+						(xy 0 9.398)
+						(xy 1.27 6.858)
+						(xy -1.27 6.858)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0.508)
+						(xy 2.54 3.048)
+						(xy 2.54 4.318)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -0.762)
+						(xy -2.54 1.778)
+						(xy -2.54 3.048)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -3.302)
+						(xy 0 6.858)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0 -3.302)
+					(radius 1.27)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 1.905 4.318)
+					(end 3.175 5.588)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "USB_C_Receptacle_PowerOnly_6P_1_1"
+				(pin passive line
+					(at -7.62 -17.78 90)
+					(length 5.08)
+					(name "SHIELD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "S1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -17.78 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -17.78 90)
+					(length 5.08)
+					(hide yes)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 15.24 7.62 180)
+					(length 5.08)
+					(name "VBUS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 15.24 7.62 180)
+					(length 5.08)
+					(hide yes)
+					(name "VBUS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 -5.08 180)
+					(length 5.08)
+					(name "CC1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 -7.62 180)
+					(length 5.08)
+					(name "CC2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Transistor_FET:AO3401A"
 			(pin_names
 				(hide yes)
@@ -1855,7 +2438,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "sdc_emulator:TEM2-0511"
+		(symbol "sdc_emulator:TMR1-0511"
 			(pin_names
 				(offset 0.508)
 			)
@@ -1863,7 +2446,7 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "PS"
-				(at -7.62 10.16 0)
+				(at -7.62 6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1871,8 +2454,8 @@
 					(justify left)
 				)
 			)
-			(property "Value" "TEM2-0511"
-				(at -7.62 -12.7 0)
+			(property "Value" "TMR1-0511"
+				(at -7.62 -6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1880,8 +2463,8 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "sdc_emulator:Traco_TEM2_Single_DIP24"
-				(at 0 -15.24 0)
+			(property "Footprint" "Converter_DCDC:Converter_DCDC_TRACO_TMR-1-xxxx_Single_THT"
+				(at 0 -8.89 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1889,8 +2472,8 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://www.tracopower.com/sites/default/files/products/datasheets/tem2_datasheet.pdf"
-				(at 0 -17.78 0)
+			(property "Datasheet" "https://www.tracopower.com/sites/default/files/products/datasheets/tmr1_datasheet.pdf"
+				(at 0 -11.43 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1898,8 +2481,8 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Traco TEM 2 isolated DC/DC 2 W, 5 V in, 5 V / 400 mA out, 1000 VDC, DIP-24 (pins 4-9, 16-21 absent)"
-				(at 0 -20.32 0)
+			(property "Description" "Traco TMR 1 isolated DC/DC 1 W regulated, 4.5-9 V in, 5 V / 200 mA out, 1500 VDC, SIP-6 (pins 3 and 5 absent)"
+				(at 0 -13.97 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1907,10 +2490,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "TEM2-0511_0_1"
+			(symbol "TMR1-0511_0_1"
 				(rectangle
-					(start -7.62 7.62)
-					(end 7.62 -10.16)
+					(start -7.62 5.08)
+					(end 7.62 -5.08)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -1921,8 +2504,8 @@
 				)
 				(polyline
 					(pts
-						(xy 0 7.62)
-						(xy 0 -10.16)
+						(xy 0 5.08)
+						(xy 0 -5.08)
 					)
 					(stroke
 						(width 0.254)
@@ -1933,156 +2516,11 @@
 					)
 				)
 			)
-			(symbol "TEM2-0511_1_1"
-				(pin power_in line
-					(at -10.16 5.08 0)
-					(length 2.54)
-					(name "+Vin"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
+			(symbol "TMR1-0511_1_1"
 				(pin power_in line
 					(at -10.16 2.54 0)
 					(length 2.54)
 					(name "+Vin"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "24"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at -10.16 -5.08 0)
-					(length 2.54)
-					(name "-Vin"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "12"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at -10.16 -7.62 0)
-					(length 2.54)
-					(name "-Vin"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "13"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_out line
-					(at 10.16 5.08 180)
-					(length 2.54)
-					(name "+Vout"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "14"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 10.16 2.54 180)
-					(length 2.54)
-					(name "+Vout"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "11"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_out line
-					(at 10.16 -5.08 180)
-					(length 2.54)
-					(name "-Vout"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "15"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 10.16 -7.62 180)
-					(length 2.54)
-					(name "-Vout"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin no_connect line
-					(at -5.08 -12.7 90)
-					(length 2.54)
-					(hide yes)
-					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2097,18 +2535,17 @@
 						)
 					)
 				)
-				(pin no_connect line
-					(at -2.54 -12.7 90)
+				(pin power_in line
+					(at -10.16 -2.54 0)
 					(length 2.54)
-					(hide yes)
-					(name "NC"
+					(name "-Vin"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "3"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2116,18 +2553,17 @@
 						)
 					)
 				)
-				(pin no_connect line
-					(at 2.54 -12.7 90)
+				(pin power_out line
+					(at 10.16 2.54 180)
 					(length 2.54)
-					(hide yes)
-					(name "NC"
+					(name "+Vout"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "22"
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2135,18 +2571,17 @@
 						)
 					)
 				)
-				(pin no_connect line
-					(at 5.08 -12.7 90)
+				(pin power_out line
+					(at 10.16 -2.54 180)
 					(length 2.54)
-					(hide yes)
-					(name "NC"
+					(name "-Vout"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "23"
+					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2496,130 +2931,6 @@
 						)
 					)
 					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "Device:R"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "R"
-				(at 2.032 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "R"
-				(at 0 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at -1.778 0 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Resistor"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "R res resistor"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "R_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "R_0_1"
-				(rectangle
-					(start -1.016 -2.54)
-					(end 1.016 2.54)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "R_1_1"
-				(pin passive line
-					(at 0 3.81 270)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -3.81 90)
-					(length 1.27)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3875,6 +4186,642 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:Conn_01x04_Pin"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x04_Pin"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x04, script generated"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x04_Pin_1_1"
+				(rectangle
+					(start 0.8636 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54)
+						(xy 0.8636 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0)
+						(xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -2.54)
+						(xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -5.08)
+						(xy 0.8636 -5.08)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 180)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Isolator:ISO7721D"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at 0 10.795 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "ISO7721D"
+				(at 0 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/iso7721.pdf"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Low Power Dual-Channel 1/1 Digital Isolator, 100Mbps 11ns, Fail-Safe High, SOIC-8 (150mil)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "2Ch Dual Digital Isolator 100Mbps"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "*SOIC*3.9x4.9mm*P1.27mm*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "ISO7721D_0_1"
+				(rectangle
+					(start -7.62 7.62)
+					(end 7.62 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 6.35)
+						(xy -1.27 5.08)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 3.81)
+						(xy -1.27 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 1.27)
+						(xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -1.27)
+						(xy -1.27 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 -3.81)
+						(xy -1.27 -5.08)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.635 2.54)
+						(xy 0.635 3.175)
+						(xy 0.635 1.905)
+						(xy -0.635 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.635 0.635)
+						(xy -0.635 -0.635)
+						(xy 0.635 0)
+						(xy -0.635 0.635)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 6.35)
+						(xy 1.27 5.08)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 3.81)
+						(xy 1.27 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 1.27)
+						(xy 1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.27)
+						(xy 1.27 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -3.81)
+						(xy 1.27 -5.08)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "ISO7721D_1_1"
+				(pin power_in line
+					(at -10.16 5.08 0)
+					(length 2.54)
+					(name "VCC1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -10.16 2.54 0)
+					(length 2.54)
+					(name "OUTA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 0 0)
+					(length 2.54)
+					(name "INB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -10.16 -2.54 0)
+					(length 2.54)
+					(name "GND1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 10.16 5.08 180)
+					(length 2.54)
+					(name "VCC2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 10.16 2.54 180)
+					(length 2.54)
+					(name "INA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 10.16 0 180)
+					(length 2.54)
+					(name "OUTB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 10.16 -2.54 180)
+					(length 2.54)
+					(name "GND2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Potentiometer_Digital:AD5272BRM"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4411,7 +5358,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "ESP32-S3-DevKitC-1 header J1 (3V3/GPIO4/GPIO8/GPIO9/5V/GND)"
+		(property "Description" "ESP32-S3-DevKitC-1 header J1 (3V3/GPIO4-9/5V/GND)"
 			(at 30.48 76.2 0)
 			(effects
 				(font
@@ -4561,13 +5508,27 @@
 		)
 		(uuid "54d2bc45-823f-589f-97ff-eff4992e7452")
 	)
-	(no_connect
-		(at 25.4 63.5)
-		(uuid "e5c201b5-e080-5c85-aa26-bfa6a32b9a60")
+	(label "SVC_RX"
+		(at 25.4 63.5 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "30a2d7f4-d1a1-5a7c-95d5-9a4c5ccf09ff")
 	)
-	(no_connect
-		(at 25.4 66.04)
-		(uuid "615a1a11-d3ba-5287-b946-0f35311e8848")
+	(label "SVC_TX"
+		(at 25.4 66.04 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a1ed5121-4867-5ea5-b0eb-b456c8f218cc")
 	)
 	(no_connect
 		(at 25.4 68.58)
@@ -4700,7 +5661,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "ESP32-S3-DevKitC-1 header J3 (GND only, mechanical)"
+		(property "Description" "ESP32-S3-DevKitC-1 header J3 (GPIO1/GPIO2, GND)"
 			(at 30.48 160.02 0)
 			(effects
 				(font
@@ -4814,13 +5775,27 @@
 		(at 25.4 139.7)
 		(uuid "4eb66f76-5db6-53a2-a283-cc9491980a80")
 	)
-	(no_connect
-		(at 25.4 142.24)
-		(uuid "ca746a2a-4ef8-5822-b203-95c4b2aa6999")
+	(label "EXT_IO1"
+		(at 25.4 142.24 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ca3acfa7-77cc-5deb-9d23-c5d67ca10c95")
 	)
-	(no_connect
-		(at 25.4 144.78)
-		(uuid "5d034ae4-4189-58cc-9e52-6a6861bdf234")
+	(label "EXT_IO2"
+		(at 25.4 144.78 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "5cc7f94c-3282-5f09-ac49-420b3165b4eb")
 	)
 	(no_connect
 		(at 25.4 147.32)
@@ -5010,6 +5985,397 @@
 			(justify left bottom)
 		)
 		(uuid "78436b53-4980-57ce-a7e6-0ece05e297fe")
+	)
+	(symbol
+		(lib_id "Connector:USB_C_Receptacle_PowerOnly_6P")
+		(at 294.64 205.74 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c2858119-e49b-5f41-a79c-79791794f572")
+		(property "Reference" "J7"
+			(at 294.64 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "USB-C 5V IN"
+			(at 294.64 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x-0190_6P_TopMnt_Horizontal"
+			(at 294.64 205.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.usb.org/sites/default/files/documents/usb_type-c.zip"
+			(at 294.64 205.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "5 V input alternative to J3 (any USB-C charger); power sink only, never above 5 V"
+			(at 294.64 205.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 294.64 205.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "USB4125-GF-A-0190"
+			(at 294.64 205.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "S1"
+			(uuid "43429da0-70fa-55c4-bef3-69444c5e7c99")
+		)
+		(pin "A12"
+			(uuid "7caa1411-681c-5648-9dd9-beb77c5afa4b")
+		)
+		(pin "B12"
+			(uuid "dd96ae91-4b22-57e1-8417-f74874cba497")
+		)
+		(pin "A9"
+			(uuid "aba8c783-bd0b-5a6f-8b6a-cce5147043e7")
+		)
+		(pin "B9"
+			(uuid "a8bb7645-b3ad-5c31-9fc3-f525a6b988d7")
+		)
+		(pin "A5"
+			(uuid "94bdefe8-057a-5a8e-8f5d-cd0447838a9c")
+		)
+		(pin "B5"
+			(uuid "f95ccf53-0e75-5439-8664-45d6690cb09c")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "J7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GND"
+		(at 287.02 223.52 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0361e012-8302-5c2c-9c4c-fcb44334435e")
+	)
+	(label "GND"
+		(at 294.64 223.52 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d889af10-e1e9-5615-aa0b-9a872ea5f80d")
+	)
+	(label "GND"
+		(at 294.64 223.52 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d889af10-e1e9-5615-aa0b-9a872ea5f80d")
+	)
+	(label "+5V_IN"
+		(at 309.88 198.12 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "aff7056d-7aa9-5eb7-b997-4d466449059f")
+	)
+	(label "+5V_IN"
+		(at 309.88 198.12 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "aff7056d-7aa9-5eb7-b997-4d466449059f")
+	)
+	(label "USB_CC1"
+		(at 309.88 210.82 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b7a994ad-aa5f-563a-b376-78e896897cf5")
+	)
+	(label "USB_CC2"
+		(at 309.88 213.36 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5df58d88-d62b-556d-bade-38e79f4d074a")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 322.58 213.36 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2b0a9810-ac27-5ef4-9a34-3b0f31026cab")
+		(property "Reference" "R22"
+			(at 324.612 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "5k1"
+			(at 322.58 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 322.58 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 322.58 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "USB-C CC1 Rd: identifies the board as a sink, the charger then supplies 5 V"
+			(at 322.58 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Bourns"
+			(at 322.58 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CR0805-FX-5101ELF"
+			(at 322.58 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "92ff854f-74c2-5e2f-b177-f68adea40d3a")
+		)
+		(pin "2"
+			(uuid "94b49592-5d7d-5d17-a855-d940800582cf")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "USB_CC1"
+		(at 322.58 209.55 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6c45882e-e15a-575f-adaa-ec173972192e")
+	)
+	(label "GND"
+		(at 322.58 217.17 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "80897067-3e2f-5a38-91e0-b97392b95d5b")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 332.74 213.36 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "426f8f16-441e-5771-b3ee-77e18e878e83")
+		(property "Reference" "R23"
+			(at 334.772 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "5k1"
+			(at 332.74 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 332.74 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 332.74 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "USB-C CC2 Rd (cable can be plugged either way round)"
+			(at 332.74 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Bourns"
+			(at 332.74 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CR0805-FX-5101ELF"
+			(at 332.74 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0d3afee9-ac55-5fbc-af70-e9ab9d07ee66")
+		)
+		(pin "2"
+			(uuid "2b8821de-0708-5967-8fd5-3b8a1284f9e1")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R23")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "USB_CC2"
+		(at 332.74 209.55 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ecb1da45-6d68-51c8-905e-a2656428433d")
+	)
+	(label "GND"
+		(at 332.74 217.17 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "41ddf044-d909-5ec2-8b52-ee5bde3f0b17")
 	)
 	(symbol
 		(lib_id "Transistor_FET:AO3401A")
@@ -5300,7 +6666,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM31CR71E106KA12L"
+		(property "MPN" "GRM31CR71E106MA12L"
 			(at 95.25 38.1 0)
 			(effects
 				(font
@@ -5363,7 +6729,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF"
+		(property "Value" "10uF 16V X5R"
 			(at 102.235 40.64 0)
 			(effects
 				(font
@@ -5389,7 +6755,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "TEM 2-0511 input decoupling"
+		(property "Description" "TMR 1-0511 input decoupling (80 mA p-p reflected ripple)"
 			(at 101.6 38.1 0)
 			(effects
 				(font
@@ -5398,7 +6764,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Yageo"
 			(at 101.6 38.1 0)
 			(effects
 				(font
@@ -5407,7 +6773,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM21BR71H104KA01L"
+		(property "MPN" "CC0805KRX5R7BB106"
 			(at 101.6 38.1 0)
 			(effects
 				(font
@@ -5454,7 +6820,7 @@
 		(uuid "b87a7aa9-ee96-54cc-8c78-7cac0a9afb0d")
 	)
 	(symbol
-		(lib_id "sdc_emulator:TEM2-0511")
+		(lib_id "sdc_emulator:TMR1-0511")
 		(at 142.24 45.72 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5463,22 +6829,22 @@
 		(dnp no)
 		(uuid "f774f9a5-6144-5128-b04c-3d1909d4a989")
 		(property "Reference" "PS1"
-			(at 134.62 35.56 0)
+			(at 134.62 39.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "TEM 2-0511"
-			(at 134.62 58.42 0)
+		(property "Value" "TMR 1-0511"
+			(at 134.62 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "sdc_emulator:Traco_TEM2_Single_DIP24"
+		(property "Footprint" "Converter_DCDC:Converter_DCDC_TRACO_TMR-1-xxxx_Single_THT"
 			(at 142.24 45.72 0)
 			(effects
 				(font
@@ -5487,7 +6853,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.tracopower.com/sites/default/files/products/datasheets/tem2_datasheet.pdf"
+		(property "Datasheet" "https://www.tracopower.com/sites/default/files/products/datasheets/tmr1_datasheet.pdf"
 			(at 142.24 45.72 0)
 			(effects
 				(font
@@ -5496,7 +6862,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Traco TEM 2-0511 isolated DC/DC 5 V -> 5 V, 1000 VDC"
+		(property "Description" "Traco TMR 1-0511 isolated DC/DC 5 V -> 5 V regulated, 200 mA, 1500 VDC, SIP-6"
 			(at 142.24 45.72 0)
 			(effects
 				(font
@@ -5514,7 +6880,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "TEM 2-0511"
+		(property "MPN" "TMR 1-0511"
 			(at 142.24 45.72 0)
 			(effects
 				(font
@@ -5523,41 +6889,17 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "463f1da2-acda-5aca-9aa7-ae7918b2748e")
-		)
-		(pin "24"
-			(uuid "6e8fb492-5271-5662-931c-57ce73123916")
-		)
-		(pin "12"
-			(uuid "cd659a70-b5b6-58f8-8a76-60dbbf6b9a13")
-		)
-		(pin "13"
-			(uuid "dfdbbdcf-d7ba-587e-885b-873d2df3dba0")
-		)
-		(pin "14"
-			(uuid "ade21554-af56-5fad-a834-59def2177b2d")
-		)
-		(pin "11"
-			(uuid "27051580-191f-54be-a8b2-3eece3cfcfd7")
-		)
-		(pin "15"
-			(uuid "e79d97d1-155c-5a7e-8bdd-c518588f4560")
-		)
-		(pin "10"
-			(uuid "249bfb02-8ca0-550d-831b-273b1a5e8b3a")
-		)
 		(pin "2"
 			(uuid "3dfbde52-60f4-5f93-a70f-cea00e6bbe31")
 		)
-		(pin "3"
-			(uuid "34b4ec28-c87d-573c-b272-503e95819e5c")
+		(pin "1"
+			(uuid "463f1da2-acda-5aca-9aa7-ae7918b2748e")
 		)
-		(pin "22"
-			(uuid "243663ff-eeba-5b54-b939-f50c33f0c3b8")
+		(pin "4"
+			(uuid "aec06453-2d0b-5797-9cdd-fc0baf755e00")
 		)
-		(pin "23"
-			(uuid "2bb45d69-eca6-583d-8a36-72137e9495c3")
+		(pin "6"
+			(uuid "71f5a1c4-af06-568e-8942-091e93bbecd5")
 		)
 		(instances
 			(project "sdc-ntc-emulator"
@@ -5567,17 +6909,6 @@
 				)
 			)
 		)
-	)
-	(label "+5V"
-		(at 132.08 40.64 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b2080dad-53bc-5c11-bbb2-2971d8e0a015")
 	)
 	(label "+5V"
 		(at 132.08 43.18 180)
@@ -5591,7 +6922,7 @@
 		(uuid "60a96d5d-df40-57dd-8852-3b4efdd4b2d6")
 	)
 	(label "GND"
-		(at 132.08 50.8 180)
+		(at 132.08 48.26 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5599,29 +6930,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "bd3a5af1-3649-5554-9e58-556cc74c1a1f")
-	)
-	(label "GND"
-		(at 132.08 53.34 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "b4d13500-64d2-5b9e-bc70-e608dba4c127")
-	)
-	(label "VDD_ISO"
-		(at 152.4 40.64 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9ebb2f8d-5ed4-57fd-af4f-acf01c46bc38")
+		(uuid "99179e89-9b81-5305-b0d8-1b5a71278837")
 	)
 	(label "VDD_ISO"
 		(at 152.4 43.18 0)
@@ -5635,7 +6944,7 @@
 		(uuid "576c034b-cd43-5fa1-b1e1-7e13f2d3170b")
 	)
 	(label "GND_ISO"
-		(at 152.4 50.8 0)
+		(at 152.4 48.26 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5643,18 +6952,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "8f98536d-81b5-5e78-ac71-3e83bd71d225")
-	)
-	(label "GND_ISO"
-		(at 152.4 53.34 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b6737013-3a3e-540a-b68c-a7f9f8bbc51c")
+		(uuid "6f78b1c3-3074-5c8a-aaad-99da81e99ae2")
 	)
 	(symbol
 		(lib_id "Isolator:ISO1540")
@@ -5899,7 +7197,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 106.68 111.76 0)
 			(effects
 				(font
@@ -5908,7 +7206,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM21BR71H104KA01L"
+		(property "MPN" "CL21B104KBCNNNC"
 			(at 106.68 111.76 0)
 			(effects
 				(font
@@ -6327,7 +7625,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Yageo"
+		(property "Manufacturer" "Stackpole Electronics"
 			(at 124.46 198.12 0)
 			(effects
 				(font
@@ -6336,7 +7634,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "RC0805FR-0720KL"
+		(property "MPN" "RMCF0805FT20K0"
 			(at 124.46 198.12 0)
 			(effects
 				(font
@@ -7016,6 +8314,1295 @@
 		(uuid "0285cf85-2e3e-5f22-9dae-cad3ccb33c7c")
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 294.64 33.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4ca82b2d-29d1-57dc-8aa9-9cf73dff50ba")
+		(property "Reference" "R13"
+			(at 296.672 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2k2"
+			(at 294.64 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 294.64 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 294.64 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "5 V power LED resistor (~1.3 mA)"
+			(at 294.64 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 294.64 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-072K2L"
+			(at 294.64 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "acf21da2-e132-5df8-b3ef-39cd74b6a264")
+		)
+		(pin "2"
+			(uuid "b089774f-f080-508d-b9c0-7e9a29de9332")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+5V"
+		(at 294.64 29.21 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9b049e93-cbe5-5039-aa96-09d3a87f6d05")
+	)
+	(label "LED_PWR"
+		(at 294.64 36.83 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a93a972c-d53e-5d0c-a271-2fb2b87d4a11")
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 294.64 45.72 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8d69b8ec-6d50-5398-9a72-01ea4cbfe191")
+		(property "Reference" "D3"
+			(at 292.1 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "green"
+			(at 297.18 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder"
+			(at 294.64 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 294.64 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "5 V present (after the reverse-polarity FET)"
+			(at 294.64 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Lite-On"
+			(at 294.64 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "LTST-C171GKT"
+			(at 294.64 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a23f6e9b-ee79-53d1-b98a-4d3ad890a6d9")
+		)
+		(pin "2"
+			(uuid "41f6b943-2fb1-56f0-a34f-2bf965972f07")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GND"
+		(at 294.64 49.53 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d5393eca-7a22-5f69-95f9-256a358e90f6")
+	)
+	(label "LED_PWR"
+		(at 294.64 41.91 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "0b4377c8-ed6b-5799-a4ba-ca7c6a44f25b")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 314.96 33.02 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "85b9a776-0ebc-5a9e-9278-33593fe465d7")
+		(property "Reference" "R14"
+			(at 316.992 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2k2"
+			(at 314.96 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 314.96 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 314.96 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Relay LED resistor (~1.3 mA)"
+			(at 314.96 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 314.96 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-072K2L"
+			(at 314.96 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "579af585-f7fa-50b6-bd8d-f0248cb07925")
+		)
+		(pin "2"
+			(uuid "ccbaae28-c231-50f3-b4d6-bf00bd28d131")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+5V"
+		(at 314.96 29.21 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "edd43caf-aa32-5d44-bef5-c9f514c8d26d")
+	)
+	(label "LED_REL"
+		(at 314.96 36.83 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0f2399a7-34b8-5f02-9b9a-a58ddde066ff")
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 314.96 45.72 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "40da8ca7-b776-57b1-b891-b2f3f14a3ea6")
+		(property "Reference" "D4"
+			(at 312.42 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "yellow"
+			(at 317.5 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder"
+			(at 314.96 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 314.96 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Relay coil energised (parallel to the coil: shows the real coil state)"
+			(at 314.96 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Lite-On"
+			(at 314.96 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "LTST-C171YKT"
+			(at 314.96 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "996195b9-c090-564c-ae87-4e0c4b15e129")
+		)
+		(pin "2"
+			(uuid "e24847c7-3fa1-58f0-ab54-6dd4346b2db1")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "COIL_N"
+		(at 314.96 49.53 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "77d56bd7-1f82-567d-babf-5f0562da65a8")
+	)
+	(label "LED_REL"
+		(at 314.96 41.91 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2cee6820-bb6d-5ea3-8ca6-08f9d2cd1fb1")
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 294.64 76.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "446b2885-3c0b-5016-a8a4-3e5d1a2bf576")
+		(property "Reference" "J6"
+			(at 294.64 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "EXT I/O"
+			(at 294.64 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+			(at 294.64 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 294.64 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Expansion header: 3V3, GPIO2, GPIO1, GND"
+			(at 294.64 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Wurth Elektronik"
+			(at 294.64 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "61300411121"
+			(at 294.64 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "8a464764-97b4-5bf0-9993-1140fed6f9be")
+		)
+		(pin "2"
+			(uuid "b25dddd3-e776-5d0a-bc32-60347c1b471c")
+		)
+		(pin "3"
+			(uuid "6bbdd4a6-af66-5b33-906d-18adfdd8dd66")
+		)
+		(pin "4"
+			(uuid "3d240a6a-0eef-51e9-8073-39c70c7b653a")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "J6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+3V3"
+		(at 299.72 73.66 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "42109b86-df08-53e6-871c-5ce7a6ca00a2")
+	)
+	(label "EXT_IO2_H"
+		(at 299.72 76.2 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1326cdfc-04ab-59b3-8087-46314d4cbd0a")
+	)
+	(label "EXT_IO1_H"
+		(at 299.72 78.74 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d98d15cb-0a72-538f-83a7-5a0ada15f315")
+	)
+	(label "GND"
+		(at 299.72 81.28 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f89ef2dc-35bf-5214-b641-adf01f930bf9")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 309.88 73.66 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "28d6fb95-2e30-553e-92ae-d7a2192f6d5c")
+		(property "Reference" "R18"
+			(at 311.912 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100R"
+			(at 309.88 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 309.88 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 309.88 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Series resistor GPIO2 (ESD / short-circuit protection)"
+			(at 309.88 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 309.88 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-07100RL"
+			(at 309.88 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "09df193c-f645-541c-b935-528885796de8")
+		)
+		(pin "2"
+			(uuid "4c72dd0b-d2ef-5758-96ba-bfe1b190206c")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R18")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "EXT_IO2_H"
+		(at 309.88 69.85 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b9bb4461-bc03-5a17-974d-2461675e590e")
+	)
+	(label "EXT_IO2"
+		(at 309.88 77.47 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8ec59fef-59e3-5ee0-8b88-fcf1b363182b")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 309.88 91.44 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ed2d358d-c51b-5af1-bda5-fc5df88c9f0e")
+		(property "Reference" "R19"
+			(at 311.912 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100R"
+			(at 309.88 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 309.88 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 309.88 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Series resistor GPIO1 (ESD / short-circuit protection)"
+			(at 309.88 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 309.88 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-07100RL"
+			(at 309.88 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e5f348b8-17f0-5af6-96da-f219f004cddb")
+		)
+		(pin "2"
+			(uuid "72e2e1cd-6236-5883-934e-6e18f010ae00")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "EXT_IO1_H"
+		(at 309.88 87.63 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9b21e5d7-627b-5860-b36d-24d706f8c541")
+	)
+	(label "EXT_IO1"
+		(at 309.88 95.25 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fbcf8307-ff2f-5237-bdf2-2fc07b223930")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 325.12 68.58 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp yes)
+		(uuid "b4cc0b0f-5281-5e92-9899-704ede535d2a")
+		(property "Reference" "R20"
+			(at 325.12 66.548 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4k7"
+			(at 325.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 325.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 325.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Optional pull-up GPIO2 (I2C / 1-Wire)"
+			(at 325.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 325.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-074K7L"
+			(at 325.12 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2def439c-5c0b-5bef-b02b-976352f7a62d")
+		)
+		(pin "2"
+			(uuid "a85953fd-5ce7-5b36-a2c1-23e833e26683")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+3V3"
+		(at 321.31 68.58 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c028967d-f8a0-5f8b-967e-a1c223cea86d")
+	)
+	(label "EXT_IO2"
+		(at 328.93 68.58 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bcb66c65-2743-5a49-a52b-16c8f4ba7336")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 340.36 68.58 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp yes)
+		(uuid "9fe73f56-13c7-58e2-85ce-afe72c483326")
+		(property "Reference" "R21"
+			(at 340.36 66.548 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4k7"
+			(at 340.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 340.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 340.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Optional pull-up GPIO1 (I2C / 1-Wire)"
+			(at 340.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 340.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-074K7L"
+			(at 340.36 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b95d7c06-02fe-5850-80b5-d242c6f70190")
+		)
+		(pin "2"
+			(uuid "af5152a9-011d-5e51-8fb1-9b535de07614")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+3V3"
+		(at 336.55 68.58 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "97b1c7d1-fcda-5d94-b702-dfc459889435")
+	)
+	(label "EXT_IO1"
+		(at 344.17 68.58 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "dc5060cb-efef-5d4a-a653-0f94594d55ec")
+	)
+	(symbol
+		(lib_id "Isolator:ISO7721D")
+		(at 309.88 116.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9fd14a56-c417-539a-9373-52dc8e8c1339")
+		(property "Reference" "U3"
+			(at 309.88 106.045 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "ISO7721D"
+			(at 309.88 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+			(at 309.88 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/iso7721.pdf"
+			(at 309.88 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Service-port UART isolator, 1/1 channels, default output high (UART idle)"
+			(at 309.88 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 309.88 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "ISO7721DR"
+			(at 309.88 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b9316794-e633-5004-819f-bb4c43ebb8d4")
+		)
+		(pin "2"
+			(uuid "aa3fc86a-9fa4-58c4-a04e-15c478fbdb50")
+		)
+		(pin "3"
+			(uuid "e03fc640-f191-5b65-bd65-4f90eeb0810e")
+		)
+		(pin "4"
+			(uuid "42224a8a-6ccb-5bc1-9424-d4bb696c6a6d")
+		)
+		(pin "8"
+			(uuid "7ad6edcd-9ba0-532c-a6a1-8a5d46ba1077")
+		)
+		(pin "7"
+			(uuid "8ebf0993-412f-5a8a-a1e8-f610c5baa4bc")
+		)
+		(pin "6"
+			(uuid "97f3a216-61f4-547d-ad79-6a7b6f358a65")
+		)
+		(pin "5"
+			(uuid "fccf69be-d58c-5bd6-ba6c-6eef37eaf88e")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "U3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+3V3"
+		(at 299.72 111.76 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "5db1aa59-c9c2-5752-96f5-6c4c44a92cf1")
+	)
+	(label "SVC_RX"
+		(at 299.72 114.3 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "3435c0c0-eb2b-5f4f-a437-552bc056fc66")
+	)
+	(label "SVC_TX"
+		(at 299.72 116.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "128b254b-9e24-50c1-97ed-2a918c16be5f")
+	)
+	(label "GND"
+		(at 299.72 119.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a266087f-df4b-54f8-809f-df34bf55116e")
+	)
+	(label "VDD_ISO"
+		(at 320.04 111.76 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1740bb1d-3f7d-5baa-95e1-37b8e7fa06d4")
+	)
+	(label "SVC_RX_ISO"
+		(at 320.04 114.3 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fd67e0b2-dd16-565c-b42b-f8061f106f69")
+	)
+	(label "SVC_TX_ISO"
+		(at 320.04 116.84 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "64ccd329-e3eb-5a17-b742-a0a18b716346")
+	)
+	(label "GND_ISO"
+		(at 320.04 119.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "99e5ea0b-46a3-5cad-9deb-e18292691c22")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 289.56 114.3 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0a2d2d61-4af0-56a5-a845-add9ae8868aa")
+		(property "Reference" "C10"
+			(at 290.195 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 290.195 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 289.56 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 289.56 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "U3 VCC1 decoupling"
+			(at 289.56 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 289.56 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CL21B104KBCNNNC"
+			(at 289.56 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cfa4f740-d121-5895-8be2-c51b955f71f8")
+		)
+		(pin "2"
+			(uuid "a0b6835e-ef3a-5fef-898f-b85488d0891e")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "C10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+3V3"
+		(at 289.56 110.49 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e4ce713c-dd00-5584-9919-64ac63a66b97")
+	)
+	(label "GND"
+		(at 289.56 118.11 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c112e327-886a-550c-b3b4-c8a69e2237f3")
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 208.28 38.1 0)
 		(unit 1)
@@ -7058,7 +9645,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "TEM output buffer"
+		(property "Description" "TMR output buffer"
 			(at 208.28 38.1 0)
 			(effects
 				(font
@@ -7067,7 +9654,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Yageo"
 			(at 208.28 38.1 0)
 			(effects
 				(font
@@ -7076,7 +9663,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM21BR61C106KE15L"
+		(property "MPN" "CC0805KRX5R7BB106"
 			(at 208.28 38.1 0)
 			(effects
 				(font
@@ -7121,113 +9708,6 @@
 			(justify right bottom)
 		)
 		(uuid "1765bbea-cfcf-53e2-ae73-4e76333a60ba")
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 220.98 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp yes)
-		(uuid "5430f811-b06e-565b-8d22-9be01dec9c15")
-		(property "Reference" "R8"
-			(at 223.012 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "270R 0.6W"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Optional TEM preload (~18 mA), fit only if no-load output > 5.4 V"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer" "Vishay Beyschlag"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "MBB02070C2700FC100"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b61da329-28bc-57a6-81d7-00d6660b16ce")
-		)
-		(pin "2"
-			(uuid "321d895c-badf-5071-bbd2-f13bec5ec6c2")
-		)
-		(instances
-			(project "sdc-ntc-emulator"
-				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
-					(reference "R8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(label "VDD_ISO"
-		(at 220.98 34.29 90)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "00820db5-a229-5c1b-a76b-5b712605187e")
-	)
-	(label "GND_ISO"
-		(at 220.98 41.91 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "2cae7c16-a963-57c8-b085-4b8d3a7aab0f")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -7495,7 +9975,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 177.8 111.76 0)
 			(effects
 				(font
@@ -7504,7 +9984,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM21BR71H104KA01L"
+		(property "MPN" "CL21B104KBCNNNC"
 			(at 177.8 111.76 0)
 			(effects
 				(font
@@ -8035,7 +10515,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Samsung Electro-Mechanics"
 			(at 223.52 101.6 0)
 			(effects
 				(font
@@ -8044,7 +10524,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM21BR71H104KA01L"
+		(property "MPN" "CL21B104KBCNNNC"
 			(at 223.52 101.6 0)
 			(effects
 				(font
@@ -8142,7 +10622,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Murata"
+		(property "Manufacturer" "Yageo"
 			(at 231.14 101.6 0)
 			(effects
 				(font
@@ -8151,7 +10631,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM21BR61C106KE15L"
+		(property "MPN" "CC0805KRX5R7BB106"
 			(at 231.14 101.6 0)
 			(effects
 				(font
@@ -8258,7 +10738,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM21BR71C105KA01L"
+		(property "MPN" "GRM219R71E105KA88D"
 			(at 269.24 129.54 0)
 			(effects
 				(font
@@ -8356,7 +10836,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Vishay Dale"
+		(property "Manufacturer" "TE Connectivity"
 			(at 208.28 175.26 0)
 			(effects
 				(font
@@ -8365,7 +10845,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "RN55E1822BB14"
+		(property "MPN" "YR1B18K2CC"
 			(at 208.28 175.26 0)
 			(effects
 				(font
@@ -8463,7 +10943,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Vishay Dale"
+		(property "Manufacturer" "TE Connectivity"
 			(at 208.28 195.58 0)
 			(effects
 				(font
@@ -8472,7 +10952,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "RN55E2492BB14"
+		(property "MPN" "YR1B24K9CC"
 			(at 208.28 195.58 0)
 			(effects
 				(font
@@ -8624,6 +11104,569 @@
 			(justify right bottom)
 		)
 		(uuid "93ccd745-3483-5f1d-932b-a9bc6d27f5f0")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 335.28 114.3 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8bcb616a-3474-53f0-8944-6970a8977058")
+		(property "Reference" "C11"
+			(at 335.915 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 335.915 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 335.28 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 335.28 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "U3 VCC2 decoupling"
+			(at 335.28 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 335.28 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CL21B104KBCNNNC"
+			(at 335.28 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6494c6df-f14c-5fab-83f4-e27e58198a6f")
+		)
+		(pin "2"
+			(uuid "78c10cf3-9223-50c8-ba6b-9e9c99948563")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "C11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "VDD_ISO"
+		(at 335.28 110.49 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e27ab420-844d-5bb7-b12e-3b509db9ae9a")
+	)
+	(label "GND_ISO"
+		(at 335.28 118.11 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e11efb80-099f-5c94-857a-7e4abacdfbf8")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 345.44 104.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "83d925dc-446a-559e-a740-f7c704b24a07")
+		(property "Reference" "R15"
+			(at 347.472 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1k"
+			(at 345.44 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 345.44 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 345.44 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Service RX series resistor (cable protection, limits current on a wrong pinout)"
+			(at 345.44 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 345.44 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-071KL"
+			(at 345.44 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4a91083b-d71b-5e4d-83d7-f3f08cfb4e9a")
+		)
+		(pin "2"
+			(uuid "4641aa83-a24f-5c5e-8d4a-8e4d0cad2d65")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "SVC_RX_EXT"
+		(at 345.44 100.33 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "17a1980f-6a2b-577f-b8a0-f960056cd2be")
+	)
+	(label "SVC_RX_ISO"
+		(at 345.44 107.95 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "000d9bb2-dd06-53fd-9bb0-296f815d5195")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 345.44 124.46 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ad6dd77b-a16e-5456-a050-8ccad1791629")
+		(property "Reference" "R16"
+			(at 347.472 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1k"
+			(at 345.44 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 345.44 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 345.44 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Service TX series resistor (limits current if the SDC line also drives)"
+			(at 345.44 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 345.44 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805FR-071KL"
+			(at 345.44 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "12f46f9b-07c8-56cb-b893-1ae6e5357718")
+		)
+		(pin "2"
+			(uuid "03b0a6ad-b502-5585-9346-5a17db8e5cce")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "SVC_TX_EXT"
+		(at 345.44 120.65 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d3a7da57-cd5d-5e66-afa3-bce6d158e246")
+	)
+	(label "SVC_TX_ISO"
+		(at 345.44 128.27 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e53a1e98-0710-554b-be08-d8616951d653")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 345.44 139.7 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7602693c-87df-5494-9266-f809abc74dbc")
+		(property "Reference" "R17"
+			(at 347.472 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0R"
+			(at 345.44 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+			(at 345.44 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 345.44 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "VDD_ISO to the service connector; remove if the SDC port has its own 5 V"
+			(at 345.44 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 345.44 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0805JR-070RL"
+			(at 345.44 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6b7f112d-8504-5a39-b927-1b2acb34c10f")
+		)
+		(pin "2"
+			(uuid "be5a13b7-3c6b-5765-a69f-66dee285fdde")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "R17")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "SVC_5V"
+		(at 345.44 135.89 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "25429f32-6f74-5366-abc6-9135ebe414a7")
+	)
+	(label "VDD_ISO"
+		(at 345.44 143.51 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "58e52ccb-99a6-523d-9384-4b288bdd5eff")
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 365.76 116.84 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b98eaf4a-16cd-5274-9fe5-9068d4725573")
+		(property "Reference" "J5"
+			(at 365.76 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SDC SERVICE"
+			(at 365.76 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical"
+			(at 365.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 365.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "SDC service port: GND_ISO, RX (from SDC TX), TX (to SDC RX), 5 V (VDD_ISO)"
+			(at 365.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "JST"
+			(at 365.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "B4B-XH-A(LF)(SN)"
+			(at 365.76 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6ea3d692-25a5-5015-84d2-6cc4e9d56e6d")
+		)
+		(pin "2"
+			(uuid "fdd3b520-5d51-545e-8f66-b8d09a96320c")
+		)
+		(pin "3"
+			(uuid "c751aeec-2b85-52fd-832b-fa356ab1c0a2")
+		)
+		(pin "4"
+			(uuid "d2aabe9d-4633-5ec1-a9ff-295d2777add8")
+		)
+		(instances
+			(project "sdc-ntc-emulator"
+				(path "/d9cfafe7-d1f3-551b-a0cb-64d50125fa6c"
+					(reference "J5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "GND_ISO"
+		(at 360.68 119.38 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c199fba9-cee6-531f-9248-b6c69c976844")
+	)
+	(label "SVC_RX_EXT"
+		(at 360.68 116.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fa0d7a40-896f-5f97-8365-ca6637cae67a")
+	)
+	(label "SVC_TX_EXT"
+		(at 360.68 114.3 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "154d2507-eca3-57b8-98f5-36b490a78650")
+	)
+	(label "SVC_5V"
+		(at 360.68 111.76 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "37c98a83-9ff5-5fa4-b654-c45f32067323")
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
@@ -9119,7 +12162,7 @@
 		)
 		(uuid "4d0b1c50-4c7d-5a8d-bcb3-646b3c34be52")
 	)
-	(text "DevKit: ESP32-S3-DevKitC-1 (N16R8 clone), header rows 25.1 mm apart (measured).\nGPIO4 = RELAY_EN (ESPHome restore_mode ALWAYS_OFF), GPIO5 = RELAY_SENSE (LOW = coil on),\nGPIO8 = SDA, GPIO9 = SCL."
+	(text "DevKit: ESP32-S3-DevKitC-1 (N16R8 clone), header rows 25.1 mm apart (measured).\nGPIO4 = RELAY_EN (ESPHome restore_mode ALWAYS_OFF), GPIO5 = RELAY_SENSE (LOW = coil on),\nGPIO8 = SDA, GPIO9 = SCL, GPIO6 = service RX, GPIO7 = service TX (UART),\nGPIO1/GPIO2 = expansion header J6."
 		(exclude_from_sim no)
 		(at 20.32 228.6 0)
 		(effects
@@ -9128,7 +12171,18 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "bdd6d7c5-88fa-50b0-b4c9-9841269436f9")
+		(uuid "a35904ac-3d51-5fda-bb4a-d7a93680bf3a")
+	)
+	(text "SDC service port (J5): UART at 5 V logic, isolated by U3. Pinout of the SDC socket\nis not yet known: J5-2 RX must go to the SDC's TX, J5-3 TX to the SDC's RX.\nJ5-1 is GND_ISO (= SDC X5 ground): only connect if the port GND is the same potential.\nR17 (0R): remove if the SDC port has its own 5 V supply pin."
+		(exclude_from_sim no)
+		(at 284.48 157.48 0)
+		(effects
+			(font
+				(size 1.5 1.5)
+			)
+			(justify left bottom)
+		)
+		(uuid "a051ed03-97bb-5442-ac77-4d012ac3aee3")
 	)
 	(text "Relay K1: coil 1/16, COM 4/13, NC 6/11, NO 8/9 (Omron datasheet).\nBoth poles in parallel for dry-circuit reliability.\nDe-energised: VE1 -> R10 (fail-safe). Energised: VE1 -> R9 -> AD5272 W-A."
 		(exclude_from_sim no)
@@ -9152,7 +12206,7 @@
 		)
 		(uuid "ba763c5d-38ac-5c85-a5cd-e5eb771ec066")
 	)
-	(text "R8 is DNP: fit only if TEM no-load output > 5.4 V."
+	(text "PS1 TMR 1-0511: regulated, no minimum load. Pin 3/5 absent:\n5.08 mm between +Vin (2) and +Vout (4)."
 		(exclude_from_sim no)
 		(at 208.28 55.88 0)
 		(effects
@@ -9161,7 +12215,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "0b55a724-445f-5cb7-b394-0a06e6a475dd")
+		(uuid "d5d22367-a639-5f57-8352-f5b5cf536d51")
 	)
 	(sheet_instances
 		(path "/"

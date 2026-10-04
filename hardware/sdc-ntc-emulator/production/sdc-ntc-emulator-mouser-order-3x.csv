@@ -1,0 +1,34 @@
+Quantity,Mfr. Part Number,Manufacturer,Customer Part Number,Description,Qty per board
+3,EEU-FR1A471,Panasonic,C1,"470 uF 10 V, 8 x 11.5 mm, 3.5 mm pitch, low ESR",1
+20,CL21B104KBCNNNC,Samsung Electro-Mechanics,C3 C5 C6 C10 C11,100 nF 50 V X7R 0805,5
+10,CC0805KRX5R7BB106,Yageo,C2 C4 C7,10 uF 16 V X5R 0805,3
+10,GRM219R71E105KA88D,Murata,C8,1 uF 25 V X7R 0805,1
+10,GRM31CR71E106MA12L,Murata,C9,10 uF 25 V X7R 1206,1
+5,1N4148W-7-F,Diodes Incorporated,D1,SOD-123,1
+10,LTST-C171GKT,Lite-On,D2 D3,green LED 0805,2
+5,LTST-C171YKT,Lite-On,D4,yellow LED 0805,1
+6,PPTC221LFBN-RC,Sullins Connector Solutions,J1 J2,"female header 1 x 22, 2.54 mm",2
+6,1715721,Phoenix Contact,J3 J4,"MKDS 1,5/ 2-5,08 terminal block",2
+3,B4B-XH-A(LF)(SN),JST,J5,"XH 4-pin header, 2.5 mm, vertical",1
+3,61300411121,Wurth Elektronik,J6,"pin header 1 x 4, 2.54 mm",1
+3,USB4125-GF-A-0190,GCT,J7,"USB-C receptacle, power only, 6P, 1.9 mm shell stakes",1
+3,G5V-2-H1 DC5,Omron,K1,"DPDT signal relay, 5 V high-sensitivity coil",1
+5,AO3400A,Alpha & Omega Semiconductor,Q1,N-MOSFET SOT-23,1
+5,AO3401A,Alpha & Omega Semiconductor,Q2,P-MOSFET SOT-23,1
+25,RC0805FR-072K7L,Yageo,R1 R2,2.7 k 1 % 0805,2
+25,RC0805FR-07100KL,Yageo,R3,100 k 1 % 0805,1
+25,RC0805FR-07100RL,Yageo,R4 R18 R19,100 R 1 % 0805,3
+25,RC0805FR-074K7L,Yageo,R5 R6 R20 R21,4.7 k 1 % 0805 (R20/R21 optional),4
+25,RC0805FR-071K5L,Yageo,R7,1.5 k 1 % 0805,1
+25,RC0805FR-072K2L,Yageo,R13 R14,2.2 k 1 % 0805,2
+25,RC0805FR-071KL,Yageo,R15 R16,1 k 1 % 0805,2
+25,RC0805JR-070RL,Yageo,R17,0 R jumper 0805,1
+25,CR0805-FX-5101ELF,Bourns,R22 R23,5.1 k 1 % 0805 (USB-C Rd),2
+25,RC0805FR-0710KL,Yageo,R11,10 k 1 % 0805,1
+25,RMCF0805FT20K0,Stackpole Electronics,R12,20 k 1 % 0805,1
+3,YR1B18K2CC,TE Connectivity,R9,18.2 k 0.1 % 15 ppm 1/4 W axial 2.3 x 6.3 mm,1
+3,YR1B24K9CC,TE Connectivity,R10,24.9 k 0.1 % 15 ppm 1/4 W axial 2.3 x 6.3 mm,1
+3,ISO1540DR,Texas Instruments,U1,I2C isolator SOIC-8,1
+3,ISO7721DR,Texas Instruments,U3,"dual digital isolator 1/1, default high, SOIC-8",1
+4,AD5272BRMZ-50,Analog Devices,U2,50 k digital rheostat MSOP-10 (spare for hand soldering),1
+3,TMR 1-0511,Traco Power,PS1,"isolated DC/DC 1 W regulated, SIP-6",1

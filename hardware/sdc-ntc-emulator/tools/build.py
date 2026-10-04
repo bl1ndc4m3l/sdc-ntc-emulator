@@ -62,22 +62,28 @@ def bom():
             w.writerow([len(refs), " ".join(refs), value, fp.split(":")[1], purposes, dnp or "fit"])
     print("  wrote", path)
     order_file("digikey", ["Quantity", "Manufacturer Part Number", "Manufacturer",
-                           "Customer Reference", "Description", "Qty per board"])
+                           "Customer Reference", "Description", "Qty per board",
+                           "DigiKey Part Number"], design.DIGIKEY)
     order_file("mouser", ["Quantity", "Mfr. Part Number", "Manufacturer",
                           "Customer Part Number", "Description", "Qty per board"])
 
 
-def order_file(shop, header):
-    """Upload file for the distributor's BOM tool (DigiKey BOM Manager, Mouser BOM Tool).
-    Both match on the manufacturer part number; only the column names differ."""
-    path = os.path.join(OUT, f"{NAME}-{shop}-order.csv")
+def order_file(shop, header, shop_pn=None):
+    """Upload file for the distributor's BOM tool (DigiKey BOM Manager, Mouser BOM Tool),
+    with quantities for design.BOARDS boards.
+    Both match on the manufacturer part number; shop_pn (MPN -> distributor part number)
+    adds an exact-match column."""
+    path = os.path.join(OUT, f"{NAME}-{shop}-order-{design.BOARDS}x.csv")
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(header)
         for refs, (mfr, mpn, order, note) in design.MPN.items():
             if order == 0:
                 continue
-            w.writerow([order, mpn, mfr, refs, note, len(refs.split())])
+            row = [design.order_qty(refs, mpn, order), mpn, mfr, refs, note, len(refs.split())]
+            if shop_pn is not None:
+                row.append(shop_pn[mpn])
+            w.writerow(row)
     print("  wrote", path)
 
 

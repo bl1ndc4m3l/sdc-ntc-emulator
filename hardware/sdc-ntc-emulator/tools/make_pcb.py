@@ -41,12 +41,19 @@ DEVKIT_X0, DEVKIT_PIN1_Y = 10.0, 58.34
 PLACEMENT = {
     "J2": (DEVKIT_X0, DEVKIT_PIN1_Y, 180),                # DevKit header J3 (left row)
     "J1": (DEVKIT_X0 + DEVKIT_ROWS, DEVKIT_PIN1_Y, 180),  # DevKit header J1 (right row)
-    "J3": (47.08, 6.0, 180),     # 5 V in, wire entry towards top edge
-    "Q2": (53.5, 6.0, 180),      # reverse-polarity P-FET between J3 and C1
-    "C1": (62.0, 6.0, 0),
+    "J3": (45.18, 6.0, 180),     # 5 V in, wire entry towards top edge
+    # USB-C 5 V input next to J3, opening at the top edge (footprint: edge 2.825 mm from origin)
+    "J7": (54.0, 2.825, 180),
+    "R22": (55.6, 9.3, 90),
+    "R23": (57.8, 9.3, 90),
+    "Q2": (52.5, 9.7, 180),      # reverse-polarity P-FET behind J3 and J7
+    "C1": (53.0, 16.5, 0),
     "C9": (30.6, 7.54, 0),       # 10 uF ceramic under the DevKit, next to its 5V pin J1.21
-    "C2": (62.3, 16.5, 90),      # TEM input decoupling, beside pin 24
-    "PS1": (42.0, 16.5, 0),      # TEM 2-0511, pin 1 top left
+    # TMR 1-0511 straddles the straight isolation gap: pins 1/2 (input) left of it,
+    # 4/6 (output) right of it; pin 3 is absent, so 3.6 mm copper between pins 2 and 4.
+    "PS1": (54.4, 38.0, 0),
+    "C2": (55.6, 33.6, 180),     # input decoupling, right above pins 1/2
+    "C4": (63.3, 33.6, 0),       # output buffer, right above pins 4/6
     "U1": (60.3, 50.5, 0),       # ISO1540 straddles the isolation gap
     "R1": (47.0, 48.4, 0),
     "R2": (47.0, 50.8, 0),
@@ -58,10 +65,8 @@ PLACEMENT = {
     "Q1": (41.0, 55.6, 0),
     "R4": (39.6, 51.8, 90),
     "R3": (41.0, 58.5, 0),
-    "C4": (63.0, 40.63, 90),
-    "R8": (84.0, 35.5, 0),       # optional preload, kept away from the TEM
-    "R7": (67.2, 36.8, 0),
-    "D2": (71.6, 36.8, 180),
+    "R7": (68.6, 33.6, 0),
+    "D2": (72.9, 33.6, 180),
     "C5": (65.2, 50.5, 270),     # right at U1 VCC2/GND2
     "R5": (69.0, 51.0, 0),
     "R6": (69.0, 53.4, 0),
@@ -72,6 +77,27 @@ PLACEMENT = {
     "R10": (58.5, 67.9, 0),
     "R9": (86.0, 48.0, 0),       # R_series above U2: the wiper leaves upwards, away from VDD/A
     "J4": (97.5, 64.0, 90),      # SDC terminal, wire entry towards right edge
+    # 5 V power LED, below the input terminal
+    "R13": (43.0, 16.5, 0),
+    "D3": (43.0, 18.8, 0),
+    # relay LED (parallel to the coil) in the strip between antenna keep-out and relay
+    "D4": (40.6, 62.2, 270),
+    "R14": (40.6, 66.6, 90),
+    # expansion header at the left edge, pins in line with DevKit J3 pins 4/5 (GPIO1/2)
+    "J6": (2.4, 45.64, 0),
+    "R21": (6.2, 43.1, 0),
+    "R20": (6.2, 45.64, 0),
+    "R18": (6.2, 48.18, 0),
+    "R19": (6.2, 50.72, 0),
+    # service-port isolator below U1, straddling the same gap; decoupling like U1
+    "U3": (60.3, 56.3, 0),
+    "C10": (55.4, 56.3, 270),
+    "C11": (65.2, 56.3, 270),
+    # service connector at the bottom edge, between R10 and J4
+    "R15": (78.5, 64.7, 90),
+    "R16": (81.0, 64.7, 90),
+    "R17": (83.5, 64.7, 90),
+    "J5": (76.0, 70.2, 0),
     "H1": (4.0, 4.0, 0),
     "H2": (100.0, 4.0, 0),
     "H3": (4.0, 72.0, 0),
@@ -82,29 +108,38 @@ PLACEMENT = {
 # footprint default would collide with neighbours. Size 1.0 mm (JLC minimum).
 REF_POS = {
     "R1": (44.0, 48.4), "R2": (44.0, 50.8), "C3": (55.4, 47.3), "D1": (51.8, 49.5),
-    "Q1": (41.6, 53.3), "R3": (41.0, 60.4), "R4": (37.7, 51.8), "C2": (64.9, 16.5), "C9": (30.6, 9.8),
-    "J3": (44.55, 13.0), "PS1": (49.6, 19.6), "U1": (61.5, 46.9), "C5": (65.2, 47.3), "R5": (72.7, 51.0),
+    "Q1": (41.6, 53.3), "R3": (38.0, 58.5), "R4": (37.7, 51.8), "C2": (55.6, 31.6), "C9": (30.6, 9.8), "C1": (54.75, 21.9),
+    "J3": (42.65, 13.0), "PS1": (48.5, 38.0), "U1": (61.5, 46.9), "C5": (65.2, 47.3), "R5": (72.7, 51.0),
     "R6": (72.7, 53.4), "C8": (89.6, 53.6), "C6": (90.0, 58.6), "C7": (90.0, 61.0),
-    "R7": (67.2, 38.5), "D2": (74.9, 36.8), "C4": (65.3, 40.63), "Q2": (53.5, 9.6),
+    "R7": (68.6, 31.6), "D2": (72.9, 31.6), "C4": (63.3, 31.6), "Q2": (49.4, 9.7),
     "R11": (38.0, 44.8, 90), "R12": (41.3, 49.6),
-    "U2": (80.0, 59.5), "K1": (49.0, 64.5), "J4": (92.0, 70.5),
+    "U2": (80.0, 53.3), "K1": (49.0, 64.5), "J4": (92.0, 70.5),
+    "R13": (46.6, 16.5), "D3": (46.6, 18.8), "D4": (40.6, 69.7), "R14": (40.6, 71.2),
+    "U3": (60.3, 59.9), "C10": (56.0, 59.9), "C11": (65.2, 59.5),
+    "R15": (78.5, 61.3, 90), "R16": (81.0, 61.3, 90), "R17": (83.5, 61.3, 90), "J5": (72.3, 70.2, 90),
 }
-HIDE_REFS = {"H1", "H2", "H3", "H4", "J1", "J2", "R8", "R9", "R10"}
+HIDE_REFS = {"H1", "H2", "H3", "H4", "J1", "J2", "R9", "R10", "J6", "R18", "R19", "R20", "R21",
+             "J7", "R22", "R23"}
+# Pads that join a power net with a thin track (LED branches in tight spots). They are
+# left out of the net's main routing and connected afterwards to its nearest copper.
+THIN_PADS = {("D4", "1"), ("R14", "1")}
 
-# Copper areas per domain (board coordinates). Gap between them >= 1 mm.
+# Copper areas per domain (board coordinates), 1.4 mm apart: one straight line from the
+# top edge down through PS1, U1 and U3, and one step around the relay contacts.
 # Tracks are kept inside their outline (eroded by half their width), so the outline
 # gap is also the minimum copper gap between the domains. tools/check_isolation.py
 # verifies >= 1.0 mm on the finished board.
-ESP_POLY = [(0.5, 0.5), (71.0, 0.5), (71.0, 30.0), (59.8, 30.0), (59.8, 34.9), (39.8, 34.9),
-            (39.8, 43.7), (59.8, 43.7), (59.8, 58.8), (42.2, 58.8), (42.2, 75.5), (0.5, 75.5)]
-ISO_POLY = [(72.4, 0.5), (103.5, 0.5), (103.5, 75.5), (43.4, 75.5), (43.4, 60.0), (61.2, 60.0),
-            (61.2, 42.4), (41.0, 42.4), (41.0, 36.2), (61.2, 36.2), (61.2, 31.4), (72.4, 31.4)]
+ESP_POLY = [(0.5, 0.5), (59.7, 0.5), (59.7, 58.8), (42.2, 58.8), (42.2, 75.5), (0.5, 75.5)]
+ISO_POLY = [(61.1, 0.5), (103.5, 0.5), (103.5, 75.5), (43.6, 75.5), (43.6, 60.2), (61.1, 60.2)]
+# Traco: "avoid routing PCB traces under the converter" - no tracks or vias under the
+# PS1 body beyond its pin row (the pins themselves sit 2.5 mm from the upper body edge).
+PS1_BODY_KEEPOUT = (52.25, 39.8, 69.25, 43.1)
 # No copper under the ESP32-S3 module antenna (DevKit antenna end, bottom left).
 ANTENNA_KEEPOUT = [(7.0, 59.6), (39.0, 59.6), (39.0, 75.9), (7.0, 75.9)]
 # No copper around the M3 mounting holes (screw heads, washers).
 MOUNT_KEEPOUT_R = 3.5
 # THT ground pads that additionally get a via (pour access is cramped there).
-THT_GROUND_VIAS = {("PS1", "12"), ("PS1", "13")}
+THT_GROUND_VIAS = {("J2", "22")}   # J2.22: 3V3 to J6 passes above it
 
 POWER_W = {"/+5V_IN": 0.6, "/+5V": 0.6, "/VDD_ISO": 0.6, "/COIL_N": 0.6, "/+3V3": 0.4}
 SIGNAL_W = 0.25
@@ -353,8 +388,10 @@ class Router:
         for ref in ("H1", "H2", "H3", "H4"):
             x, y, _ = PLACEMENT[ref]
             holes |= seg_mask(x, y, x, y, MOUNT_KEEPOUT_R)
+        bx0, by0, bx1, by1 = PS1_BODY_KEEPOUT
+        body = (GX > bx0) & (GX < bx1) & (GY > by0) & (GY < by1)
         for li in (0, 1):
-            self.owner[li][edge | keep | holes] = HARD
+            self.owner[li][edge | keep | holes | body] = HARD
         # AD5272: no tracks under the MSOP body, no vias anywhere in its courtyard
         # (hand-soldering bridge risk)
         cy = self.fps["U2"].GetCourtyard(pcbnew.F_Cu).BBox()
@@ -509,8 +546,12 @@ class Router:
         width = width or POWER_W.get(net, SIGNAL_W)
         pads = [p for p in self.pads if p["net"] == net
                 and (only is None or (p["ref"], p["num"]) in only)]
+        thin = []
+        if only is None:
+            thin = [p for p in pads if (p["ref"], p["num"]) in THIN_PADS]
+            pads = [p for p in pads if (p["ref"], p["num"]) not in THIN_PADS]
         if len(pads) < 2:
-            return True
+            return all([self.route_branch(net, p) for p in thin])
         dom = self.domain(net)
 
         def free_for(w):
@@ -561,7 +602,37 @@ class Router:
             for li in p["layers"]:
                 tree[li] |= p["mask"]
             done.append(p)
+        for p in thin:
+            ok = self.route_branch(net, p) and ok
         return ok
+
+    def route_branch(self, net, p, width=SIGNAL_W):
+        """Connect one pad with a thin track to the nearest existing copper of its net."""
+        nid = self.idx[net]
+        dom = self.domain(net)
+        free = ~self.blocked(nid, width / 2)
+        inner = self.inside(dom, width / 2)
+        for li in (0, 1):
+            free[li] &= inner
+        free[0] &= ~self.exit_corridors(except_net=net, half=0.45) & ~self.body
+        own = self.owner == nid
+        for li in p["layers"]:
+            own[li] &= ~p["mask"]
+        goal = own & (free | ~self.padcell)
+        j, i = cell_of(p["x"], p["y"])
+        starts = [(li, j, i) for li in p["layers"]]
+        for li in p["layers"]:
+            free[li, j, i] = True
+        vok = self.via_ok(nid, net) & ~self.exit_corridors(except_net=net, half=0.8)
+        others = [q for q in self.pads if q["net"] == net and q is not p]
+        near = min(others, key=lambda q: math.hypot(p["x"] - q["x"], p["y"] - q["y"]))
+        path = self.astar(starts, goal, free | goal, vok, (near["x"], near["y"]))
+        if path is None:
+            print(f"  !! could not route {net}: {p['ref']}.{p['num']} (thin branch)")
+            return False
+        tree = np.zeros((2, NY, NX), dtype=bool)
+        self.commit_path(net, nid, path, width, (p["x"], p["y"]), tree)
+        return True
 
     def ground_vias(self, fine=None, only=None, own_only=False):
         """Give every SMD ground pad (and the listed THT pads) a via to the bottom pour.
@@ -713,19 +784,30 @@ def add_silk(board):
     silk_text(board, "DK-J1", DEVKIT_X0 + DEVKIT_ROWS, y1 + 1.5, 1.0)
     silk_text(board, "DK-J3", DEVKIT_X0, y1 + 1.5, 1.0)
     # isolation gap (centre line): full outline on F.Fab, top run also on silkscreen
-    dashed(board, [(71.7, 1.0), (71.7, 30.7), (60.5, 30.7), (60.5, 35.6), (40.4, 35.6), (40.4, 43.05),
-                   (60.5, 43.05), (60.5, 59.4), (42.8, 59.4), (42.8, 75.0)], layer=pcbnew.F_Fab)
-    dashed(board, [(71.7, 2.0), (71.7, 30.7), (66.0, 30.7)])
-    silk_text(board, "ESP SIDE", 50.0, 33.2, 1.0, bold=True)
+    dashed(board, [(60.4, 1.0), (60.4, 59.5), (42.9, 59.5), (42.9, 75.0)], layer=pcbnew.F_Fab)
+    dashed(board, [(60.4, 2.0), (60.4, 30.5)])
+    silk_text(board, "ESP SIDE", 50.0, 26.0, 1.0, bold=True)
     silk_text(board, "ISOLATED SDC SIDE", 82.0, 44.5, 1.2, bold=True)
-    silk_text(board, "+5V", 47.08, 13.0, 1.0)
-    silk_text(board, "GND", 41.9, 13.0, 1.0)
+    silk_text(board, "+5V", 45.18, 13.0, 1.0)
+    silk_text(board, "GND", 39.5, 13.0, 1.0)
+    silk_text(board, "5V: J3 OR USB-C", 48.0, 23.6, 1.0)
     silk_text(board, "TO SDC", 97.5, 52.0, 1.0, bold=True)
     silk_text(board, "GND X5-2..12", 97.2, 54.3, 1.0)
     silk_text(board, "VE1 X6-6", 97.5, 68.4, 1.0)
-    silk_text(board, "R8: DNP", 79.0, 33.3, 1.0, justify="left")
     silk_text(board, "SDC NTC emulator", 88.0, 8.0, 1.2, bold=True)
-    silk_text(board, "SDC3-40PM VE1  rev 2  2026-09", 88.0, 10.4, 1.0)
+    silk_text(board, "SDC3-40PM VE1  rev 3  2026-10", 88.0, 10.4, 1.0)
+    # indicators
+    silk_text(board, "PWR", 39.6, 17.65, 1.0, angle=90)
+    silk_text(board, "RELAY", 40.6, 73.5, 1.0)
+    # expansion header J6 (left edge)
+    silk_text(board, "J6", 0.9, 39.2, 1.0, justify="left")
+    silk_text(board, "EXT I/O", 0.9, 40.8, 1.0, justify="left")
+    for k, name in enumerate(("1 3V3", "2 GPIO2", "3 GPIO1", "4 GND")):
+        silk_text(board, name, 0.9, 56.3 + 1.6 * k, 1.0, justify="left")
+    # service connector J5 (bottom edge): pin names below, title beside
+    for x, name in ((75.3, "GND"), (78.5, "RX"), (81.0, "TX"), (83.5, "5V")):
+        silk_text(board, name, x, 74.9, 1.0)
+    silk_text(board, "SDC SERVICE", 88.6, 68.5, 1.0, bold=True, angle=90)
     silk_text(board, "R9 R_series 18k2 0.1%", 91.1, 50.2, 1.0)
     silk_text(board, "R10 R_failsafe 24k9 0.1%", 66.0, 65.7, 1.0)
 
@@ -733,9 +815,12 @@ def add_silk(board):
 # ------------------------------------------------------------------ main
 # AD5272 nets first (after its ground stubs), so its 0.5 mm-pitch pins are not walled in.
 ROUTE_ORDER = ["/SDA_ISO", "/SCL_ISO", "/EXT_CAP", "/WIPER", "/VDD_ISO",
-               "/+5V_IN", "/+5V", "/COIL_N", "/RELAY_SENSE", "/GATE", "/RELAY_EN", "/+3V3", "/SDA_ESP",
-               "/SCL_ESP", "/LED_ISO",
-               "/VE1", "/NC_PATH", "/NO_PATH", "/GND", "/GND_ISO"]
+               "/+5V_IN", "/+5V", "/USB_CC1", "/USB_CC2", "/COIL_N", "/RELAY_SENSE", "/GATE", "/RELAY_EN", "/+3V3", "/SDA_ESP",
+               "/SCL_ESP", "/LED_ISO", "/LED_PWR", "/LED_REL", "/SVC_RX", "/SVC_TX",
+               "/EXT_IO1", "/EXT_IO2", "/EXT_IO1_H", "/EXT_IO2_H",
+               "/VE1", "/NC_PATH", "/NO_PATH",
+               "/SVC_RX_ISO", "/SVC_TX_ISO", "/SVC_RX_EXT", "/SVC_TX_EXT", "/SVC_5V",
+               "/GND", "/GND_ISO"]
 
 
 def main():
@@ -744,9 +829,9 @@ def main():
     router = Router(board, fps, netinfo)
     failed = []
     # The antenna keep-out and the J1 fan-out split the ESP ground pour; tie the
-    # DevKit GND to the TEM input ground with a real track first.
+    # DevKit GND to the PS1 input ground with a real track first.
     print("routing /GND link")
-    if not router.route_net("/GND", only={("J1", "22"), ("PS1", "12")}, width=0.8):
+    if not router.route_net("/GND", only={("J1", "22"), ("PS1", "1")}, width=0.8):
         failed.append("/GND link")
     # AD5272 fan-out in a fixed order so no 0.5 mm-pitch pin gets walled in:
     # left side SDA/SCL, right side EXT_CAP, then pin 2 (A) ground, then the wiper,

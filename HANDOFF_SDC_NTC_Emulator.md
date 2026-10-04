@@ -56,7 +56,7 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
  230 V ─ fuse ─▶ RAC03 ─ 5 V ─▶ Q2 P-FET (reverse-polarity protection) ─ +5V
                               ┌───────────────────────────────────────────┘
                               ├─▶ DevKit 5V pin      ┆
-                              ├─▶ iso DC/DC in ══════╪═▶ TEM 2-0511  5V = VDD_ISO ─┬─▶ AD5272 VDD
+                              ├─▶ iso DC/DC in ══════╪═▶ TMR 1-0511  5V = VDD_ISO ─┬─▶ AD5272 VDD
                               │                      ┆                             └─▶ ISO1540 side 2
       DevKit 3V3 ─▶ ISO1540 side 1                   ┆
       GPIO8/9 SDA/SCL ─▶ ISO1540 ════════════════════╪═▶ SDA2/SCL2 ─▶ AD5272 (addr 0x2F)
@@ -71,9 +71,14 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
  X5-2…12 (GND, never X5-1) ─────────────────────────────── GND_ISO (AD5272, ISO1540-2) ┘
 ```
 
-**Isolation boundary:** Everything right of ┆ belongs to the SDC domain: TEM output, ISO1540 side 2, AD5272, both resistors, relay contacts. Its only reference is X5. Everything left of it may be earthed (PC via USB). This is functional isolation; safety isolation from mains is still the RAC03's job.
+**Isolation boundary:** Everything right of ┆ belongs to the SDC domain: DC/DC output, ISO1540 side 2, AD5272, both resistors, relay contacts. Its only reference is X5. Everything left of it may be earthed (PC via USB). This is functional isolation; safety isolation from mains is still the RAC03's job.
 
-**Gap on the PCB: ≥ 1.15 mm copper-to-copper**, measured on the finished board by `tools/check_isolation.py` (build fails below 1.0 mm). The tightest spot is at the TEM 2-0511, whose pinout puts −Vin (pin 12) next to +Vout (pin 11). Rev 1 claimed "≥ 1 mm" but actually had 0.40 mm there (found by the review). Rev 2 fixes it with oval TEM pads and ≥ 1.2 mm between the domain outlines, and the router keeps whole tracks, not just their centre lines, inside their domain.
+**Gap on the PCB: ≥ 1.40 mm copper-to-copper**, measured on the finished board by `tools/check_isolation.py` (build fails below 1.0 mm).
+- **Rev 3:** the gap is one straight line through PS1, U1 and U3, plus one step around the relay contacts. The Traco TMR 1-0511 (SIP-6) has its input at one end and its output at the other, with 3.6 mm of copper between them.
+- **History:** the earlier TEM 2-0511 (DIP-24) put −Vin (pin 12) next to +Vout (pin 11).
+  - That forced a notch into the gap; its tightest spot was 1.15 mm in rev 2.
+  - Rev 1 claimed "≥ 1 mm" but actually had 0.40 mm there (found by the review).
+  - Since rev 2 the router keeps whole tracks, not just their centre lines, inside their domain.
 
 **Rejected: powering the AD5272 side from the SDC.** The SDC's only low-voltage supply is the T2B data bus: X6-1 (A) / X5-1 (B), "power supply via bus 12 V/150 mA" (service manual ch. 8.1), described as "data bus line 12 V AC" (ch. 2.2). It was not used because:
 1. **Data rides on the supply.** The bus powers and talks to SDW wall devices over the same two wires. A rectifier with a buffer capacitor loads and distorts that signal, which risks fault 70-1 "No T2B signal" or disturbing the bus.
@@ -111,9 +116,18 @@ The other German `SDC_*.pdf` files (2006–2008) are older revisions and only ke
 | 10 kΩ + 20 kΩ | relay sense divider to GPIO5 | |
 | AO3401A P-FET | reverse-polarity protection | |
 | ISO1540 (TI) or ADuM1250 (ADI) | bidirectional I2C isolator | each side 3.0–5.5 V; 100 nF decoupling per side |
-| Isolated DC/DC: **Traco TEM 2-0511** (user already owns it) | powers the SDC domain: VDD_ISO = 5 V for AD5272 + ISO1540 side 2 | 5 V ±10 % in, **regulated** 5 V ±3 % out, 400 mA, 1000 VDC isolation, DIP-24, PFM 80 kHz, ripple ≤ 50 mVpp, max. 470 µF load. End-of-life part. Load regulation is only specified from 10 % load (40 mA); ours is a few mA, so **measure the no-load output once**: must be ≤ 5.4 V for the AD5272 (5.5 V max). Add 10 µF + 100 nF at the AD5272. No LDO needed. **5 V-output models are rated only to +60 °C ambient**, which matters in a boiler-room enclosure. |
+| Isolated DC/DC: **Traco TMR 1-0511** (since PCB rev 3; replaces the TEM 2-0511) | powers the SDC domain: VDD_ISO = 5 V for AD5272, ISO1540 side 2, ISO7721 side 2, service port J5 | See the notes below the table. |
 | LED + 1.5 kΩ on VDD_ISO | "SDC domain powered" indicator | ~2 mA; always fitted |
-| **Preload resistor 270 Ω / 0.6 W THT** (R8) on VDD_ISO | preload the TEM 2-0511 (~18.5 mA ≈ 93 mW) | **Footprint always present, fit only if needed:** if the no-load output is > 5.4 V or ripple is > 50 mVpp at assembly. Costs about +40 mA on the RAC03's 5 V (50 % efficiency), which matters for the tight budget. |
+
+TMR 1-0511 details:
+- **Electrical:** 4.5–9 V in, **regulated** 5 V ±1 % out, 200 mA, **no minimum load** (no preload resistor needed).
+- **Input current:** 40 mA at no load, 76 % efficiency.
+- **Isolation:** 1500 VDC, 50 pF.
+- **Ripple:** ≤ 110 mVpp; up to 1680 µF capacitive load allowed.
+- **Package:** SIP-6, with the input (pins 1/2) at one end and the output (pins 4/6) at the other.
+- **Temperature:** −40 … +95 °C. The TEM 5 V models were only rated to +60 °C, which mattered in a boiler room.
+- **Decoupling:** 10 µF on each side; 10 µF + 100 nF at the AD5272. No LDO needed.
+- **Datasheet:** `datasheets/TMR1_datasheet.pdf`.
 | 2 × 2.7 kΩ (ESP side), 2 × 4.7 kΩ (SDC side) | I2C pull-ups on **both** sides of the isolator | ESP side to 3V3: 2.7k so the ISO1540 side 1 sinks ≥ 0.5 mA at its 0.8 V low level. SDC side to VDD_ISO. |
 | Electrolytic capacitor 470 µF / 10 V | 5 V bulk buffer for Wi-Fi current peaks | RAC03 allows up to 7500 µF |
 | Ceramic capacitor 10 µF / 25 V X7R, 1206 (C9) | parallel to the elco: low ESR against RAC03 switching ripple and fast current edges | 25 V/1206 because of DC-bias derating; a film cap of 10 µF would be far too large |
@@ -147,16 +161,17 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
 
 ### PCB
 
-**Designed (rev 2, 2026-09-30): [hardware/sdc-ntc-emulator/](hardware/sdc-ntc-emulator/README.md).**
+**Designed (rev 3, 2026-10-01): [hardware/sdc-ntc-emulator/](hardware/sdc-ntc-emulator/README.md).**
 - KiCad 9, 2 layers, 104 × 76 mm.
-- ERC and DRC clean, schematic parity OK, isolation gap check ≥ 1.15 mm.
+- ERC and DRC clean, schematic parity OK, isolation gap check ≥ 1.40 mm.
+- Rev 3 adds the TMR 1-0511, the isolated service-port UART (J5), power and relay LEDs, and the expansion header J6.
 - JLC Gerber zip and BOM in `production/`, generated from `tools/design.py` by `tools/build.py`.
 - Choices made during layout:
   - Relay **Omron G5V-2-H1 5VDC** with both poles **in parallel**: COM 4+13, NC 6+11, NO 8+9, coil 1/16, gold-alloy contacts, 30 mA coil.
   - GPIO4 = relay, GPIO5 = relay sense, GPIO8/9 = I2C.
   - R_failsafe and R_series are THT 0.1 % parts, so they are easy to swap.
   - The AD5272's A and VSS pins connect to GND_ISO by a short trace under the chip body (under solder mask, no vias there).
-- Before ordering, check the points in the README: TEM footprint 1:1, terminal orientation, R10 value. DevKit row spacing is 25.1 mm (measured).
+- Before ordering, check the points in the README: PS1 footprint, terminal orientation, R10 value. DevKit row spacing is 25.1 mm (measured).
 
 - **No mains on the PCB.** The RAC03-05SER/277 is a potted module (50.3 × 50.3 × 11 mm) with **flying leads** on input and output. It sits next to the PCB in the enclosure, fixed with a clip, strap or adhesive pad.
   - Its input leads go to a fused mains terminal (e.g. an in-line fuse holder with a slow-blow fuse + Wago lever terminals), in their own section of the enclosure.
@@ -164,10 +179,10 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
   - So the PCB is SELV only, and no 6 mm mains clearances are needed on it.
 - **Own PCB from JLC (bare board, hand-soldered)** rather than perfboard, for clean isolation gaps:
   - Two zones: **ESP domain** and **SDC domain**.
-  - ≥ 1.15 mm copper gap across the ISO1540 / TEM 2-0511 / relay barrier (measured by `tools/check_isolation.py`), with no copper crossing it except through those parts.
+  - ≥ 1.40 mm copper gap across the ISO1540 / ISO7721 / TMR 1-0511 / relay barrier (measured by `tools/check_isolation.py`), with no copper crossing it except through those parts.
 - **Hand-soldering friendly:**
   - Passives 0805/1206; ISO1540 in SOIC-8; MOSFET in SOT-23.
-  - Relay and TEM 2-0511 (DIP-24) through-hole.
+  - Relay and TMR 1-0511 (SIP-6) through-hole.
   - AD5272 MSOP-10 is the only fine-pitch part. Wide power tracks stay out of its area, and no vias sit under it.
 - DevKit on female headers (removable). Screw terminals: 5 V in (from RAC03), 2-pin to the SDC (X6-6 / X5-2…12, **never X5-1**, which is the T2B data bus).
 - Silkscreen text ≥ 1.0 mm / 0.15 mm (JLC minimum).
@@ -180,13 +195,19 @@ Absolute tolerance is less critical, since a one-time calibration can remove it.
 - Avoid the strapping pins GPIO0, 3, 45 and 46.
 - Avoid GPIO35–37, which are used by the octal PSRAM on R8 modules.
 - Avoid GPIO19/20 (USB) and GPIO43/44 (UART0).
-- **Used on the PCB:** I2C on GPIO8 (SDA) / GPIO9 (SCL), relay ENABLE on GPIO4, relay SENSE on GPIO5. All are on DevKit header J1 (pinout confirmed on the clone).
+- **Used on the PCB (rev 3):**
+  - DevKit header J1 (pinout confirmed on the clone):
+    - I2C: GPIO8 (SDA), GPIO9 (SCL)
+    - relay ENABLE: GPIO4
+    - relay SENSE: GPIO5
+    - SDC service-port UART, isolated by the ISO7721: GPIO6 = RX, GPIO7 = TX, 9600 baud
+  - DevKit header J3: GPIO1/GPIO2, routed to expansion header J6 (3V3, GPIO2, GPIO1, GND).
 - **I2C level margin (bench check):** the ISO1540's side-1 low level can be up to 0.8 V, while the ESP32-S3's VIL max is 0.825 V (0.25 × VDD). That is within spec, but only just. Look at SDA/SCL with a scope once. If there are problems: 100 kHz, stronger pull-ups, or an ISO1640.
 
 ### AD5272 supply voltage (settled by the VE1 measurement: U_max ≈ 1.7 V)
 
 The voltage on terminals A/W must stay between GND and VDD. Worst case is the highest resistance: U_max = U0 × 68 kΩ / (68 kΩ + R_pull), with R_pull = 20 kΩ × (U0 / U20 − 1).
-- **Decided: VDD_ISO = 5 V** from the Traco TEM 2-0511. That gives the most headroom. Measured: U_max ≈ 1.7 V, so it is confirmed with a wide margin.
+- **Decided: VDD_ISO = 5 V** from the isolated DC/DC (Traco TMR 1-0511 since rev 3). That gives the most headroom. Measured: U_max ≈ 1.7 V, so it is confirmed with a wide margin.
 - The ISO1540 handles the level shift to the ESP32's 3V3, so no extra level shifter is needed.
 
 The measuring current is far below the AD5272's ±3 mA limit in any case: measured ≈ 65 µA, at most ≈ 2 V / (10.8 kΩ + 18.2 kΩ) ≈ 70 µA.
@@ -213,10 +234,17 @@ The measuring current is far below the AD5272's ±3 mA limit in any case: measur
 **Suitable, with caveats.**
 - **Good:** 3 kVAC isolation, EN 60335-1 (household appliances) certified, leakage ≤ 10 µA, OVP and short-circuit protection, −40 … +75 °C at full load, 85–305 VAC input.
 - **Current budget:** 600 mA at 5 V. ESP32-S3 Wi-Fi TX peaks ≈ 350–500 mA at 5 V incl. the DevKit regulator's losses, plus relay ~30 mA. That is enough, but not generous, so add the 470 µF bulk capacitor. Average draw ≈ 100 mA. Keep the DevKit's RGB LED off.
-- **Obsolescence:** the datasheet says "not recommended for new designs, last time buy 31 Mar 2026". Fine for this one unit, but a replacement would be a different part: Mean Well IRM-05-5 (5 W, 1 A, more headroom) or a certified USB-C wall adapter if a socket is available in the boiler room.
+- **Obsolescence:** the datasheet says "not recommended for new designs, last time buy 31 Mar 2026". Fine for this one unit, but a replacement would be a different part. The options are in the PCB README ("5 V supply alternatives"):
+- **Kit default:** any certified USB-C charger (5 V ≥ 2 A) into the board's USB-C input J7 (since PCB rev 3). No mains wiring by the user.
+- **Plug-in adapter with wires into J3:** Mean Well SGA12E05-P1J (5 V / 2.4 A).
+- **Same concept as the RAC03:** Recom RAC05-05SK/277/W (wire leads, 1 A).
+- **DIN rail:** Mean Well HDR-15-5.
 - **Mains wiring (by a qualified person):** It is a potted module with flying leads, so it stays off the PCB (see PCB). It still needs a slow-blow input fuse, a closed enclosure and strain relief. Feed it from its own fused supply or socket. Do not tap the SDC's L/N terminals.
 - **Isolation concept:** The RAC03 isolates from mains. The I2C isolator + iso DC/DC (revision 3) additionally separate the ESP32 from the SDC sensor ground.
-- **Current budget with revision 3 (tight!):** The TEM 2-0511 draws **80 mA even without load**. Peak: ESP32-S3 Wi-Fi ≈ 350–500 mA + relay ≈ 30 mA + TEM 80 mA ≈ **460–610 mA vs. the RAC03's 600 mA**. Average ≈ 200 mA. The TX peaks are short and the RAC03's over-current limit only starts at 120–190 % (≥ 720 mA; the 105–150 % in the datasheet is the over-voltage clamp), so this works, but only with the **470 µF bulk capacitor** (RAC03 allows up to 7500 µF; 1000 µF is also fine). Further headroom: disable Bluetooth, reduce ESPHome `wifi: output_power` (e.g. 15 dB), keep the RGB LED off. If the ESP32 shows brown-out resets: move to a Mean Well IRM-05-5 (1 A).
+- **Current budget with the isolation (tight):**
+  - **The isolated DC/DC:** the TEM 2-0511 drew 80 mA even without load. Since PCB rev 3, the TMR 1-0511 draws ≈ 40 mA at no load, plus ≈ 30 mA for the SDC-side load at 76 % efficiency, so ≈ 50–70 mA.
+  - **Peak:** ESP32-S3 Wi-Fi ≈ 350–500 mA + relay ≈ 30 mA + DC/DC ≈ 60 mA + LEDs ≈ 3 mA ≈ **445–595 mA vs. the RAC03's 600 mA**. This was 460–610 mA with the TEM.
+  - **Average:** ≈ 180 mA. The TX peaks are short and the RAC03's over-current limit only starts at 120–190 % (≥ 720 mA; the 105–150 % in the datasheet is the over-voltage clamp), so this works, but only with the **470 µF bulk capacitor** (RAC03 allows up to 7500 µF; 1000 µF is also fine). Further headroom: disable Bluetooth, reduce ESPHome `wifi: output_power` (e.g. 15 dB), keep the RGB LED off. If the ESP32 shows brown-out resets: move to a Mean Well IRM-05-5 (1 A).
 
 ## Failure modes and fail-safe behaviour
 
@@ -232,7 +260,7 @@ The measuring current is far below the AD5272's ±3 mA limit in any case: measur
 | 8 | Relay does not do what GPIO4 says (coil/driver open, Q1 shorted) | **GPIO5 sense**: HIGH = coil off, LOW = coil on; compare with GPIO4 | report `FAILSAFE: relay fault` in HA. Stuck on (Q1 shorted) cannot be switched off by firmware: set the AD5272 to the fail-safe value (≈ 24.9 kΩ total) and alarm. | open coil: as 1; stuck on: fail-safe value via the rheostat |
 | 9 | Local heat in the living room (fireplace, sun) | – | optional: limit the emulated temperature to setpoint ± 3 K (setpoint as an HA `number`) | limited deviation, other rooms not undersupplied |
 | 10 | USB flashing/debugging while installed | – | Allowed thanks to the isolator: PC earth only reaches the ESP domain. The official DevKitC-1 has a Schottky diode (1N5819) from each USB VBUS to the 5 V rail, so USB and RAC03 can be connected at the same time. **Verify these diodes on the clone** (near both USB-C ports) before doing so. | unaffected |
-| 11 | Isolated rail fails (TEM) or AD5272 dies while relay is on | AD5272 I2C NACK / readback error within 1–10 s | relay off (as 7) | until detected: ≈ R9 only (18.2 kΩ ≈ 27 °C, via the chip's clamp diodes), then as 1 |
+| 11 | Isolated rail fails (DC/DC) or AD5272 dies while relay is on | AD5272 I2C NACK / readback error within 1–10 s | relay off (as 7) | until detected: ≈ R9 only (18.2 kΩ ≈ 27 °C, via the chip's clamp diodes), then as 1 |
 | 11a | Brief dip on the isolated rail | readback: RDAC at midscale and/or C1 = 0 (write-protected) | rewrite control register + RDAC, or relay off | until detected: midscale ≈ 43 kΩ ≈ 9 °C (too cold) |
 | 11b | AD5272 internal wiper-to-A short | **not detectable** by I2C readback | – | 18.2 kΩ ≈ 27 °C floor (the reason R9 went from 15.0 to 18.2 kΩ) |
 | 12 | SDC reduced/night mode | – | none | R_failsafe matches only the day setpoint. At night the fail-safe reads "too warm", so the night setback gets a bit deeper. Acceptable. |
@@ -316,7 +344,18 @@ Change a parameter:
 
   At commissioning: tune the offset against the panel, and check that the fail-safe state (relay off → 24.9 kΩ) shows ≈ 21 °C on the SDC.
 - [ ] **⏰ PENDING (user): DevKit clone diode check.** The official ESP32-S3-DevKitC-1 (schematic in `datasheets/`) has a Schottky diode 1N5819 (D1, D7) from each USB-C VBUS to the 5 V rail. It blocks back-feed from the RAC03 into the PC. Check on the clone: look for a small diode (SOD-123, marking e.g. "S4"/"SL" or similar) next to each USB-C port. Alternatively measure with the multimeter in diode mode from the VBUS pin of each port to the 5V header pin: ~0.2–0.4 V in one direction and open in the other = diode present. **If missing:** unplug the RAC03 (or disconnect the 5 V pin) whenever USB is connected.
-- [x] Isolated DC/DC: **Traco TEM 2-0511** (5 V → 5 V regulated, 2 W; datasheet `datasheets/TEM2_datasheet.pdf`). VDD_ISO = 5 V, no LDO. To do at assembly: measure its output with only the indicator LED as load: ≤ 5.4 V and ripple ≤ 50 mVpp. If not, fit the 270 Ω preload resistor R8 and measure again.
+- [x] Isolated DC/DC: **Traco TMR 1-0511** since PCB rev 3 (5 V → 5 V regulated, 1 W, no minimum load; datasheet `datasheets/TMR1_datasheet.pdf`). VDD_ISO = 5 V, no LDO.
+  - It replaces the TEM 2-0511, whose DIP-24 pinout forced a notch into the isolation gap.
+  - The TEM is now unused; it stays as a spare for something else.
+  - At assembly: VDD_ISO = 5.0 V ±1 %.
+- [ ] **SDC service port pinout (user).** The 6-pin socket (~1.0 mm pitch) behind the flap above the day/night buttons carries a proprietary 9600 baud protocol at 5 V logic.
+  - Protocol: frames end with `21 0A 0A`, checksum CRC-16/KERMIT.
+  - An earlier decoder is in `D:\Development\ESPHome\Heizungscontroller.yaml`, RX only. It already decodes outside, boiler, flow, hot water and solar temperatures, burner starts and status.
+  - PCB rev 3 has an isolated UART for it on J5, the measurement procedure is in `hardware/sdc-ntc-emulator/README.md` ("Service port"). Still to find out:
+    1. which pin is GND, the SDC's TX, its RX, and 5 V (if any);
+    2. whether the port GND has continuity to X5-2;
+    3. whether a record carries the VE1 reading. That would allow an end-to-end check of the emulated temperature.
+  - Sending is possible but untested. It might later replace the analog VE1 path.
 - [ ] SDC day room setpoint? It determines the R_failsafe value (24.9 kΩ assumes 21 °C displayed, including the +0.5 K SDC offset).
 - [x] Sonoff panel: NSPanel-EU (original NSPanel, Wi-Fi, black) with custom ESPHome firmware.
 - [x] Home Assistant is available and is the data path.
