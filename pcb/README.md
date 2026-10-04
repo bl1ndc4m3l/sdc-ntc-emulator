@@ -1,9 +1,9 @@
-# SDC NTC emulator PCB (rev 3)
+# SDC NTC emulator PCB (rev 4)
 
 KiCad 9 project for the wireless room sensor of the Smile SDC3-40PM, as described in
-[HANDOFF_SDC_NTC_Emulator.md](../../HANDOFF_SDC_NTC_Emulator.md). On the board:
+[docs/design-notes.md](../docs/design-notes.md). On the board:
 - ESP32-S3 DevKit on sockets
-- ISO1540 I2C isolator, Traco TMR 1-0511 isolated supply, AD5272 digital rheostat
+- ISO1540 I2C isolator, Gaptec 1S4E_0509S1U isolated 9 V supply + L78L05, AD5272 digital rheostat
 - Omron G5V-2 fail-safe relay with state sense
 - reverse-polarity protection on the 5 V input
 - isolated UART to the SDC service port
@@ -19,14 +19,39 @@ KiCad 9 project for the wireless room sensor of the Smile SDC3-40PM, as describe
 |---|---|
 | ERC | 0 errors, 0 warnings |
 | DRC (incl. schematic parity) | 0 violations, 0 unconnected pads |
-| Isolation gap ESP ↔ SDC side (`tools/check_isolation.py`) | **≥ 1.40 mm** copper to copper, both layers (required ≥ 1.0 mm) |
+| Isolation gap ESP ↔ SDC side (`tools/check_isolation.py`) | **≥ 1.14 mm** copper to copper, both layers (required ≥ 1.0 mm); tightest spot between PS1 pins 2 and 3 |
 | Gerbers + drill for JLCPCB | `production/sdc-ntc-emulator-jlcpcb-gerbers.zip` |
 | BOM | `production/sdc-ntc-emulator-bom.csv` |
-| Order files for 3 boards (`BOARDS` in `tools/design.py`) | DigiKey BOM Manager: `production/sdc-ntc-emulator-digikey-order-3x.csv`, Mouser BOM Tool: `production/sdc-ntc-emulator-mouser-order-3x.csv` |
+| Order files for 3 boards (`BOARDS` in `tools/design.py`) | DigiKey BOM Manager: `production/sdc-ntc-emulator-digikey-order-3x.csv` (with DigiKey part numbers), Mouser BOM Tool: `production/sdc-ntc-emulator-mouser-order-3x.csv` |
+
+Rev 3 (Traco TMR 1-0511, never ordered) is tagged `pcb-rev3` in git.
+
+### Changes from rev 3 (2026-10-04): cheaper isolated supply
+
+PS1 cost €8.85 per board (TMR 1-0511, a third of the DigiKey order). Rev 4 replaces it with an unregulated 5 V → 9 V module and a linear regulator, ≈ €2.75 per board in total.
+
+- **PS1 Gaptec 1S4E_0509S1U** (Gaptec 1S4E_1U datasheet, DigiKey 3182-1S4E_0509S1U-ND):
+  - 5 V in, 9 V / 111 mA out, unregulated, 1000 VDC, 20 pF isolation capacitance.
+  - SIP-4 (1 GND, 2 Vin, 3 −Vo, 4 +Vo), pin-compatible with the Traco TME 05xxS, so it uses KiCad's TME symbol and footprint.
+  - No-load input current max 15 mA (TMR: 40 mA).
+  - **Needs ≥ 10 % load (11 mA)** (datasheet section 3; the selection table says 0 mA, the text wins). Below that the output voltage is not specified.
+- **U4 L78L05ACUTR** (SOT-89) makes VDD_ISO = 5 V from the 9 V rail.
+  - 30 V max input, so the unregulated rail's light-load rise (max +10 % at 10 % load, plus input tolerance: ≈ 10.5 V worst case) is harmless.
+  - ≈ 1.7 V dropout; the rail stays above ≈ 8.4 V at our load.
+  - Its ≈ 4–6 mA quiescent current counts towards the PS1 minimum load.
+- **R24 1.5 kΩ** preload on the 9 V rail (≈ 6–7 mA, ≤ 75 mW). With U4's own current and the VDD_ISO load (U1/U3 side 2, D2, pull-ups) the module sees ≈ 15–20 mA, above its 10 % minimum.
+- **C12 10 µF 25 V X7R 1206** (same part as C9) at the module output / LDO input. 25 V/1206 because a 16 V 0805 loses most of its capacitance at 10 V DC bias.
+- **Isolation gap 1.40 → 1.14 mm.** On the SIP-4, +Vin (pin 2) and −Vout (pin 3) are 2.54 mm apart. The pads are narrow ovals (1.4 × 2.2 mm, 1.0 mm drill), and the gap line runs midway between pins 2 and 3.
+- **Supply budget:** ≈ 40–45 mA from the 5 V rail for the isolated side (TMR: ≈ 50 mA). Estimated, not measured.
+- **Clear zone around PS1:** C2 sits left of the module, C12/C4/U4/R24/R7/D2 right of it. No part lies where either possible body orientation could cover it.
+- **Silkscreen:** every part's reference is printed next to it, never under a part body, and clear of pads, vias and other text. The labels are placed by `place_refs()` in `tools/make_pcb.py`, and the build fails if one finds no spot. Value texts are not printed; R9/R10's descriptions are gone, and their values are in the BOM.
+  - J6 moved up into the free strip at the left edge. Its signal names (3V3, IO2, IO1, GND) sit next to each pin, and R18–R21 have room for their labels.
+  - R22/R23 lie flat and stacked next to J7; the dashed gap line now starts below them.
+  - Third title line: "Made by bl1ndc4m3l, authored by Claudine".
 
 ### Changes from rev 2 (2026-09-30 / 2026-10-01)
 
-- **Isolated supply: Traco TMR 1-0511 replaces the TEM 2-0511** (PS1; datasheet `datasheets/TMR1_datasheet.pdf`).
+- **Isolated supply: Traco TMR 1-0511 replaces the TEM 2-0511** (PS1; Traco TMR 1 datasheet).
   - **Straight gap:** SIP-6 with the input at one end (pin 1 −Vin, pin 2 +Vin) and the output at the other (pin 4 +Vout, pin 6 −Vout). Pin 3 is absent, so there are 3.6 mm of copper between pins 2 and 4. The isolation gap is now one straight line from the top edge through PS1, U1 and U3, plus one step around the relay contacts. The TEM's pinout put −Vin next to +Vout and forced a notch into the gap.
   - **Wider gap:** 1.15 → 1.40 mm.
   - **Regulated** ±1 %, **no minimum load**, so the R8 preload resistor is gone.
@@ -46,7 +71,7 @@ KiCad 9 project for the wireless room sensor of the Smile SDC3-40PM, as describe
   | 1 | GND_ISO | |
   | 2 | RX | into the board; connect to the SDC's TX |
   | 3 | TX | out of the board; connect to the SDC's RX |
-  | 4 | 5 V | VDD_ISO from PS1, through R17 |
+  | 4 | 5 V | VDD_ISO (since rev 4 from U4), through R17 |
 
   - **Isolated:** the 9600 baud UART goes through U3 (ISO7721). It sits across the gap like U1, so the port is on the SDC side of the barrier.
   - **ESP pins:** GPIO6 = RX, GPIO7 = TX.
@@ -89,16 +114,18 @@ KiCad 9 project for the wireless room sensor of the Smile SDC3-40PM, as describe
    - The clone is ~56.6 × 27.7 mm. Its module antenna overhangs the DevKit edge by ~7 mm at the pin-1 end; the no-copper area covers that.
    - DevKit J3 pin 1 (GND) is intentionally not connected.
    - On the silkscreen the DevKit headers are "DK-J1"/"DK-J3", to tell them apart from the 5 V terminal J3.
-2. **PS1 footprint.** It is KiCad's TMR 1 footprint; it matches the datasheet rev. July 2026 (pins 1/2/4/6, 2.54 mm grid, 1.0 mm holes). The pin-1 marking (square pad, left) must be the −Vin end.
+2. **PS1 footprint.** It is KiCad's Traco TME SIP-4 footprint with narrow oval pads (pins 1–4 on a 2.54 mm grid, 1.0 mm holes, as in the Gaptec drawing). The pin-1 marking (square pad, left) must be the GND (−Vin) end.
+   - **Body side does not matter:** the pin row sits ≈ 1–1.7 mm from one face of the 6 mm deep body. No other part is placed within 5.6 mm of the pin row on either side, or within 6.3 mm of its centre along the row (`PS1_BODY_MAX` in `tools/make_pcb.py`, checked by the build). So the module fits whichever way its body extends.
+   - **After assembly, measure** the 9 V rail at C12 (expect ≈ 9–10.5 V) and VDD_ISO at C4 (5 V ±4 %).
 3. **Terminal blocks.** The wire entries should face the board edge: J3 (5 V in) the top edge, J4 (to SDC) the right edge. This follows from KiCad's footprint graphics; confirm in the 3D view.
-4. **R10 (R_failsafe) = 24.9 kΩ** assumes an SDC day setpoint of 21 °C (displayed). For another setpoint, pick the value from the NTC table in the handoff, taking the +0.5 K display offset into account. It is a through-hole part, so it is easy to swap.
+4. **R10 (R_failsafe) = 24.9 kΩ** assumes an SDC day setpoint of 21 °C (displayed). For another setpoint, pick the value from the NTC table in the [design notes](../docs/design-notes.md#ntc-20-resistance-from-service-manual-en2h-0221ge51-r1020-ch-821), taking the +0.5 K display offset into account. It is a through-hole part, so it is easy to swap.
 
 ## Ordering at JLCPCB (bare board, hand soldering)
 
 Upload the zip. Defaults are fine: 2 layers, 1.6 mm FR-4, 1 oz copper, HASL or ENIG, any colour. No assembly service needed.
 
 Smallest features, all within JLC's standard capabilities:
-- **Clearance:** 0.13 mm, only inside the AD5272 MSOP-10 fan-out (pad gap 0.15 mm). Elsewhere ≥ 0.20 mm.
+- **Clearance:** ≥ 0.20 mm everywhere except at the AD5272 MSOP-10 (rule there: 0.13 mm; actual: 0.15 mm pad gap, and one via 0.175 mm from a track at its courtyard edge). Verified by a DRC run with 0.20 mm netclass clearance.
 - **Tracks:** 0.25 mm.
 - **Vias:** 0.8/0.4 mm, tented.
 
@@ -145,7 +172,7 @@ There are two 5 V inputs, wired in parallel in front of Q2:
   - Use a charger rated **5 V ≥ 2 A**. A PC USB port (0.5–0.9 A) is too weak for the Wi-Fi peaks.
 - **J3, screw terminal:** any regulated 5 V supply with wires. Q2 protects against swapped polarity, not against overvoltage.
 
-**Use only one of J3 and J7.** Both feed the same node, so two supplies connected at the same time would drive each other. The DevKit's own USB ports are a third route; see the open diode check in the handoff. Powering the board from the DevKit's USB port instead is not recommended: the DevKit's VBUS diode drops ≈ 0.4 V, which leaves PS1 at the edge of its 4.5 V minimum.
+**Use only one of J3 and J7.** Both feed the same node, so two supplies connected at the same time would drive each other. The DevKit's own USB ports are a third route; see the open diode check in the [design notes](../docs/design-notes.md#open-points). Powering the board from the DevKit's USB port instead is not recommended: the DevKit's VBUS diode drops ≈ 0.4 V, which leaves PS1 at the edge of its 4.5 V minimum.
 
 | Option | Part | Rating | Mains wiring by the user | Notes |
 |---|---|---|---|---|
@@ -157,7 +184,7 @@ There are two 5 V inputs, wired in parallel in front of Q2:
 **Selling as a kit** (bare PCB + parts, unassembled):
 - Included: PCB and all parts from the order file. Power comes from the buyer's own USB-C charger, so the buyer never touches mains.
 - Not included: the ESP32-S3 DevKit (the buyer brings it, or offer it as an option) and the enclosure.
-- Documentation: this README and the handoff, with the wiring to the SDC (X5-2…12, never X5-1) and the service-port pinout once it is measured.
+- Documentation: this README and the design notes, with the wiring to the SDC (X5-2…12, never X5-1) and the service-port pinout once it is measured.
 
 ## Bench checks after assembly
 
@@ -196,6 +223,20 @@ Everything is generated from `tools/design.py` (parts, values, footprints, nets)
 ```
 python tools/build.py   # footprints -> schematic -> ERC -> netlist -> PCB -> DRC -> isolation check -> Gerbers/BOM/renders
 ```
+
+Requirements:
+- **KiCad 9.0** (the committed outputs were made with 9.0.7). `tools/make_pcb.py` and `tools/check_isolation.py` run in KiCad's own Python, which provides `pcbnew` and `numpy`.
+- **Python 3** for `build.py`, `make_schematic.py` and `make_footprints.py` (standard library only).
+- The scripts default to the Windows install in `C:\Program Files\KiCad\9.0`. Elsewhere, set:
+
+  | Variable | Points to | Example (Linux) |
+  |---|---|---|
+  | `KICAD_CLI` | `kicad-cli` | `/usr/bin/kicad-cli` |
+  | `KICAD_PYTHON` | a Python that can `import pcbnew` (needs `numpy`) | `python3` |
+  | `KICAD9_SYMBOL_DIR` | KiCad's standard symbol libraries | `/usr/share/kicad/symbols` |
+  | `KICAD9_FOOTPRINT_DIR` | KiCad's standard footprint libraries | `/usr/share/kicad/footprints` |
+
+  On Windows with KiCad installed elsewhere, `KICAD_BIN` (the folder with `kicad-cli.exe` and `python.exe`) is enough for the first two.
 
 - `tools/make_schematic.py`: writes `sdc-ntc-emulator.kicad_sch` from `design.py` (net labels at every pin).
 - `tools/make_pcb.py` (runs in KiCad's Python): placement, routing, pours, keep-outs and silkscreen.

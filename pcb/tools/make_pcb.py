@@ -1,6 +1,6 @@
 """Build sdc-ntc-emulator.kicad_pcb: placement, routing, pours, silkscreen.
 
-Must run with KiCad's Python (pcbnew + numpy):
+Must run with KiCad's Python (pcbnew + numpy), e.g. on Windows:
   "C:\\Program Files\\KiCad\\9.0\\bin\\python.exe" tools/make_pcb.py
 
 Inputs: tools/design.py (parts, footprints) and sdc-ntc-emulator.net
@@ -24,7 +24,9 @@ PROJ_DIR = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import design  # noqa: E402
 
-KICAD_FP = r"C:\Program Files\KiCad\9.0\share\kicad\footprints"
+# KiCad 9 standard footprints; KICAD9_FOOTPRINT_DIR is KiCad's own variable for them
+KICAD_FP = os.environ.get("KICAD9_FOOTPRINT_DIR",
+                          r"C:\Program Files\KiCad\9.0\share\kicad\footprints")
 PCB_PATH = os.path.join(PROJ_DIR, design.PROJECT + ".kicad_pcb")
 NET_PATH = os.path.join(PROJ_DIR, design.PROJECT + ".net")
 
@@ -44,16 +46,21 @@ PLACEMENT = {
     "J3": (45.18, 6.0, 180),     # 5 V in, wire entry towards top edge
     # USB-C 5 V input next to J3, opening at the top edge (footprint: edge 2.825 mm from origin)
     "J7": (54.0, 2.825, 180),
-    "R22": (55.6, 9.3, 90),
-    "R23": (57.8, 9.3, 90),
+    "R22": (57.0, 9.0, 180),     # CC resistors stacked flat, GND end left: labels fit
+    "R23": (57.0, 11.0, 180),    # to their right
     "Q2": (52.5, 9.7, 180),      # reverse-polarity P-FET behind J3 and J7
     "C1": (53.0, 16.5, 0),
     "C9": (30.6, 7.54, 0),       # 10 uF ceramic under the DevKit, next to its 5V pin J1.21
-    # TMR 1-0511 straddles the straight isolation gap: pins 1/2 (input) left of it,
-    # 4/6 (output) right of it; pin 3 is absent, so 3.6 mm copper between pins 2 and 4.
-    "PS1": (54.4, 38.0, 0),
-    "C2": (55.6, 33.6, 180),     # input decoupling, right above pins 1/2
-    "C4": (63.3, 33.6, 0),       # output buffer, right above pins 4/6
+    # 1S4E (SIP-4, 2.54 mm) straddles the straight isolation gap: pins 1/2 (input) left
+    # of it, 3/4 (output) right of it; the gap line (x 60.4) runs midway between pins 2
+    # and 3. Rotated so the pins run left to right. Nothing is placed inside PS1_BODY_MAX,
+    # so the module fits whichever side of the pin row its body extends to.
+    "PS1": (60.4 - 1.5 * 2.54, 38.0, 90),
+    "C2": (52.6, 38.0, 90),      # input decoupling, left of the body, in line with the pins
+    "C12": (68.4, 40.4, 90),     # 9 V output / LDO input, right of the body
+    "R24": (69.0, 46.2, 0),      # 9 V preload
+    "U4": (74.0, 40.4, 0),       # L78L05: OUT top, GND tab, IN bottom
+    "C4": (70.6, 36.2, 0),       # LDO output buffer, next to U4 OUT
     "U1": (60.3, 50.5, 0),       # ISO1540 straddles the isolation gap
     "R1": (47.0, 48.4, 0),
     "R2": (47.0, 50.8, 0),
@@ -65,8 +72,8 @@ PLACEMENT = {
     "Q1": (41.0, 55.6, 0),
     "R4": (39.6, 51.8, 90),
     "R3": (41.0, 58.5, 0),
-    "R7": (68.6, 33.6, 0),
-    "D2": (72.9, 33.6, 180),
+    "R7": (70.1, 33.6, 0),
+    "D2": (74.4, 33.6, 180),
     "C5": (65.2, 50.5, 270),     # right at U1 VCC2/GND2
     "R5": (69.0, 51.0, 0),
     "R6": (69.0, 53.4, 0),
@@ -83,12 +90,13 @@ PLACEMENT = {
     # relay LED (parallel to the coil) in the strip between antenna keep-out and relay
     "D4": (40.6, 62.2, 270),
     "R14": (40.6, 66.6, 90),
-    # expansion header at the left edge, pins in line with DevKit J3 pins 4/5 (GPIO1/2)
-    "J6": (2.4, 45.64, 0),
-    "R21": (6.2, 43.1, 0),
-    "R20": (6.2, 45.64, 0),
-    "R18": (6.2, 48.18, 0),
-    "R19": (6.2, 50.72, 0),
+    # expansion header at the left edge, above its resistors; R18/R19 in line with
+    # DevKit J3 pins 5/4 (GPIO2/1), with room for their labels before the socket
+    "J6": (2.4, 29.0, 0),
+    "R21": (2.6, 43.1, 0),
+    "R20": (2.6, 45.64, 0),
+    "R18": (2.6, 48.18, 0),
+    "R19": (2.6, 50.72, 0),
     # service-port isolator below U1, straddling the same gap; decoupling like U1
     "U3": (60.3, 56.3, 0),
     "C10": (55.4, 56.3, 270),
@@ -104,22 +112,19 @@ PLACEMENT = {
     "H4": (100.0, 72.0, 0),
 }
 
-# Reference designator positions on the silkscreen (board coordinates), where the
-# footprint default would collide with neighbours. Size 1.0 mm (JLC minimum).
-REF_POS = {
-    "R1": (44.0, 48.4), "R2": (44.0, 50.8), "C3": (55.4, 47.3), "D1": (51.8, 49.5),
-    "Q1": (41.6, 53.3), "R3": (38.0, 58.5), "R4": (37.7, 51.8), "C2": (55.6, 31.6), "C9": (30.6, 9.8), "C1": (54.75, 21.9),
-    "J3": (42.65, 13.0), "PS1": (48.5, 38.0), "U1": (61.5, 46.9), "C5": (65.2, 47.3), "R5": (72.7, 51.0),
-    "R6": (72.7, 53.4), "C8": (89.6, 53.6), "C6": (90.0, 58.6), "C7": (90.0, 61.0),
-    "R7": (68.6, 31.6), "D2": (72.9, 31.6), "C4": (63.3, 31.6), "Q2": (49.4, 9.7),
-    "R11": (38.0, 44.8, 90), "R12": (41.3, 49.6),
-    "U2": (80.0, 53.3), "K1": (49.0, 64.5), "J4": (92.0, 70.5),
-    "R13": (46.6, 16.5), "D3": (46.6, 18.8), "D4": (40.6, 69.7), "R14": (40.6, 71.2),
-    "U3": (60.3, 59.9), "C10": (56.0, 59.9), "C11": (65.2, 59.5),
-    "R15": (78.5, 61.3, 90), "R16": (81.0, 61.3, 90), "R17": (83.5, 61.3, 90), "J5": (72.3, 70.2, 90),
+# Reference designators (1.0 mm, JLC minimum) are placed by place_refs(): next to their
+# part (right, left, then above; never below), clear of pads, vias, other parts,
+# other silkscreen and the DevKit. REF_FIXED pins a label where the search would pick
+# a worse spot (board coordinates, angle).
+REF_FIXED = {
+    "PS1": (52.6, 34.7, 0),      # left of the body, above C2: clear of either body side
+    "R4": (41.25, 51.8, 90),     # between the DevKit socket and Q1 only its right side is free
+    "R15": (78.5, 61.4, 90),     # the three service resistors: same style, above each
+    "R16": (81.0, 61.4, 90),
+    "R17": (83.5, 61.4, 90),
 }
-HIDE_REFS = {"H1", "H2", "H3", "H4", "J1", "J2", "R9", "R10", "J6", "R18", "R19", "R20", "R21",
-             "J7", "R22", "R23"}
+# J1/J2 are labelled DK-J1/DK-J3, J6 has its own title; mounting holes need no label.
+HIDE_REFS = {"H1", "H2", "H3", "H4", "J1", "J2", "J6"}
 # Pads that join a power net with a thin track (LED branches in tight spots). They are
 # left out of the net's main routing and connected afterwards to its nearest copper.
 THIN_PADS = {("D4", "1"), ("R14", "1")}
@@ -131,17 +136,27 @@ THIN_PADS = {("D4", "1"), ("R14", "1")}
 # verifies >= 1.0 mm on the finished board.
 ESP_POLY = [(0.5, 0.5), (59.7, 0.5), (59.7, 58.8), (42.2, 58.8), (42.2, 75.5), (0.5, 75.5)]
 ISO_POLY = [(61.1, 0.5), (103.5, 0.5), (103.5, 75.5), (43.6, 75.5), (43.6, 60.2), (61.1, 60.2)]
-# Traco: "avoid routing PCB traces under the converter" - no tracks or vias under the
-# PS1 body beyond its pin row (the pins themselves sit 2.5 mm from the upper body edge).
-PS1_BODY_KEEPOUT = (52.25, 39.8, 69.25, 43.1)
+# No tracks or vias under the PS1 body beyond its pin row (switching transformer; the
+# body extends ~4.4-5 mm above the row, 11.6 mm wide around the 7.62 mm pin span).
+PS1_BODY_KEEPOUT = (54.4, 32.8, 66.4, 36.7)
+# Where the PS1 body may be: 11.6 x 6.0 mm, pin row ~1 mm from one face, either face,
+# plus 0.5 mm body tolerance. No other part's courtyard may reach into it.
+PS1_BODY_MAX = (60.4 - 5.8 - 0.5, 38.0 - 5.1 - 0.5, 60.4 + 5.8 + 0.5, 38.0 + 5.1 + 0.5)
+DEVKIT_BOX = (DEVKIT_X0 - 1.15, DEVKIT_PIN1_Y - 21 * 2.54 - 1.7,
+              DEVKIT_X0 + DEVKIT_ROWS + 1.15, DEVKIT_PIN1_Y + 1.4)
+# PS1 pads: narrow ovals along the row, 1.0 mm drill (Gaptec), 1.4 mm wide -> 1.14 mm
+# copper between pin 2 (+Vin, ESP side) and pin 3 (-Vout, isolated side).
+PS1_PAD = (2.2, 1.4)      # footprint-local (x, y); the row runs along local y
+PS1_DRILL = 1.0
 # No copper under the ESP32-S3 module antenna (DevKit antenna end, bottom left).
 ANTENNA_KEEPOUT = [(7.0, 59.6), (39.0, 59.6), (39.0, 75.9), (7.0, 75.9)]
 # No copper around the M3 mounting holes (screw heads, washers).
 MOUNT_KEEPOUT_R = 3.5
 # THT ground pads that additionally get a via (pour access is cramped there).
-THT_GROUND_VIAS = {("J2", "22")}   # J2.22: 3V3 to J6 passes above it
+THT_GROUND_VIAS = {("J2", "22"),   # J2.22: 3V3 to J6 passes above it
+                   ("J6", "4")}    # J6.4: board edge on one side, signal tracks on the other
 
-POWER_W = {"/+5V_IN": 0.6, "/+5V": 0.6, "/VDD_ISO": 0.6, "/COIL_N": 0.6, "/+3V3": 0.4}
+POWER_W = {"/+5V_IN": 0.6, "/+5V": 0.6, "/VDD_ISO": 0.6, "/V9_ISO": 0.6, "/COIL_N": 0.6, "/+3V3": 0.4}
 SIGNAL_W = 0.25
 GND_NETS = {"/GND", "/GND_ISO"}
 VIA_D, VIA_DRILL = 0.8, 0.4
@@ -284,17 +299,19 @@ def build_board():
         rf = fp.Reference()
         rf.SetTextSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0)))
         rf.SetTextThickness(mm(0.15))
+        rf.SetKeepUpright(False)
         if ref in HIDE_REFS:
             rf.SetVisible(False)
-        elif ref in REF_POS:
-            pos = REF_POS[ref]
-            rf.SetPosition(vec(pos[0], pos[1]))
-            rf.SetTextAngleDegrees(pos[2] if len(pos) > 2 else 0)
         if ref == "K1":
             # Omron recommends 1.0 mm holes for the G5V-2 (library footprint: 0.7 mm)
             for pad in fp.Pads():
                 pad.SetDrillSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0)))
                 pad.SetSize(pcbnew.VECTOR2I(mm(1.8), mm(1.8)))
+        if ref == "PS1":
+            for pad in fp.Pads():
+                pad.SetShape(pcbnew.PAD_SHAPE_RECT if pad.GetNumber() == "1" else pcbnew.PAD_SHAPE_OVAL)
+                pad.SetDrillSize(pcbnew.VECTOR2I(mm(PS1_DRILL), mm(PS1_DRILL)))
+                pad.SetSize(pcbnew.VECTOR2I(mm(PS1_PAD[0]), mm(PS1_PAD[1])))
         for pad in fp.Pads():
             name = pad_net.get((ref, pad.GetNumber()))
             if name:
@@ -785,36 +802,152 @@ def add_silk(board):
     silk_text(board, "DK-J3", DEVKIT_X0, y1 + 1.5, 1.0)
     # isolation gap (centre line): full outline on F.Fab, top run also on silkscreen
     dashed(board, [(60.4, 1.0), (60.4, 59.5), (42.9, 59.5), (42.9, 75.0)], layer=pcbnew.F_Fab)
-    dashed(board, [(60.4, 2.0), (60.4, 30.5)])
+    dashed(board, [(60.4, 13.5), (60.4, 30.5)])   # starts below the J7/R22/R23 labels
     silk_text(board, "ESP SIDE", 50.0, 26.0, 1.0, bold=True)
-    silk_text(board, "ISOLATED SDC SIDE", 82.0, 44.5, 1.2, bold=True)
+    silk_text(board, "ISOLATED SDC SIDE", 91.5, 41.0, 1.2, bold=True)
     silk_text(board, "+5V", 45.18, 13.0, 1.0)
     silk_text(board, "GND", 39.5, 13.0, 1.0)
     silk_text(board, "5V: J3 OR USB-C", 48.0, 23.6, 1.0)
     silk_text(board, "TO SDC", 97.5, 52.0, 1.0, bold=True)
     silk_text(board, "GND X5-2..12", 97.2, 54.3, 1.0)
     silk_text(board, "VE1 X6-6", 97.5, 68.4, 1.0)
-    silk_text(board, "SDC NTC emulator", 88.0, 8.0, 1.2, bold=True)
-    silk_text(board, "SDC3-40PM VE1  rev 3  2026-10", 88.0, 10.4, 1.0)
+    silk_text(board, "SDC NTC emulator", 82.0, 8.0, 1.2, bold=True)
+    silk_text(board, "SDC3-40PM VE1  rev 4  2026-10", 82.0, 10.4, 1.0)
+    silk_text(board, "Made by bl1ndc4m3l, authored by Claudine", 82.0, 12.8, 1.0)
     # indicators
     silk_text(board, "PWR", 39.6, 17.65, 1.0, angle=90)
     silk_text(board, "RELAY", 40.6, 73.5, 1.0)
-    # expansion header J6 (left edge)
-    silk_text(board, "J6", 0.9, 39.2, 1.0, justify="left")
-    silk_text(board, "EXT I/O", 0.9, 40.8, 1.0, justify="left")
-    for k, name in enumerate(("1 3V3", "2 GPIO2", "3 GPIO1", "4 GND")):
-        silk_text(board, name, 0.9, 56.3 + 1.6 * k, 1.0, justify="left")
+    # expansion header J6 (left edge): title above, signal names right of the pins
+    jx, jy, _ = PLACEMENT["J6"]
+    silk_text(board, "J6", 0.9, jy - 4.4, 1.0, justify="left")
+    silk_text(board, "EXT I/O", 0.9, jy - 2.8, 1.0, justify="left")
+    for k, name in enumerate(("3V3", "IO2", "IO1", "GND")):
+        silk_text(board, name, jx + 2.1, jy + 2.54 * k, 1.0, justify="left")
     # service connector J5 (bottom edge): pin names below, title beside
     for x, name in ((75.3, "GND"), (78.5, "RX"), (81.0, "TX"), (83.5, "5V")):
         silk_text(board, name, x, 74.9, 1.0)
     silk_text(board, "SDC SERVICE", 88.6, 68.5, 1.0, bold=True, angle=90)
-    silk_text(board, "R9 R_series 18k2 0.1%", 91.1, 50.2, 1.0)
-    silk_text(board, "R10 R_failsafe 24k9 0.1%", 66.0, 65.7, 1.0)
+
+
+def box_mm(bb, grow=0.0):
+    x0, y0 = to_board(bb.GetOrigin())
+    x1, y1 = to_board(bb.GetEnd())
+    return (min(x0, x1) - grow, min(y0, y1) - grow, max(x0, x1) + grow, max(y0, y1) + grow)
+
+
+def overlap(a, b):
+    return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
+
+
+def place_refs(board, fps, clr=0.2):
+    """Put every visible reference next to its part: right or left of the courtyard
+    (centred, then slid along it), then above; never below. A spot is valid if the
+    text box stays on the board, off every pad and via (+clr), off every other part's
+    courtyard, other silkscreen and labels placed so far, and off the DevKit area
+    (unless the part itself sits under the DevKit, like C9)."""
+    court = {}
+    for ref, fp in fps.items():
+        cy = fp.GetCourtyard(pcbnew.F_Cu)
+        court[ref] = box_mm(cy.BBox()) if cy.OutlineCount() else box_mm(fp.GetBoundingBox(False))
+    blocks = []
+    for fp in fps.values():
+        blocks += [box_mm(p.GetBoundingBox(), clr) for p in fp.Pads()]
+        blocks += [box_mm(g.GetBoundingBox(), 0.1) for g in fp.GraphicalItems()
+                   if g.GetLayer() == pcbnew.F_SilkS]
+    for t in board.GetTracks():
+        if t.GetClass() == "PCB_VIA":
+            blocks.append(box_mm(t.GetBoundingBox(), clr))
+    for d in board.GetDrawings():
+        if d.GetLayer() == pcbnew.F_SilkS:
+            blocks.append(box_mm(d.GetBoundingBox(), clr))
+    blocks.append(PS1_BODY_MAX)
+    base = list(blocks)
+    # big parts first, they have the fewest good spots; on failure retry with the
+    # failed parts at the front of the queue
+    order = sorted((r for r in fps if r not in HIDE_REFS),
+                   key=lambda r: -(court[r][2] - court[r][0]) * (court[r][3] - court[r][1]))
+    for _ in range(4):
+        blocks[:] = base
+        failed = place_in_order(fps, court, blocks, order)
+        if not failed:
+            break
+        order = failed + [r for r in order if r not in failed]
+    return failed
+
+
+def place_in_order(fps, court, blocks, order, clr=0.2):
+    edge = (0.5, 0.5, BOARD_W - 0.5, BOARD_H - 0.5)
+    failed = []
+
+    def ok(ref, box, under_devkit):
+        if box[0] < edge[0] or box[1] < edge[1] or box[2] > edge[2] or box[3] > edge[3]:
+            return False
+        if not under_devkit and overlap(box, DEVKIT_BOX):
+            return False
+        if any(overlap(box, b) for b in blocks):
+            return False
+        return not any(overlap(box, c) for r, c in court.items() if r != ref)
+
+    for ref in order:
+        rf = fps[ref].Reference()
+        rf.SetVisible(True)
+        c = court[ref]
+        under = overlap(c, DEVKIT_BOX)
+        cands = []
+        if ref in REF_FIXED:
+            x, y, a = REF_FIXED[ref]
+            cands.append((a, x, y))
+        for a in (0, 90):
+            rf.SetTextAngleDegrees(a)
+            rf.SetPosition(vec(0, 0))
+            t = box_mm(rf.GetBoundingBox())
+            w, h = t[2] - t[0], t[3] - t[1]
+            cx, cy = (c[0] + c[2]) / 2, (c[1] + c[3]) / 2
+            slide_y = [0] + [s * k * 0.4 for k in range(1, 8) for s in (-1, 1)
+                             if k * 0.4 <= max(0.0, (c[3] - c[1]) / 2 + h / 2 - 0.4)]
+            slide_x = [0] + [s * k * 0.4 for k in range(1, 12) for s in (-1, 1)
+                             if k * 0.4 <= max(0.0, (c[2] - c[0]) / 2 + w / 2 - 0.4)]
+            # centred on each side first (right, left, above, beneath), then slid
+            for gap in (0.15, 0.6):
+                for k in range(max(len(slide_x), len(slide_y))):
+                    if k < len(slide_y):
+                        cands.append((a, c[2] + gap + w / 2, cy + slide_y[k]))
+                        cands.append((a, c[0] - gap - w / 2, cy + slide_y[k]))
+                    if k < len(slide_x):
+                        cands.append((a, cx + slide_x[k], c[1] - gap - h / 2))
+                        cands.append((a, cx + slide_x[k], c[3] + gap + h / 2))
+            if a == 0:
+                centred = [(0, c[2] + 0.15 + w / 2, cy), (0, c[0] - 0.15 - w / 2, cy),
+                           (0, cx, c[1] - 0.15 - h / 2), (0, cx, c[3] + 0.15 + h / 2)]
+        placed = False
+        for a, x, y in cands:
+            rf.SetTextAngleDegrees(a)
+            rf.SetPosition(vec(x, y))
+            box = box_mm(rf.GetBoundingBox(), 0.05)
+            if ok(ref, box, under):
+                placed = True
+                break
+        if not placed:
+            failed.append(ref)
+        if not placed or ref in os.environ.get("REF_DEBUG", "").split(","):
+            # diagnostics: what blocks the centred right/left/above/beneath spots
+            for a, x, y in centred:
+                rf.SetTextAngleDegrees(a)
+                rf.SetPosition(vec(x, y))
+                box = box_mm(rf.GetBoundingBox(), 0.05)
+                hit = [r for r, cc in court.items() if r != ref and overlap(box, cc)]
+                hit += [tuple(round(v, 1) for v in b) for b in blocks if overlap(box, b)][:3]
+                print(f"  {ref} @({x:.1f},{y:.1f}) blocked by {hit}")
+        if placed:
+            rf.SetTextAngleDegrees(a)
+            rf.SetPosition(vec(x, y))
+            blocks.append(box_mm(rf.GetBoundingBox(), clr))
+    return failed
 
 
 # ------------------------------------------------------------------ main
 # AD5272 nets first (after its ground stubs), so its 0.5 mm-pitch pins are not walled in.
-ROUTE_ORDER = ["/SDA_ISO", "/SCL_ISO", "/EXT_CAP", "/WIPER", "/VDD_ISO",
+ROUTE_ORDER = ["/SDA_ISO", "/SCL_ISO", "/EXT_CAP", "/WIPER", "/VDD_ISO", "/V9_ISO",
                "/+5V_IN", "/+5V", "/USB_CC1", "/USB_CC2", "/COIL_N", "/RELAY_SENSE", "/GATE", "/RELAY_EN", "/+3V3", "/SDA_ESP",
                "/SCL_ESP", "/LED_ISO", "/LED_PWR", "/LED_REL", "/SVC_RX", "/SVC_TX",
                "/EXT_IO1", "/EXT_IO2", "/EXT_IO1_H", "/EXT_IO2_H",
@@ -826,8 +959,13 @@ ROUTE_ORDER = ["/SDA_ISO", "/SCL_ISO", "/EXT_CAP", "/WIPER", "/VDD_ISO",
 def main():
     board, fps, netinfo, nets = build_board()
     add_outline(board)
-    router = Router(board, fps, netinfo)
     failed = []
+    for ref, fp in fps.items():
+        cy = fp.GetCourtyard(pcbnew.F_Cu)
+        if ref != "PS1" and cy.OutlineCount() and overlap(box_mm(cy.BBox()), PS1_BODY_MAX):
+            print("PART UNDER THE PS1 BODY AREA:", ref)
+            failed.append("placement " + ref)
+    router = Router(board, fps, netinfo)
     # The antenna keep-out and the J1 fan-out split the ESP ground pour; tie the
     # DevKit GND to the PS1 input ground with a real track first.
     print("routing /GND link")
@@ -867,6 +1005,10 @@ def main():
         z = add_zone(board, netinfo, None, circle, pcbnew.F_Cu, rule_area=True)
         z.SetZoneName(f"{ref} screw keep-out")
     add_silk(board)
+    unlabelled = place_refs(board, fps)
+    if unlabelled:
+        print("NO LABEL SPOT:", unlabelled)
+        failed += ["label " + r for r in unlabelled]
     filler = pcbnew.ZONE_FILLER(board)
     filler.Fill(board.Zones())
     pcbnew.SaveBoard(PCB_PATH, board)

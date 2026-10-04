@@ -18,9 +18,12 @@ PROJ = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import design  # noqa: E402
 
-KICAD_BIN = r"C:\Program Files\KiCad\9.0\bin"
-CLI = os.path.join(KICAD_BIN, "kicad-cli.exe")
-KPY = os.path.join(KICAD_BIN, "python.exe")
+# KiCad 9 install. Defaults to the Windows installer location; elsewhere set
+# KICAD_BIN, or KICAD_CLI / KICAD_PYTHON directly (e.g. KICAD_PYTHON=python3 on Linux).
+KICAD_BIN = os.environ.get("KICAD_BIN", r"C:\Program Files\KiCad\9.0\bin")
+EXE = ".exe" if os.name == "nt" else ""
+CLI = os.environ.get("KICAD_CLI", os.path.join(KICAD_BIN, "kicad-cli" + EXE))
+KPY = os.environ.get("KICAD_PYTHON", os.path.join(KICAD_BIN, "python" + EXE))
 NAME = design.PROJECT
 SCH = os.path.join(PROJ, NAME + ".kicad_sch")
 PCB = os.path.join(PROJ, NAME + ".kicad_pcb")

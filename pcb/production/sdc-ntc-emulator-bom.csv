@@ -1,9 +1,9 @@
 Qty,References,Value,Footprint,Purpose,Fit
 1,C1,470uF 10V,CP_Radial_D8.0mm_P3.50mm,5 V bulk for Wi-Fi TX peaks,fit
-3,C2 C4 C7,10uF 16V X5R,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,TMR 1-0511 input decoupling (80 mA p-p reflected ripple); TMR output buffer; U2 VDD decoupling,fit
+3,C2 C4 C7,10uF 16V X5R,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,PS1 input decoupling (datasheet: 4.7 uF); U4 output buffer; U2 VDD decoupling,fit
 5,C3 C10 C5 C6 C11,100nF,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,U1 VCC1 decoupling; U3 VCC1 decoupling; U1 VCC2 decoupling; U2 VDD decoupling; U3 VCC2 decoupling,fit
 1,C8,1uF 16V,C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,AD5272 EXT_CAP (>= 7 V rating),fit
-1,C9,10uF 25V X7R,C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"Low-ESR ceramic parallel to C1: RAC03 ripple, fast Wi-Fi current edges",fit
+2,C9 C12,10uF 25V X7R,C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"Low-ESR ceramic parallel to C1: RAC03 ripple, fast Wi-Fi current edges; PS1 output / U4 input (datasheet: 4.7 uF, max 1000 uF); 25 V 1206 for DC-bias derating at ~10 V",fit
 1,D1,1N4148W,D_SOD-123,Flyback diode,fit
 2,D3 D2,green,LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder,5 V present (after the reverse-polarity FET); VDD_ISO present,fit
 1,D4,yellow,LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder,Relay coil energised (parallel to the coil: shows the real coil state),fit
@@ -15,7 +15,7 @@ Qty,References,Value,Footprint,Purpose,Fit
 1,J6,EXT I/O,PinHeader_1x04_P2.54mm_Vertical,"Expansion header: 3V3, GPIO2, GPIO1, GND",fit
 1,J7,USB-C 5V IN,USB_C_Receptacle_GCT_USB4125-xx-x-0190_6P_TopMnt_Horizontal,"5 V input alternative to J3 (any USB-C charger); power sink only, never above 5 V",fit
 1,K1,G5V-2-H1 5VDC,Relay_DPDT_Omron_G5V-2,"Fail-safe relay, both poles in parallel; de-energised = R_failsafe",fit
-1,PS1,TMR 1-0511,Converter_DCDC_TRACO_TMR-1-xxxx_Single_THT,"Traco TMR 1-0511 isolated DC/DC 5 V -> 5 V regulated, 200 mA, 1500 VDC, SIP-6",fit
+1,PS1,1S4E_0509S1U,Converter_DCDC_TRACO_TME_03xxS_05xxS_12xxS_Single_THT,"Gaptec 1S4E_0509S1U isolated DC/DC 5 V -> 9 V unregulated, 111 mA, 1000 VDC, SIP-4",fit
 1,Q1,AO3400A,SOT-23,Relay coil driver,fit
 1,Q2,AO3401A,SOT-23,"Reverse-polarity protection: P-FET, gate to GND (Vgs max 12 V), ~25 mV drop",fit
 2,R1 R2,2k7,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,I2C pull-up ESP side (>= 0.5 mA sink current for ISO1540 side 1),fit
@@ -27,11 +27,12 @@ Qty,References,Value,Footprint,Purpose,Fit
 1,R17,0R,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,VDD_ISO to the service connector; remove if the SDC port has its own 5 V,fit
 2,R20 R21,4k7,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Optional pull-up GPIO2 (I2C / 1-Wire); Optional pull-up GPIO1 (I2C / 1-Wire),DNP
 2,R22 R23,5k1,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,"USB-C CC1 Rd: identifies the board as a sink, the charger then supplies 5 V; USB-C CC2 Rd (cable can be plugged either way round)",fit
+2,R24 R7,1k5,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,PS1 preload: the 1S4E needs >= 10 % load (11 mA); 6-7 mA here plus U2/U1/U3/D2 and the LDO's own current; Indicator LED resistor,fit
 1,R3,100k,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Gate pull-down: relay off while GPIO4 floats,fit
 3,R4 R18 R19,100R,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Gate series resistor; Series resistor GPIO2 (ESD / short-circuit protection); Series resistor GPIO1 (ESD / short-circuit protection),fit
 2,R5 R6,4k7,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,I2C pull-up SDC side,fit
-1,R7,1k5,R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,Indicator LED resistor,fit
 1,R9,18k2 0.1% 25ppm,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,R_series: hardware floor ~27 C even if the AD5272 is unpowered or shorted,fit
 1,U1,ISO1540,SOIC-8_3.9x4.9mm_P1.27mm,Bidirectional I2C isolator,fit
 1,U2,AD5272BRMZ-50,MSOP-10_3x3mm_P0.5mm,"1024-step 50k digital rheostat, I2C address 0x2F (ADDR=GND)",fit
 1,U3,ISO7721D,SOIC-8_3.9x4.9mm_P1.27mm,"Service-port UART isolator, 1/1 channels, default output high (UART idle)",fit
+1,U4,L78L05,SOT-89-3,"VDD_ISO 5 V from the unregulated ~9-11 V (30 V max input, ~1.7 V dropout)",fit

@@ -1,1 +1,22 @@
+# Datasheets and manuals are copyrighted: kept locally, never published.
+# (pcb/.gitignore handles the KiCad build leftovers.)
+/datasheets/
 *.pdf
+# ...except our own schematic, for readers without KiCad
+!/pcb/production/sdc-ntc-emulator-schematic.pdf
+
+# Private local files: distributor carts, order confirmations, notes
+/local/
+
+# Firmware: credentials and ESPHome build output
+secrets.yaml
+.esphome/
+
+# Python
+__pycache__/
+
+# Editor / OS
+*.code-workspace
+.vscode/
+.DS_Store
+Thumbs.db

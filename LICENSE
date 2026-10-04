@@ -1,0 +1,19 @@
+This repository uses two licences. The full texts are in LICENSES/.
+
+Hardware design: CERN-OHL-S-2.0 (CERN Open Hardware Licence Version 2,
+Strongly Reciprocal)
+  - pcb/ (KiCad project, libraries, production files), except pcb/tools/
+  - docs/
+
+Software: GPL-3.0-or-later (GNU General Public License v3.0 or later)
+  - pcb/tools/ (the scripts that generate the KiCad project)
+  - firmware/
+
+Copyright (C) 2026 bl1ndc4m3l
+
+The KiCad standard library symbols and footprints embedded in the schematic and
+board files are licensed CC-BY-SA-4.0 with KiCad's exception, which allows their
+use in designs without affecting the design's licence.
+
+Honeywell Home, Smile and Resideo are trademarks of their respective owners.
+This project is not affiliated with or endorsed by them.

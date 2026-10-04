@@ -10,7 +10,7 @@ PROJECT = "sdc-ntc-emulator"
 
 # Nets in the isolated SDC domain (everything else is the ESP domain).
 ISO_NETS = {"VDD_ISO", "GND_ISO", "SDA_ISO", "SCL_ISO", "EXT_CAP", "WIPER",
-            "NO_PATH", "NC_PATH", "VE1", "LED_ISO",
+            "NO_PATH", "NC_PATH", "VE1", "LED_ISO", "V9_ISO",
             "SVC_RX_ISO", "SVC_RX_EXT", "SVC_TX_ISO", "SVC_TX_EXT", "SVC_5V"}
 
 FP_R0805 = "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
@@ -61,11 +61,13 @@ PARTS = [
          (95.25, 38.1, 0), {"1": "+5V", "2": "GND"},
          Description="Low-ESR ceramic parallel to C1: RAC03 ripple, fast Wi-Fi current edges"),
     part("C2", "Device:C", "10uF 16V X5R", FP_C0805, (101.6, 38.1, 0), {"1": "+5V", "2": "GND"},
-         Description="TMR 1-0511 input decoupling (80 mA p-p reflected ripple)"),
-    part("PS1", "sdc_emulator:TMR1-0511", "TMR 1-0511",
-         "Converter_DCDC:Converter_DCDC_TRACO_TMR-1-xxxx_Single_THT", (142.24, 45.72, 0),
-         {"2": "+5V", "1": "GND", "4": "VDD_ISO", "6": "GND_ISO"},
-         Description="Traco TMR 1-0511 isolated DC/DC 5 V -> 5 V regulated, 200 mA, 1500 VDC, SIP-6"),
+         Description="PS1 input decoupling (datasheet: 4.7 uF)"),
+    # Gaptec 1S4E_0509S1U: pin-compatible with the Traco TME 05xxS (SIP-4, -Vin +Vin -Vout +Vout),
+    # so it uses KiCad's TME symbol and footprint.
+    part("PS1", "Converter_DCDC:TME-0509S", "1S4E_0509S1U",
+         "Converter_DCDC:Converter_DCDC_TRACO_TME_03xxS_05xxS_12xxS_Single_THT", (142.24, 45.72, 0),
+         {"1": "GND", "2": "+5V", "3": "GND_ISO", "4": "V9_ISO"},
+         Description="Gaptec 1S4E_0509S1U isolated DC/DC 5 V -> 9 V unregulated, 111 mA, 1000 VDC, SIP-4"),
     part("U1", "Isolator:ISO1540", "ISO1540", "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
          (142.24, 114.3, 0),
          {"1": "+3V3", "2": "SDA_ESP", "3": "SCL_ESP", "4": "GND",
@@ -124,8 +126,16 @@ PARTS = [
     part("C10", "Device:C", "100nF", FP_C0805, (289.56, 114.3, 0), {"1": "+3V3", "2": "GND"},
          Description="U3 VCC1 decoupling"),
     # ---------------------------------------------------------- isolated domain
+    part("C12", "Device:C", "10uF 25V X7R", "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+         (167.64, 38.1, 0), {"1": "V9_ISO", "2": "GND_ISO"},
+         Description="PS1 output / U4 input (datasheet: 4.7 uF, max 1000 uF); 25 V 1206 for DC-bias derating at ~10 V"),
+    part("R24", "Device:R", "1k5", FP_R0805, (177.8, 33.02, 0), {"1": "V9_ISO", "2": "GND_ISO"},
+         Description="PS1 preload: the 1S4E needs >= 10 % load (11 mA); 6-7 mA here plus U2/U1/U3/D2 and the LDO's own current"),
+    part("U4", "Regulator_Linear:L78L05_SOT89", "L78L05", "Package_TO_SOT_SMD:SOT-89-3", (190.5, 45.72, 0),
+         {"3": "V9_ISO", "2": "GND_ISO", "1": "VDD_ISO"},
+         Description="VDD_ISO 5 V from the unregulated ~9-11 V (30 V max input, ~1.7 V dropout)"),
     part("C4", "Device:C", "10uF 16V X5R", FP_C0805, (208.28, 38.1, 0), {"1": "VDD_ISO", "2": "GND_ISO"},
-         Description="TMR output buffer"),
+         Description="U4 output buffer"),
     part("R7", "Device:R", "1k5", FP_R0805, (233.68, 33.02, 0), {"1": "VDD_ISO", "2": "LED_ISO"},
          Description="Indicator LED resistor"),
     part("D2", "Device:LED", "green", "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder",
@@ -185,7 +195,7 @@ MPN = {
     "C3 C5 C6 C10 C11": ("Samsung Electro-Mechanics", "CL21B104KBCNNNC", 10, "100 nF 50 V X7R 0805"),
     "C2 C4 C7": ("Yageo", "CC0805KRX5R7BB106", 4, "10 uF 16 V X5R 0805"),
     "C8": ("Murata", "GRM219R71E105KA88D", 5, "1 uF 25 V X7R 0805"),
-    "C9": ("Murata", "GRM31CR71E106MA12L", 3, "10 uF 25 V X7R 1206"),
+    "C9 C12": ("Murata", "GRM31CR71E106MA12L", 3, "10 uF 25 V X7R 1206"),
     "D1": ("Diodes Incorporated", "1N4148W-7-F", 3, "SOD-123"),
     "D2 D3": ("Lite-On", "LTST-C171GKT", 4, "green LED 0805"),
     "D4": ("Lite-On", "LTST-C171YKT", 3, "yellow LED 0805"),
@@ -201,7 +211,7 @@ MPN = {
     "R3": ("Yageo", "RC0805FR-07100KL", 10, "100 k 1 % 0805"),
     "R4 R18 R19": ("Yageo", "RC0805FR-07100RL", 10, "100 R 1 % 0805"),
     "R5 R6 R20 R21": ("Yageo", "RC0805FR-074K7L", 10, "4.7 k 1 % 0805 (R20/R21 optional)"),
-    "R7": ("Yageo", "RC0805FR-071K5L", 10, "1.5 k 1 % 0805"),
+    "R7 R24": ("Yageo", "RC0805FR-071K5L", 10, "1.5 k 1 % 0805"),
     "R13 R14": ("Yageo", "RC0805FR-072K2L", 10, "2.2 k 1 % 0805"),
     "R15 R16": ("Yageo", "RC0805FR-071KL", 10, "1 k 1 % 0805"),
     "R17": ("Yageo", "RC0805JR-070RL", 10, "0 R jumper 0805"),
@@ -213,7 +223,8 @@ MPN = {
     "U1": ("Texas Instruments", "ISO1540DR", 1, "I2C isolator SOIC-8"),
     "U3": ("Texas Instruments", "ISO7721DR", 1, "dual digital isolator 1/1, default high, SOIC-8"),
     "U2": ("Analog Devices", "AD5272BRMZ-50", 2, "50 k digital rheostat MSOP-10 (spare for hand soldering)"),
-    "PS1": ("Traco Power", "TMR 1-0511", 1, "isolated DC/DC 1 W regulated, SIP-6"),
+    "PS1": ("GAPTEC Electronic", "1S4E_0509S1U", 1, "isolated DC/DC 1 W 5 V -> 9 V unregulated, SIP-4"),
+    "U4": ("STMicroelectronics", "L78L05ACUTR", 2, "5 V 100 mA linear regulator SOT-89"),
 }
 
 # DigiKey part numbers (cut tape where offered), checked on digikey.com 2026-10-01.
@@ -252,7 +263,8 @@ DIGIKEY = {
     "ISO1540DR": "296-34871-1-ND",
     "ISO7721DR": "296-48296-1-ND",
     "AD5272BRMZ-50": "505-AD5272BRMZ-50-ND",
-    "TMR 1-0511": "1951-2333-ND",
+    "1S4E_0509S1U": "3182-1S4E_0509S1U-ND",
+    "L78L05ACUTR": "497-1183-1-ND",
 }
 
 # Boards to buy parts for (JLC ships 5 bare PCBs; 3 get assembled).
@@ -316,6 +328,7 @@ TEXTS = [
      "De-energised: VE1 -> R10 (fail-safe). Energised: VE1 -> R9 -> AD5272 W-A.", (152.4, 213.36), 1.5),
     ("AD5272: ADDR = GND -> I2C 0x2F. RESET tied to VDD.\n"
      "Firmware: write control reg C1=1 at boot, never set C0 (50-TP).", (223.52, 147.32), 1.5),
-    ("PS1 TMR 1-0511: regulated, no minimum load. Pin 3/5 absent:\n"
-     "5.08 mm between +Vin (2) and +Vout (4).", (208.28, 55.88), 1.5),
+    ("PS1 1S4E_0509S1U: unregulated 9 V (~9-11 V at our load), needs >= 10 % load:\n"
+     "R24 + U4 quiescent current + VDD_ISO load. U4 L78L05 makes VDD_ISO = 5 V.\n"
+     "Pins 2 (+Vin) and 3 (-Vout) straddle the isolation gap: narrow oval pads.", (208.28, 55.88), 1.5),
 ]
